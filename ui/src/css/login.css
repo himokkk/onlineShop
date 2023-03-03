@@ -1,0 +1,86 @@
+:root {
+    --logo: #f97316;
+    --blue: #38bdf8;
+    --hover-blue: #0284c7;
+}
+
+.container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content {
+    border: 1px solid black;
+    padding: 4rem 5rem 1.5rem 5rem;
+}
+
+.shop-logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.shop-logo div {
+    margin-top: 1rem;
+}
+
+.logo {
+    color: var(--logo);
+}
+
+.hidden-text {
+    display: none;
+    color: red;
+    margin-top: 0.1rem;
+    text-align: center;
+}
+
+.input-container {
+    margin-top: 1rem;
+}
+
+.login-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.forgotten {
+    margin-top: 2rem;
+    margin-bottom: 0.2rem;
+    text-align: center;
+}
+
+.forgotten a {
+    color: var(--blue) !important;
+}
+
+.forgotten a:hover {
+    color: var(--hover-blue) !important;
+}
+
+.signup,
+.login {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.login {
+    margin-top: 1rem;
+}
+
+.link {
+    color: var(--blue);
+}
+
+.link:hover {
+    color: var(--hover-blue);
+}

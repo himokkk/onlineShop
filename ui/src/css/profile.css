@@ -1,0 +1,32 @@
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-right: 8rem;
+    margin-top: 8rem;
+}
+
+.profile-container img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 9999px;
+}
+
+.profile-main {
+    margin-top: 3rem;
+}
+
+.profile-main span {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+}
+
+.profile-main hr {
+    background-color: #10b981;
+    width: 24rem;
+    height: 0.25rem;
+}
+
+.profile-description {
+    margin-top: 1rem;
+}

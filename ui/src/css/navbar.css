@@ -1,0 +1,83 @@
+.navbar-container {
+    width: 100vw;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #f97316;
+}
+
+#home-button {
+    padding: 1.25rem;
+    margin-left: 5rem;
+}
+
+.left-nav {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.dropdown {
+}
+
+.dropdown img {
+    position: relative;
+    float: right;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+}
+
+#dropdown {
+    position: absolute;
+    z-index: 10;
+    margin-top: 8rem;
+    background-color: #ffffff;
+    width: 11rem;
+    border-radius: 0.25rem;
+    border-top-width: 1px;
+    border-color: #f3f4f6;
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.06);
+
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    color: #374151;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.hidden {
+    display: none;
+}
+
+.nav-profile {
+    display: block;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.nav-settings {
+    display: block;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.nav-logout {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    color: #374151;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: #e5e7eb;
+    background-color: #4b5563;
+}
+
+.nav-logout:hover {
+    color: #4b5563;
+    background-color: #f3f4f6;
+}
