@@ -8,6 +8,11 @@
     width: 77rem;
     display: flex;
     overflow-y: hidden;
+    cursor: pointer;
+}
+
+.categories-container:active * {
+    transform: scale(1.05);
 }
 
 .categories-border {
@@ -40,8 +45,9 @@
     height: 3rem;
 }
 
-.category:hover span {
-    opacity: 1;
+.category span {
+    font-size: 1.3rem;
+    font-weight: 600;
 }
 
 #left-arrow,
@@ -91,20 +97,5 @@
 }
 
 ::-webkit-scrollbar {
-    height: 5px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #888;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    height: 0px;
 }
