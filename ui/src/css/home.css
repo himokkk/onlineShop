@@ -4,21 +4,24 @@
 }
 
 .categories-container {
-    margin-top: 4rem;
+    z-index: 10;
     width: 77rem;
-    height: 16rem;
-    overflow-x: auto;
-    overflow-y: hidden;
-    border: 1px solid black;
     display: flex;
-    margin-left: auto;
-    margin-right: auto;
+    overflow-y: hidden;
+}
+
+.categories-border {
+    position: relative;
+    z-index: 9;
+    border: 1px solid #6b7280;
+    display: flex;
+    border-radius: 9999px;
+    padding: 0 4rem;
     margin-top: 4rem;
-    border-width: 1px;
-    border-color: #6b7280;
 }
 
 .category {
+    position: relative;
     min-width: 5rem;
     max-width: 5rem;
     height: 5rem;
@@ -26,18 +29,34 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0.5rem 0 0.5rem 1rem;
-    border: 1px solid black;
+    margin: 0.5rem 0.4rem 0.5rem 0.4rem;
+    box-shadow: 0 0 10px #6b7280;
+    border-radius: 9999px;
 }
 
-.category-image {
+.category img {
     margin-top: 0.25rem;
     width: 3rem;
     height: 3rem;
 }
 
-.category-text {
-    font-size: 0.9rem;
+.category:hover span {
+    opacity: 1;
+}
+
+#left-arrow,
+#right-arrow {
+    position: absolute;
+    font-size: 5rem;
+    top: 0.8rem;
+}
+
+#left-arrow {
+    left: 0;
+}
+
+#right-arrow {
+    right: 0;
 }
 
 .products-container {
@@ -47,7 +66,6 @@
     flex-wrap: wrap;
     margin-top: 2rem;
     margin-bottom: 3rem;
-    border: 1px solid gray;
 }
 
 .product {
@@ -58,19 +76,35 @@
     margin: 1rem 0 1rem 1rem;
     width: 10rem;
     height: 10rem;
-    border: 1px solid black;
 }
 
-.product-image {
+.product img {
     width: 5rem;
     height: 5rem;
 }
-
-.product-price {
+.product span {
+    margin-top: 0.25rem;
+    text-align: center;
+}
+.product div {
     font-size: 0.9rem;
 }
 
-.product-name {
-    margin-top: 0.25rem;
-    text-align: center;
+::-webkit-scrollbar {
+    height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

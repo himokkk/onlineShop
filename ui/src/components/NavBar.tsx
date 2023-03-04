@@ -25,12 +25,18 @@ const NavBar: React.FC = () => {
     }, []);
 
     const Click = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        const div = event.target as HTMLDivElement;
-        if (!div.className.includes("dropdown-active")) setShowDropdown(false);
+        const div = event.target as HTMLElement;
+        try {
+            if (!div.className.includes("dropdown-active")) setShowDropdown(false);
+        } catch (e) {}
     };
 
-    // @ts-ignore
-    document.addEventListener("click", Click);
+    useEffect(() => {
+        // @ts-ignore
+        document.addEventListener("click", Click);
+        // @ts-ignore
+        return () => document.removeEventListener("click", Click);
+    });
 
     return (
         <div className="navbar-container">

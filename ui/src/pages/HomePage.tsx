@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
+import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 import NavBar from "../components/NavBar";
 import getData from "../functions/getData";
@@ -50,15 +51,22 @@ const HomePage: React.FC = () => {
     return (
         <div className="container">
             <NavBar />
-            <div className="categories-container">
-                {categories.map((object: Category) => {
-                    return (
-                        <div className="category" id={"category-" + object.id} onClick={changeCategory}>
-                            <img src={object.svg_url} className="category-image" />
-                            <div className="category-text">{object.name}</div>
-                        </div>
-                    );
-                })}
+            <div className="categories-border">
+                <MdOutlineKeyboardArrowLeft id="left-arrow" />
+                <div className="categories-container">
+                    {categories.map((object: Category) => {
+                        return (
+                            <div
+                                className="category prevent-select"
+                                id={"category-" + object.id}
+                                onClick={changeCategory}
+                            >
+                                <img src={object.svg_url} />
+                            </div>
+                        );
+                    })}
+                </div>
+                <MdOutlineKeyboardArrowRight id="right-arrow" />
             </div>
             <div className="products-container">
                 {products.map((object: Product) => {
@@ -74,9 +82,9 @@ const HomePage: React.FC = () => {
                     }
                     return (
                         <div className="product" id={"product-" + object.id}>
-                            <img src={object.image_url} className="product-image" />
-                            <div className="product-name">{name}</div>
-                            <div className="product-price">Price: {price} zł</div>
+                            <img src={object.image_url} className="prevent-select" />
+                            <span>{name}</span>
+                            <div>Price: {price} zł</div>
                         </div>
                     );
                 })}
