@@ -15,6 +15,8 @@ class ProductListView(ListAPIView):
         if not query_params:
             return self.queryset.all()
 
+        queryset = self.queryset.all()
+
         size = query_params.get("size", None)
         if size:
             size = int(size)
@@ -26,8 +28,23 @@ class ProductListView(ListAPIView):
             category_instance = Category.objects.filter(id=category_id)
             if not category_instance:
                 return None
-            return self.queryset.filter(category=category_instance[0])[:size]
-        return self.queryset.all()[:size]
+            queryset = queryset.filter(category=category_instance[0])
+
+        sort = query_params.get("sort", None)
+        if sort:
+            if sort == "price_ascending":
+                queryset = queryset.order_by('price')
+            elif sort == "price_descending":
+                queryset = queryset.order_by('price').reverse()
+            elif sort == "name_ascending":
+                queryset = queryset.order_by('name')
+            elif sort == "name_descending":
+                queryset = queryset.order_by('name').reverse()
+            elif sort == "newest":
+                queryset = queryset.order_by('post_date').reverse()
+            elif sort == "oldest":
+                queryset = queryset.order_by('post_date')
+        return queryset.all()[:size]
 
 
 class ProductCreateView(CreateAPIView):

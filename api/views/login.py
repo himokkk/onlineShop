@@ -15,7 +15,6 @@ class LoginView(ObtainAuthToken):
     permission_classes = []
 
     def post(self, request, *args, **kwargs):
-        print(request.data)
         serializer = self.serializer_class(
             data=request.data, context={"request": request}
         )
