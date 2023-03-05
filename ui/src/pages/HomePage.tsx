@@ -19,6 +19,8 @@ const HomePage: React.FC = () => {
 
     const [size, setSize] = useState<number>(25);
     const [productsCount, setProductsCount] = useState<number>(0);
+    const [minPrice, setMinPrice] = useState<number>(0);
+    const [maxPrice, setMaxPrice] = useState<number>(0);
     const [page, setPage] = useState<number>(1);
     const [sort, setSort] = useState<string>("");
 
@@ -49,12 +51,20 @@ const HomePage: React.FC = () => {
             url += "&category=" + category;
         }
 
+        if (minPrice) {
+            url += "&min-price=" + minPrice;
+        }
+
+        if (maxPrice) {
+            url += "&max-price=" + maxPrice;
+        }
+
         setPage(1);
         getData({ url: url }).then(response => {
             setProductsCount(response["count"]);
             setProducts(response["results"]);
         });
-    }, [category, size, sort]);
+    }, [category, size, sort, minPrice, maxPrice]);
 
     useEffect(() => {
         if (page === 1) return;
@@ -184,6 +194,20 @@ const HomePage: React.FC = () => {
                     <span id="size-50" onClick={changeSize}>
                         50
                     </span>
+                    <label>Price </label>
+                    <input
+                        type="text"
+                        className="price-range"
+                        placeholder="from"
+                        onChange={e => setMinPrice(Number(e.target.value))}
+                    />
+                    -
+                    <input
+                        type="text"
+                        className="price-range"
+                        placeholder="to"
+                        onChange={e => setMaxPrice(Number(e.target.value))}
+                    />
                 </div>
                 <div className="pages">
                     <div onClick={changePageLeft}>

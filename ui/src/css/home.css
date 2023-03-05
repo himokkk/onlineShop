@@ -87,6 +87,13 @@
     cursor: pointer;
 }
 
+.price-range {
+    border-radius: 9999px;
+    width: 5rem;
+    height: 2rem;
+    padding-left: 1rem;
+}
+
 .sort-select {
     position: relative;
     border-radius: 9999px;
