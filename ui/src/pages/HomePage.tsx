@@ -18,6 +18,7 @@ const HomePage: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
 
     const [size, setSize] = useState<number>(25);
+    const [sort, setSort] = useState<string>("");
 
     useEffect(() => {
         if (!cookies.get("token")) {
@@ -39,18 +40,27 @@ const HomePage: React.FC = () => {
     useEffect(() => {
         let url = "/api/product/list/";
         url += "?size=" + size;
+        if (sort) {
+            url += "&sort=" + sort;
+        }
         if (category) {
             url += "&category=" + category;
         }
         getData({ url: url }).then(response => {
             setProducts(response);
         });
-    }, [category]);
+    }, [category, size, sort]);
 
     const changeCategory = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const div = event.currentTarget as HTMLDivElement;
         const id = div.id.split("-")[1];
         setCategory(Number(id));
+    };
+
+    const changeSize = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        const div = event.currentTarget as HTMLDivElement;
+        const id = div.id.split("-")[1];
+        setSize(Number(id));
     };
 
     useEffect(() => {
@@ -77,9 +87,8 @@ const HomePage: React.FC = () => {
             if (!isDown) return;
             e.preventDefault();
             const x = e.pageX - slider.offsetLeft;
-            const walk = (x - startX) * 3; //scroll-fast
+            const walk = (x - startX) * 3;
             slider.scrollLeft = scrollLeft - walk;
-            console.log(walk);
         });
     }, []);
 
@@ -87,7 +96,7 @@ const HomePage: React.FC = () => {
         <div className="container">
             <NavBar />
             <div className="categories-border">
-                <MdOutlineKeyboardArrowLeft id="left-arrow" />
+                <MdOutlineKeyboardArrowLeft id="left-categories-arrow" />
                 <div className="categories-container">
                     {categories.map((object: Category) => {
                         if (object.name === "All") {
@@ -112,7 +121,40 @@ const HomePage: React.FC = () => {
                         );
                     })}
                 </div>
-                <MdOutlineKeyboardArrowRight id="right-arrow" />
+                <MdOutlineKeyboardArrowRight id="right-categories-arrow" />
+            </div>
+            <div className="filters-container">
+                <div className="select-label">
+                    <span>Sorting</span>
+                    <select name="sort" id="sort-select" onChange={e => setSort(e.target.value)}>
+                        <option selected disabled hidden>
+                            None
+                        </option>
+                        <option value="price_ascending">Price: ascending</option>
+                        <option value="price_descending">Price: descending</option>
+                        <option value="name_ascending">Name: ascending</option>
+                        <option value="name_descending">Name: descending</option>
+                        <option value="oldest">Date: newest</option>
+                        <option value="oldest">Date: newest</option>
+                    </select>
+                </div>
+                <div className="size-filters">
+                    <span id="size-10" onClick={changeSize}>
+                        10
+                    </span>
+                    <span id="size-25" onClick={changeSize}>
+                        25
+                    </span>
+                    <span id="size-50" onClick={changeSize}>
+                        50
+                    </span>
+                </div>
+                <div className="pages">
+                    <MdOutlineKeyboardArrowLeft id="left-page-arrow" />
+                    1-{size}
+                    <MdOutlineKeyboardArrowRight id="right-page-arrow" />
+                    of 1234
+                </div>
             </div>
             <div className="products-container">
                 {products.map((object: Product) => {
