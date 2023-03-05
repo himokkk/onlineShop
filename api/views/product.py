@@ -16,7 +16,7 @@ class ProductListView(ListAPIView):
             return self.queryset.all()
 
         queryset = self.queryset.all()
-
+        
         size = query_params.get("size", None)
         if size:
             size = int(size)
@@ -44,7 +44,15 @@ class ProductListView(ListAPIView):
                 queryset = queryset.order_by('post_date').reverse()
             elif sort == "oldest":
                 queryset = queryset.order_by('post_date')
-        return queryset.all()[:size]
+
+        page = query_params.get("page", None)
+        if page:
+            start_index = size * (int(page) - 1)
+            end_index = start_index + size
+            queryset = queryset[start_index:end_index]
+        else:
+            queryset = queryset[:size]
+        return queryset.all()
 
 
 class ProductCreateView(CreateAPIView):
