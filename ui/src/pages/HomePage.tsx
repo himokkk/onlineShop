@@ -18,6 +18,8 @@ const HomePage: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
 
     const [size, setSize] = useState<number>(25);
+    const [productsCount, setProductsCount] = useState<number>(0);
+    const [page, setPage] = useState<number>(1);
     const [sort, setSort] = useState<string>("");
 
     useEffect(() => {
@@ -46,10 +48,32 @@ const HomePage: React.FC = () => {
         if (category) {
             url += "&category=" + category;
         }
+
+        setPage(1);
         getData({ url: url }).then(response => {
-            setProducts(response);
+            setProductsCount(response["count"]);
+            setProducts(response["results"]);
         });
     }, [category, size, sort]);
+
+    useEffect(() => {
+        if (page === 1) return;
+        let url = "/api/product/list/";
+        url += "?size=" + size;
+        if (sort) {
+            url += "&sort=" + sort;
+        }
+        if (category) {
+            url += "&category=" + category;
+        }
+
+        url += "&page=" + page;
+
+        getData({ url: url }).then(response => {
+            setProductsCount(response["count"]);
+            setProducts(response["results"]);
+        });
+    }, [page]);
 
     const changeCategory = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const div = event.currentTarget as HTMLDivElement;
@@ -61,6 +85,18 @@ const HomePage: React.FC = () => {
         const div = event.currentTarget as HTMLDivElement;
         const id = div.id.split("-")[1];
         setSize(Number(id));
+    };
+
+    const changePageLeft = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if (page > 1) {
+            setPage(page - 1);
+        }
+    };
+
+    const changePageRight = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if (page < productsCount / size) {
+            setPage(page + 1);
+        }
     };
 
     useEffect(() => {
@@ -124,7 +160,7 @@ const HomePage: React.FC = () => {
                 <MdOutlineKeyboardArrowRight id="right-categories-arrow" />
             </div>
             <div className="filters-container">
-                <div className="select-label">
+                <div className="sort-select">
                     <span>Sorting</span>
                     <select name="sort" id="sort-select" onChange={e => setSort(e.target.value)}>
                         <option selected disabled hidden>
@@ -150,10 +186,14 @@ const HomePage: React.FC = () => {
                     </span>
                 </div>
                 <div className="pages">
-                    <MdOutlineKeyboardArrowLeft id="left-page-arrow" />
-                    1-{size}
-                    <MdOutlineKeyboardArrowRight id="right-page-arrow" />
-                    of 1234
+                    <div onClick={changePageLeft}>
+                        <MdOutlineKeyboardArrowLeft id="left-page-arrow" />
+                    </div>
+                    {size * (page - 1) + 1}-{size * page}
+                    <div onClick={changePageRight}>
+                        <MdOutlineKeyboardArrowRight id="right-page-arrow" />
+                    </div>
+                    of {productsCount}
                 </div>
             </div>
             <div className="products-container">

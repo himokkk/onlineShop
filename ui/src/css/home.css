@@ -87,15 +87,15 @@
     cursor: pointer;
 }
 
-.select-label {
+.sort-select {
     position: relative;
     border-radius: 9999px;
-
     width: 9rem;
     height: 3rem;
+    cursor: pointer;
 }
 
-.select-label span {
+.sort-select span {
     position: relative;
     z-index: 10;
     top: -0.65rem;
@@ -115,6 +115,7 @@
     border-radius: 9999px;
     border: 1px solid gray;
     padding-left: 0.6rem;
+    cursor: pointer;
 }
 
 #sort-select:focus {
@@ -122,15 +123,19 @@
     outline: none;
 }
 
+.pages {
+    display: flex;
+}
+
 #left-page-arrow,
 #right-page-arrow {
     position: relative;
     top: 0.2rem;
-    font-size: 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
 }
 
 .products-container {
-    height: 77rem;
     width: 77rem;
     display: flex;
     flex-wrap: wrap;
@@ -146,6 +151,7 @@
     margin: 1rem 0 1rem 1rem;
     width: 10rem;
     height: 10rem;
+    cursor: pointer;
 }
 
 .product img {
