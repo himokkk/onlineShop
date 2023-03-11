@@ -60,7 +60,7 @@ const CategoryCreateModal = () => {
                         <span ref={errorRef}>Create a Category!</span>
                         <form ref={productForm} onSubmit={SubmitForm}>
                             <input type="text" id="name" name="name" placeholder="Name" required />
-                            <input type="file" id="svg" name="svg" accept=".svg" />
+                            <input type="file" id="svg" name="svg" accept=".svg" required />
                             <button type="submit">
                                 Create Category
                             </button>

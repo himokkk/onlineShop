@@ -61,7 +61,7 @@ const ProductCreateModal = () => {
                         <form ref={productForm} onSubmit={SubmitForm}>
                             <input type="text" id="name" name="name" placeholder="Name" required />
                             <input type="text" id="price" name="price" placeholder="Price" required />
-                            <input type="file" id="image" name="image" />
+                            <input type="file" id="image" name="image" required />
                             <select name="category" id="category">
                                 <option selected disabled hidden>
                                     None
@@ -78,6 +78,7 @@ const ProductCreateModal = () => {
                                     );       
                                 })}
                             </select>
+                            <textarea rows={10} placeholder="description" />
                             <button type="submit">
                                 Create Product
                             </button>

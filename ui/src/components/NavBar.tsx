@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import postData from "../functions/postData";
 import Cookies from "universal-cookie";
+import { Link } from "react-router-dom";
 
 import "../css/navbar.css";
 
@@ -60,9 +61,9 @@ const NavBar: React.FC = () => {
                         </div>
                     </div>
                     <div className="dropdown-active">
-                        <a href="/api/logout" className="nav-logout">
+                        <Link to="/logout" className="nav-logout">
                             Logout
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>

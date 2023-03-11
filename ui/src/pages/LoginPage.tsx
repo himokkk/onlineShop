@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Cookies from "universal-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineShop, AiOutlineMail } from "react-icons/ai";
@@ -7,12 +7,15 @@ import { BsFillKeyFill } from "react-icons/bs";
 import InputField from "../components/InputField";
 import SubmitButton from "../components/SubmitButton";
 import postData from "../functions/postData";
+import resetErrors from "../functions/resetErrors";
 
 import "../css/login.css";
 
 const LoginPage: React.FC = () => {
-    const [login, setLogin] = useState("");
-    const [password, setPassword] = useState("");
+    const formRef = useRef(null);
+    const loginFormRef = useRef(null);
+    const productForm = useRef(null);
+    
     const navigate = useNavigate();
     const cookies = new Cookies();
 
@@ -22,19 +25,23 @@ const LoginPage: React.FC = () => {
         }
     }, []);
 
-    const click = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        let data = { username: login, password: password };
-        postData({ url: "/api/login/", data: data }).then(response => {
-            if (response["token"]) {
-                cookies.set("token", response["token"], { path: "/" });
-                navigate("/");
-            }
-        });
+    const SubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if(loginFormRef.current) {
+            let form_data = new FormData(loginFormRef.current);
+            postData({ url: "/api/login/", data: form_data }).then(response => {
+                response?.json();
+                if (response["token"]) {
+                    cookies.set("token", response["token"], { path: "/" });
+                    navigate("/");
+                }
+            });
+        }
     };
 
     return (
         <div className="container">
-            <div className="content">
+            <form className="content" ref={loginFormRef} onSubmit={SubmitForm}>
                 <div className="shop-logo prevent-select">
                     <AiOutlineShop className="logo" size="100" />
                     <div className="mt-1">Shop</div>
@@ -42,12 +49,12 @@ const LoginPage: React.FC = () => {
                 <div className="input-container">
                     <InputField
                         id="username-input"
+                        name="username"
                         placeholder="Username"
                         label="Username"
-                        setFunc={setLogin}
                         icon={AiOutlineMail}
                     />
-                    <div className="hidden-text" id="UsernameError">
+                    <div className="hidden-text">
                         Username required
                     </div>
                 </div>
@@ -55,19 +62,19 @@ const LoginPage: React.FC = () => {
                 <div className="input-container">
                     <InputField
                         password={true}
+                        name="password"
                         id="password-input"
                         placeholder="Password"
                         label="Password"
-                        setFunc={setPassword}
                         icon={BsFillKeyFill}
                     />
-                    <div className="hidden-text" id="PasswordError">
+                    <div className="hidden-text">
                         Password required
                     </div>
                 </div>
 
                 <div className="login-button">
-                    <SubmitButton name="Log in!" onClick={click} />
+                    <SubmitButton name="Log in!" />
                 </div>
 
                 <div className="forgotten">
@@ -79,7 +86,7 @@ const LoginPage: React.FC = () => {
                         Sign up!
                     </Link>
                 </div>
-            </div>
+            </form>
         </div>
     );
 };

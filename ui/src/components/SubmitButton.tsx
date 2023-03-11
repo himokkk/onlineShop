@@ -4,14 +4,13 @@ import "../css/button.css";
 
 interface Props {
     name: string;
-    onClick: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
 const SubmitButton: React.FC<Props> = (props: Props) => {
     return (
-        <div className="submit-button prevent-select" onClick={props.onClick}>
+        <button className="submit-button prevent-select" type="submit">
             {props.name}
-        </div>
+        </button>
     );
 };
 

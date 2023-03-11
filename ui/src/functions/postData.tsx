@@ -3,7 +3,7 @@ import getCookie from "../functions/getCookie";
 interface Props {
     url: string;
     div?: HTMLDivElement;
-    data?: {};
+    data?: FormData;
 }
 
 let getData = async (props: Props) => {
@@ -18,13 +18,11 @@ let getData = async (props: Props) => {
     let response = await fetch(props.url, {
         method: "POST",
         headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
             "X-CSRFToken": csrftoken,
         },
-        body: JSON.stringify(props.data),
+        body: props.data,
     }).then((response) => {
-        return response.json();
+        return response;
     });
     if (props.div) {
         props.div.classList.remove("animate-spin");

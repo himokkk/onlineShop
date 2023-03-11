@@ -6,8 +6,8 @@ import "../css/input.css";
 interface Props {
     id: string;
     placeholder: string;
+    name: string;
     label: string;
-    setFunc: Function;
     icon: IconType;
     password?: boolean;
     onChange?: Function;
@@ -27,9 +27,9 @@ const InputField: React.FC<Props> = (props: Props) => {
             </div>
             <input
                 type={type}
+                name={props.name}
                 aria-label={props.label}
                 placeholder={props.placeholder}
-                onChange={e => props.setFunc(e.target.value)}
                 id={props.id}
                 spellCheck="false"
                 autoComplete="false"

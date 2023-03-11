@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, RefObject } from "react";
 import Cookies from "universal-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineShop, AiOutlineMail } from "react-icons/ai";
@@ -7,13 +7,18 @@ import { BsFillKeyFill } from "react-icons/bs";
 import InputField from "../components/InputField";
 import SubmitButton from "../components/SubmitButton";
 import postData from "../functions/postData";
+import resetErrors from "../functions/resetErrors";
 
 import "../css/login.css";
 
 const SignupPage: React.FC = () => {
-    const [login, setLogin] = useState("");
-    const [password, setPassword] = useState("");
-    const [repeatedPassword, setRepeatedPassword] = useState("");
+    const signupFormRef = useRef(null);
+    const usernameError1Ref = useRef(null);
+    const usernameError2Ref = useRef(null);
+    const passwordError1Ref = useRef(null);
+    const passwordError2Ref = useRef(null);
+    const internalErrorRef = useRef(null);
+
     const navigate = useNavigate();
     const cookies = new Cookies();
 
@@ -23,30 +28,53 @@ const SignupPage: React.FC = () => {
         }
     }, []);
 
-    const click = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if (password !== repeatedPassword) {
-            return;
-        }
-        let data = { username: login, password: password };
-        postData({ url: "/api/login/", data: data })
-            .then(response => {
-                if (response["token"]) {
-                    navigate("/");
-                } else {
-                    const div = document.getElementById("UsernameError") as HTMLDivElement;
-                    if (div) {
-                        div.classList.remove("hidden");
+    const setBlock = ((ref: RefObject<HTMLDivElement>) => {
+        const div = ref.current as HTMLDivElement;
+        div.style.display = "block";       
+    })
+
+    const SubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        
+        resetErrors([usernameError1Ref, usernameError2Ref, passwordError1Ref, passwordError2Ref, internalErrorRef]);
+        if(signupFormRef.current) {
+            let form_data = new FormData(signupFormRef.current);
+            if (!form_data.get("username")) {
+                setBlock(usernameError1Ref);
+                return;
+            }
+            if (!form_data.get("password")) {
+                setBlock(passwordError1Ref);
+                return;
+            }
+
+            if (form_data.get("password") !== form_data.get("repeat-password")) {
+                setBlock(passwordError2Ref);
+                return;
+            }
+
+            postData({ url: "/api/signup/", data: form_data })
+                .then(response => {
+                    if (response.ok) {
+                        navigate("/login");
+                        return;
                     }
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-            });
+                    throw response;
+                })
+                .catch(error => {
+                    if(error["username"]) {
+                        setBlock(usernameError2Ref);
+                        return;
+                    }
+                    console.error("Error:", error);
+                    setBlock(internalErrorRef);
+                });
+        }
     };
 
     return (
         <div className="container">
-            <div className="content">
+            <form ref={signupFormRef} onSubmit={SubmitForm} className="content">
                 <div className="shop-logo prevent-select">
                     <AiOutlineShop className="logo" size="100" />
                     <div>Shop</div>
@@ -55,44 +83,50 @@ const SignupPage: React.FC = () => {
                 <div className="input-container">
                     <InputField
                         id="username-input"
+                        name="username"
                         placeholder="Username"
                         label="Username"
-                        setFunc={setLogin}
                         icon={AiOutlineMail}
                     />
-                    <div className="hidden-text" id="UsernameError">
+                    <div ref={usernameError1Ref} className="hidden-text">
                         Username required
+                    </div>
+                    <div ref={usernameError2Ref} className="hidden-text">
+                        Username is taken
                     </div>
                 </div>
                 <div className="input-container">
                     <InputField
                         password={true}
+                        name="password"
                         id="password-input"
                         placeholder="Password"
                         label="Password"
-                        setFunc={setPassword}
                         icon={BsFillKeyFill}
                     />
-                    <div className="hidden-text" id="PasswordError">
+                    <div ref={passwordError1Ref} className="hidden-text">
                         Password required
                     </div>
                 </div>
                 <div className="input-container">
                     <InputField
                         password={true}
+                        name="repeat-password"
                         id="repeated-password-input"
                         placeholder="Repeat Password"
                         label="Repeat Password"
-                        setFunc={setRepeatedPassword}
                         icon={BsFillKeyFill}
                     />
-                    <div className="hidden-text" id="RepeatedPasswordError">
+                    <div ref={passwordError2Ref} className="hidden-text">
                         Passwords must match
+                    </div>
+                    <div ref={internalErrorRef} className="hidden-text">
+                        Internal Error
                     </div>
                 </div>
 
                 <div className="login-button">
-                    <SubmitButton name="Sign up!" onClick={click} />
+                    <SubmitButton name="Sign up!" />
                 </div>
                 <div className="login">
                     <div>Already has an account?</div>
@@ -100,7 +134,7 @@ const SignupPage: React.FC = () => {
                         Log in!
                     </Link>
                 </div>
-            </div>
+            </form>
         </div>
     );
 };
