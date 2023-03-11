@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 import NavBar from "../components/NavBar";
+import ProductCreateModal from "../components/ProductCreateModal";
 import getData from "../functions/getData";
 import Category from "../interfaces/category";
 import Product from "../interfaces/product";
@@ -141,6 +142,8 @@ const HomePage: React.FC = () => {
     return (
         <div className="container">
             <NavBar />
+            <ProductCreateModal />
+            <input type="file"></input>
             <div className="categories-border">
                 <MdOutlineKeyboardArrowLeft id="left-categories-arrow" />
                 <div className="categories-container">

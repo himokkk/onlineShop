@@ -10,11 +10,13 @@ from .category import Category
 class Product(models.Model):
     name = models.CharField(max_length=60, verbose_name=_("name"))
     price = models.FloatField(blank=True, null=True, verbose_name=_("price"))
+    description = models.TextField(default="")
     post_date = models.DateTimeField(
         default=datetime.datetime.now, verbose_name=_("post date")
     )
     image = models.ImageField(blank=True, null=True, upload_to="products")
-    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey(
+        Category, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _("Product")

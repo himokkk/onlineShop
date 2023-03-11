@@ -4,7 +4,7 @@ from django.db.models import Min
 from rest_framework.response import Response
 
 from ..models import Product, Category
-from ..serializers import ProductSerializer
+from ..serializers import ProductSerializer, ProductCreateSerializer
 
 
 class ProductListView(ListAPIView):
@@ -67,5 +67,5 @@ class ProductListView(ListAPIView):
         return Response(response_data)
 
 class ProductCreateView(CreateAPIView):
-    serializer_class = ProductSerializer
+    serializer_class = ProductCreateSerializer
     queryset = Product.objects.all()
