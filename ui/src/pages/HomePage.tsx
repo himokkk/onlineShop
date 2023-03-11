@@ -5,6 +5,7 @@ import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-i
 
 import NavBar from "../components/NavBar";
 import ProductCreateModal from "../components/ProductCreateModal";
+import CategoryCreateModal from "../components/CategoryCreateModal";
 import getData from "../functions/getData";
 import Category from "../interfaces/category";
 import Product from "../interfaces/product";
@@ -143,7 +144,7 @@ const HomePage: React.FC = () => {
         <div className="container">
             <NavBar />
             <ProductCreateModal />
-            <input type="file"></input>
+            <CategoryCreateModal />
             <div className="categories-border">
                 <MdOutlineKeyboardArrowLeft id="left-categories-arrow" />
                 <div className="categories-container">

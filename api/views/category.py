@@ -1,7 +1,7 @@
 from rest_framework.generics import CreateAPIView, ListAPIView
 
 from ..models import Category
-from ..serializers import CategorySerializer
+from ..serializers import CategorySerializer, CategoryCreateSerializer
 
 
 class CategoryListView(ListAPIView):
@@ -10,5 +10,5 @@ class CategoryListView(ListAPIView):
 
 
 class CategoryCreateView(CreateAPIView):
-    serializer_class = CategorySerializer
+    serializer_class = CategoryCreateSerializer
     queryset = Category.objects.all()

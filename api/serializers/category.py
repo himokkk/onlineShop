@@ -13,3 +13,10 @@ class CategorySerializer(serializers.ModelSerializer):
     def get_svg_url(self, obj):
         if obj.svg:
             return obj.svg.url
+
+
+class CategoryCreateSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Category
+        fields = ["id", "name", "svg"]
