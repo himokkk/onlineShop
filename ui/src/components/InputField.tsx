@@ -20,7 +20,7 @@ const InputField: React.FC<Props> = (props: Props) => {
     return (
         <div className="input-main">
             <label className="prevent-select">{props.label}</label>
-            <div>{props.icon ? <props.icon size="18" /> : <div></div>}</div>
+            {props.icon ? <props.icon size="18" /> : <div></div>}
             <input
                 type={type}
                 name={props.name}

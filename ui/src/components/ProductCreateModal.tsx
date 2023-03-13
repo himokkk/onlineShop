@@ -11,6 +11,10 @@ import SubmitButton from "./SubmitButton";
 
 import product_svg from "./product.svg";
 
+import { IoMdPricetag } from "react-icons/io";
+import { BiCategory } from "react-icons/bi";
+import { MdProductionQuantityLimits } from "react-icons/md";
+
 const ProductCreateModal = () => {
     const modalRef = useRef(null);
     const errorRef = useRef(null);
@@ -53,7 +57,7 @@ const ProductCreateModal = () => {
                     <span className="modal_close" onClick={() => closeModal(modalRef)}>
                         &times;
                     </span>
-                    <img src={product_svg} alt="product_photo" />
+                    <img src={product_svg} alt="product_photo" className="prevent-select" />
                     <span ref={errorRef}>Create a Product!</span>
                     <form ref={productForm} onSubmit={SubmitForm}>
                         <InputField
@@ -62,6 +66,7 @@ const ProductCreateModal = () => {
                             placeholder="Product Name"
                             label="Product Name"
                             required={true}
+                            icon={MdProductionQuantityLimits}
                         />
                         <InputField
                             id="product-price-input"
@@ -69,11 +74,13 @@ const ProductCreateModal = () => {
                             placeholder="Price"
                             label="Price"
                             required={true}
+                            icon={IoMdPricetag}
                         />
-                        <div id="category-select">
+                        <div id="category-select" className="prevent-select">
                             <label htmlFor="category-select" className="category-select-label">
                                 Category
                             </label>
+                            <BiCategory className="category-icon" />
                             <select name="category">
                                 <option selected disabled hidden>
                                     Select a Category

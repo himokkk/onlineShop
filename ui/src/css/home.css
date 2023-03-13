@@ -219,6 +219,7 @@
 }
 
 .modal_content form {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
@@ -253,7 +254,7 @@
 
 .image-input div {
     position: absolute;
-    top: -1.2rem;
+    top: -1rem;
     left: 1rem;
     background-color: var(--bg-white);
     border-radius: 9999px;
@@ -296,6 +297,13 @@
     padding: 0 0.3rem;
 }
 
+.category-icon {
+    position: absolute;
+    width: 1.5rem;
+    top: 1rem;
+    left: 1.1rem;
+}
+
 .textarea {
     position: relative;
 }
@@ -304,7 +312,7 @@
     position: absolute;
     font-size: 1rem;
     left: 1rem;
-    top: -0.5rem;
+    top: -0.7rem;
     background-color: var(--bg-white);
     border-radius: 9999px;
     padding: 0 0.3rem;

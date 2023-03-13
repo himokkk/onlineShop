@@ -12,9 +12,7 @@ import resetErrors from "../functions/resetErrors";
 import "../css/login.css";
 
 const LoginPage: React.FC = () => {
-    const formRef = useRef(null);
     const loginFormRef = useRef(null);
-    const productForm = useRef(null);
 
     const navigate = useNavigate();
     const cookies = new Cookies();
