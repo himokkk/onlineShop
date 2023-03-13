@@ -13,9 +13,10 @@
 }
 
 .textarea textarea {
-    padding: 1rem;
+    padding-top: 1rem;
+    padding-left: 1.5rem;
     font-size: 1rem;
-    width: 16.8rem;
+    width: 17.2rem;
     border: 1px solid black;
     resize: none;
     border-radius: 0.25rem;

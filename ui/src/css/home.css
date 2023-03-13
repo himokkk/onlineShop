@@ -199,9 +199,7 @@
 .modal_content {
     background-color: var(--bg-white);
     position: relative;
-    width: 30%;
-    height: 75%;
-    padding: 20px;
+    padding: 4rem 7rem;
     border-radius: 0.25rem;
     border: 1px solid black;
     display: flex;
