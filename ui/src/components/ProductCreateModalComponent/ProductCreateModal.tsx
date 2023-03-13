@@ -8,12 +8,16 @@ import showModal from "../../functions/showModal";
 
 import InputField from "../InputFieldComponent/InputField";
 import SubmitButton from "../SubmitButtonComponent/SubmitButton";
+import TextArea from "../TextAreaComponent/TextArea";
 
+import FileInput from "../FileInputComponent/FileInput";
+import Select from "../SelectComponent/Select";
 import product_svg from "./product.svg";
 
 import { IoMdPricetag } from "react-icons/io";
 import { BiCategory } from "react-icons/bi";
 import { MdProductionQuantityLimits } from "react-icons/md";
+
 
 import "./productmodal.css";
 
@@ -78,37 +82,9 @@ const ProductCreateModal = () => {
                             required={true}
                             icon={IoMdPricetag}
                         />
-                        <div id="category-select" className="prevent-select">
-                            <label htmlFor="category-select" className="category-select-label">
-                                Category
-                            </label>
-                            <BiCategory className="category-icon" />
-                            <select name="category">
-                                <option selected disabled hidden>
-                                    Select a Category
-                                </option>
-                                {categories.map((object: Category) => {
-                                    return (
-                                        <option
-                                            className="category prevent-select"
-                                            value={object.id}
-                                            id={"category-" + object.id}
-                                        >
-                                            {object.name}
-                                        </option>
-                                    );
-                                })}
-                            </select>
-                        </div>
-                        <div className="image-input">
-                            <div>File</div>
-                            <label htmlFor="image-input">Choose a file</label>
-                            <input type="file" id="image-input" name="image" required />
-                        </div>
-                        <div className="textarea">
-                            <label>Description</label>
-                            <textarea rows={6} placeholder="Description" />
-                        </div>
+                        <Select options={categories} name="category" id="category-select" default="Select a category" icon={BiCategory}/>
+                        <FileInput name="image" label="Image" required={true} accept=".jpg, .jpeg, .png"/>
+                        <TextArea name="description" label="Product Description" placeholder="Description" />
                         <SubmitButton name="Create Product" />
                     </form>
                 </div>

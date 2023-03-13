@@ -3,12 +3,13 @@ import React from "react";
 import "./submitbutton.css";
 
 interface Props {
+    id?: string;
     name: string;
 }
 
 const SubmitButton: React.FC<Props> = (props: Props) => {
     return (
-        <button className="submit-button prevent-select" type="submit">
+        <button id={props.id} className="submit-button prevent-select" type="submit">
             {props.name}
         </button>
     );

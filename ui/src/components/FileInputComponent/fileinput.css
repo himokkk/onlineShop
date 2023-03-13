@@ -1,0 +1,29 @@
+.file-input {
+    position: relative;
+    margin-bottom: 0.55rem;
+    text-align: center;
+}
+
+.file-input input {
+    display: none;
+}
+
+.file-input div {
+    position: absolute;
+    top: -1rem;
+    left: 1rem;
+    background-color: var(--bg-white);
+    border-radius: 9999px;
+    font-size: 1rem;
+    padding: 0 0.3rem;
+}
+
+.file-input label {
+    font-size: 1.2rem;
+    padding: 0.8rem 6rem;
+    border: 1px solid black;
+    background-color: white;
+    color: #4b5563;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}

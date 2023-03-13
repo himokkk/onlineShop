@@ -6,6 +6,7 @@ import closeModal from "../../functions/closeModal";
 import showModal from "../../functions/showModal";
 
 import InputField from "../InputFieldComponent/InputField";
+import { BiCategory } from "react-icons/bi";
 
 import "./categorymodal.css";
 
@@ -51,6 +52,7 @@ const CategoryCreateModal = () => {
                             placeholder="Category Name"
                             label="Category Name"
                             required={true}
+                            icon={BiCategory}
                         />
                         <input type="file" id="svg" name="svg" accept=".svg" required />
                         <button type="submit">Create Category</button>

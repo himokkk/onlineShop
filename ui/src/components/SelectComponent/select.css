@@ -1,0 +1,31 @@
+.select {
+    position: relative;
+}
+
+.select select {
+    width: 18.8rem;
+    color: #406382;
+    border: 1px solid black;
+    background-color: white;
+    border-radius: 0.25rem;
+    outline: none;
+    padding: 1rem;
+    padding-left: 2.5rem;
+}
+
+.select label {
+    position: absolute;
+    font-size: 1rem;
+    left: 1rem;
+    top: -0.4rem;
+    background-color: var(--bg-white);
+    border-radius: 9999px;
+    padding: 0 0.3rem;
+}
+
+.select-icon {
+    position: absolute;
+    width: 1.5rem;
+    top: 1.3rem;
+    left: 1.1rem;
+}

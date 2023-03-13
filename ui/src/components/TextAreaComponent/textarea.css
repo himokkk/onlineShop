@@ -1,0 +1,22 @@
+.textarea {
+    position: relative;
+}
+
+.textarea label {
+    position: absolute;
+    font-size: 1rem;
+    left: 1rem;
+    top: -0.7rem;
+    background-color: var(--bg-white);
+    border-radius: 9999px;
+    padding: 0 0.3rem;
+}
+
+.textarea textarea {
+    padding: 1rem;
+    font-size: 1rem;
+    width: 16.8rem;
+    border: 1px solid black;
+    resize: none;
+    border-radius: 0.25rem;
+}
