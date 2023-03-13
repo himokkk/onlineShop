@@ -141,7 +141,7 @@ const HomePage: React.FC = () => {
     }, []);
 
     return (
-        <div className="container">
+        <div className="home-container">
             <NavBar />
             <ProductCreateModal />
             <CategoryCreateModal />
