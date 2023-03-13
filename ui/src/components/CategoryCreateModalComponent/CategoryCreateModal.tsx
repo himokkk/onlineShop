@@ -6,6 +6,9 @@ import closeModal from "../../functions/closeModal";
 import showModal from "../../functions/showModal";
 
 import InputField from "../InputFieldComponent/InputField";
+import FileInput from "../FileInputComponent/FileInput";
+import SubmitButton from "../SubmitButtonComponent/SubmitButton";
+
 import { BiCategory } from "react-icons/bi";
 
 import "./categorymodal.css";
@@ -44,6 +47,7 @@ const CategoryCreateModal = () => {
                     <span className="modal_close" onClick={() => closeModal(modalRef)}>
                         &times;
                     </span>
+
                     <span ref={errorRef}>Create a Category!</span>
                     <form ref={productForm} onSubmit={SubmitForm}>
                         <InputField
@@ -54,8 +58,9 @@ const CategoryCreateModal = () => {
                             required={true}
                             icon={BiCategory}
                         />
-                        <input type="file" id="svg" name="svg" accept=".svg" required />
-                        <button type="submit">Create Category</button>
+
+                        <FileInput name="svg" label="SVG Image" required={true} accept=".svg" />
+                        <SubmitButton name="Create Category" id="category-create-button" />
                     </form>
                 </div>
             </div>
