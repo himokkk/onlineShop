@@ -12,17 +12,28 @@ const NavBar: React.FC = () => {
     const [showDropdown, setShowDropdown] = useState<boolean>(false);
 
     useEffect(() => {
-        const data = { token: cookies.get("token") };
-        postData({ url: "/api/user/current/", data }).then(response => {
-            const image_url = response["image_url"];
-            const user_id = response["user"];
-            setUserId(user_id);
-            if (image_url) {
-                setImageURL(image_url);
-            } else {
-                setImageURL("media/profile/default.png");
-            }
-        });
+        const form_data = new FormData();
+        form_data.append("token", cookies.get("token"));
+        postData({ url: "/api/user/current/", data: form_data })
+            .then(response => {
+                if (response && response.ok) {
+                    return response.json();
+                }
+                throw response;
+            })
+            .then(data => {
+                const image_url = data["image_url"];
+                const user_id = data["user"];
+                setUserId(user_id);
+                if (image_url) {
+                    setImageURL(image_url);
+                } else {
+                    setImageURL("media/profile/default.png");
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+            });
     }, []);
 
     const Click = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {

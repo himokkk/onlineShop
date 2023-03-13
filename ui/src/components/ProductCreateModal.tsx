@@ -1,8 +1,15 @@
-import React, { useState, useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import getCookie from "../functions/getCookie";
 import getData from "../functions/getData";
 import Category from "../interfaces/category";
+import closeModal from "../functions/closeModal";
+import showModal from "../functions/showModal";
+
+import InputField from "./InputField";
+import SubmitButton from "./SubmitButton";
+
+import product_svg from "./product.svg";
 
 const ProductCreateModal = () => {
     const modalRef = useRef(null);
@@ -17,54 +24,59 @@ const ProductCreateModal = () => {
         });
     }, []);
 
-
     const SubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (productForm.current) {
             let form_data = new FormData(productForm.current);
             const csrftoken = getCookie("csrftoken") as string;
-            
+
             fetch("/api/product/create/", {
                 method: "POST",
                 headers: {
                     "X-CSRFToken": csrftoken,
                 },
                 body: form_data,
-                }).then((response) => {
-                    if(response.ok) closeModal();
-                    else if (errorRef.current)  (errorRef.current as HTMLElement).innerHTML = "Error";
+            }).then(response => {
+                if (response.ok) closeModal(modalRef);
+                else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";
             });
-        }        
+        }
     };
-
-    const showModal = (() => {
-        if(modalRef.current) {
-            const modal = modalRef.current as HTMLDivElement;
-            modal.style.display = "flex";
-        }
-    });
-
-    const closeModal = (() => {
-        if(modalRef.current) {
-            const modal = modalRef.current as HTMLDivElement;
-            modal.style.display = "none";
-        }
-    });
 
     return (
         <div className="modal_main">
-            <div onClick={showModal}>&#43;</div>
+            <div onClick={() => showModal(modalRef)} className="pointer">
+                &#43;
+            </div>
             <div className="modal" ref={modalRef}>
-                    <div className="modal_content">
-                        <span className="modal_close" onClick={closeModal}>&times;</span>
-                        <span ref={errorRef}>Create a Product!</span>
-                        <form ref={productForm} onSubmit={SubmitForm}>
-                            <input type="text" id="name" name="name" placeholder="Name" required />
-                            <input type="text" id="price" name="price" placeholder="Price" required />
-                            <input type="file" id="image" name="image" required />
-                            <select name="category" id="category">
+                <div className="modal_content">
+                    <span className="modal_close" onClick={() => closeModal(modalRef)}>
+                        &times;
+                    </span>
+                    <img src={product_svg} alt="product_photo" />
+                    <span ref={errorRef}>Create a Product!</span>
+                    <form ref={productForm} onSubmit={SubmitForm}>
+                        <InputField
+                            id="product-input"
+                            name="name"
+                            placeholder="Product Name"
+                            label="Product Name"
+                            required={true}
+                        />
+                        <InputField
+                            id="product-price-input"
+                            name="price"
+                            placeholder="Price"
+                            label="Price"
+                            required={true}
+                        />
+                        <div id="category-select">
+                            <label htmlFor="category-select" className="category-select-label">
+                                Category
+                            </label>
+                            <select name="category">
                                 <option selected disabled hidden>
-                                    None
+                                    Select a Category
                                 </option>
                                 {categories.map((object: Category) => {
                                     return (
@@ -75,15 +87,22 @@ const ProductCreateModal = () => {
                                         >
                                             {object.name}
                                         </option>
-                                    );       
+                                    );
                                 })}
                             </select>
-                            <textarea rows={10} placeholder="description" />
-                            <button type="submit">
-                                Create Product
-                            </button>
-                        </form>
-                    </div>
+                        </div>
+                        <div className="image-input">
+                            <div>File</div>
+                            <label htmlFor="image-input">Choose a file</label>
+                            <input type="file" id="image-input" name="image" required />
+                        </div>
+                        <div className="textarea">
+                            <label>Description</label>
+                            <textarea rows={6} placeholder="Description" />
+                        </div>
+                        <SubmitButton name="Create Product" />
+                    </form>
+                </div>
             </div>
         </div>
     );

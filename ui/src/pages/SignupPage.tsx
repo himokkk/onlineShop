@@ -28,16 +28,16 @@ const SignupPage: React.FC = () => {
         }
     }, []);
 
-    const setBlock = ((ref: RefObject<HTMLDivElement>) => {
+    const setBlock = (ref: RefObject<HTMLDivElement>) => {
         const div = ref.current as HTMLDivElement;
-        div.style.display = "block";       
-    })
+        div.style.display = "block";
+    };
 
     const SubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        
+
         resetErrors([usernameError1Ref, usernameError2Ref, passwordError1Ref, passwordError2Ref, internalErrorRef]);
-        if(signupFormRef.current) {
+        if (signupFormRef.current) {
             let form_data = new FormData(signupFormRef.current);
             if (!form_data.get("username")) {
                 setBlock(usernameError1Ref);
@@ -55,14 +55,14 @@ const SignupPage: React.FC = () => {
 
             postData({ url: "/api/signup/", data: form_data })
                 .then(response => {
-                    if (response.ok) {
+                    if (response && response.ok) {
                         navigate("/login");
                         return;
                     }
                     throw response;
                 })
                 .catch(error => {
-                    if(error["username"]) {
+                    if (error["username"]) {
                         setBlock(usernameError2Ref);
                         return;
                     }

@@ -3,18 +3,18 @@
 }
 
 .input-main label {
-    margin-left: 2rem;
+    font-size: 1rem;
     padding: 0 0.3rem;
     position: absolute;
-    background-color: white;
-    top: -0.75rem;
-    left: -0.6rem;
+    border-radius: 9999px;
+    background-color: rgb(248 250 252);
+    top: -0.4rem;
+    left: 1rem;
 }
 
 .input-main input {
-    display: block;
     margin-top: 0.25rem;
-    width: 250px;
+    width: 16rem;
     height: 3rem;
     appearance: none;
     border-radius: 0.25rem;

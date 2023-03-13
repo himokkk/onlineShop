@@ -8,23 +8,19 @@ interface Props {
     placeholder: string;
     name: string;
     label: string;
-    icon: IconType;
+    icon?: IconType;
     password?: boolean;
     onChange?: Function;
+    required?: boolean;
 }
 
 const InputField: React.FC<Props> = (props: Props) => {
-    let type = "text";
-    if (props.password) {
-        type = "password";
-    }
+    let type = props.password ? "password" : "text";
 
     return (
         <div className="input-main">
             <label className="prevent-select">{props.label}</label>
-            <div>
-                <props.icon size="18" />
-            </div>
+            <div>{props.icon ? <props.icon size="18" /> : <div></div>}</div>
             <input
                 type={type}
                 name={props.name}
@@ -34,6 +30,7 @@ const InputField: React.FC<Props> = (props: Props) => {
                 spellCheck="false"
                 autoComplete="false"
                 className="prevent-select"
+                required={props.required}
             />
         </div>
     );

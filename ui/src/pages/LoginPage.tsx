@@ -15,7 +15,7 @@ const LoginPage: React.FC = () => {
     const formRef = useRef(null);
     const loginFormRef = useRef(null);
     const productForm = useRef(null);
-    
+
     const navigate = useNavigate();
     const cookies = new Cookies();
 
@@ -27,15 +27,24 @@ const LoginPage: React.FC = () => {
 
     const SubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if(loginFormRef.current) {
+        if (loginFormRef.current) {
             let form_data = new FormData(loginFormRef.current);
-            postData({ url: "/api/login/", data: form_data }).then(response => {
-                response?.json();
-                if (response["token"]) {
-                    cookies.set("token", response["token"], { path: "/" });
-                    navigate("/");
-                }
-            });
+            postData({ url: "/api/login/", data: form_data })
+                .then(response => {
+                    if (response && response.ok) {
+                        return response.json();
+                    }
+                    throw response;
+                })
+                .then(data => {
+                    if (data["token"]) {
+                        cookies.set("token", data["token"], { path: "/" });
+                        navigate("/");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                });
         }
     };
 
@@ -54,9 +63,7 @@ const LoginPage: React.FC = () => {
                         label="Username"
                         icon={AiOutlineMail}
                     />
-                    <div className="hidden-text">
-                        Username required
-                    </div>
+                    <div className="hidden-text">Username required</div>
                 </div>
 
                 <div className="input-container">
@@ -68,9 +75,7 @@ const LoginPage: React.FC = () => {
                         label="Password"
                         icon={BsFillKeyFill}
                     />
-                    <div className="hidden-text">
-                        Password required
-                    </div>
+                    <div className="hidden-text">Password required</div>
                 </div>
 
                 <div className="login-button">
