@@ -20,7 +20,6 @@ const ProfilePage: React.FC = () => {
     useEffect(() => {
         const form_data = new FormData();
         form_data.append("token", cookies.get("token"));
-        postData({ url: "/api/user/current/", data: form_data }).then(response => {});
 
         getData({ url: "/api/user/" + id }).then(response => {
             const image_url = response["image_url"];

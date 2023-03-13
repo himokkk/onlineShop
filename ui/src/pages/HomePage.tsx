@@ -9,6 +9,7 @@ import CategoryCreateModal from "../components/CategoryCreateModalComponent/Cate
 import getData from "../functions/getData";
 import Category from "../interfaces/category";
 import Product from "../interfaces/product";
+import ProductsList from "../components/ProductsListComponent/ProductsList";
 
 import "../css/home.css";
 
@@ -18,6 +19,7 @@ const HomePage: React.FC = () => {
     const [categories, setCategories] = useState<Category[]>([]);
     const [category, setCategory] = useState<number>();
     const [products, setProducts] = useState<Product[]>([]);
+    const [url, setURL] = useState<string>("");
 
     const [size, setSize] = useState<number>(25);
     const [productsCount, setProductsCount] = useState<number>(0);
@@ -62,14 +64,10 @@ const HomePage: React.FC = () => {
         }
 
         setPage(1);
-        getData({ url: url }).then(response => {
-            setProductsCount(response["count"]);
-            setProducts(response["results"]);
-        });
+        setURL(url);
     }, [category, size, sort, minPrice, maxPrice]);
 
     useEffect(() => {
-        if (page === 1) return;
         let url = "/api/product/list/";
         url += "?size=" + size;
         if (sort) {
@@ -78,13 +76,8 @@ const HomePage: React.FC = () => {
         if (category) {
             url += "&category=" + category;
         }
-
         url += "&page=" + page;
-
-        getData({ url: url }).then(response => {
-            setProductsCount(response["count"]);
-            setProducts(response["results"]);
-        });
+        setURL(url);
     }, [page]);
 
     const changeCategory = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -224,27 +217,7 @@ const HomePage: React.FC = () => {
                     of {productsCount}
                 </div>
             </div>
-            <div className="products-container">
-                {products.map((object: Product) => {
-                    let name = object.name;
-                    if (name.length > 18) {
-                        name = name.slice(0, 15);
-                        name += "...";
-                    }
-                    let price = String(object.price);
-                    if (price.length > 18) {
-                        price = price.slice(0, 10);
-                        price += "...";
-                    }
-                    return (
-                        <div className="product" id={"product-" + object.id}>
-                            <img src={object.image_url} className="prevent-select" />
-                            <span>{name}</span>
-                            <div>Price: {price} zł</div>
-                        </div>
-                    );
-                })}
-            </div>
+            <ProductsList url={url} setCount={setProductsCount} />
         </div>
     );
 };

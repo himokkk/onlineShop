@@ -13,7 +13,7 @@ class ProductListView(ListAPIView):
 
     def get(self, request):
         queryset = self.queryset.all()
-        items_count = queryset.count()        
+        items_count = queryset.count()      
         
         query_params = self.request.query_params
         if query_params:
@@ -30,7 +30,12 @@ class ProductListView(ListAPIView):
                     return None
                 queryset = queryset.filter(category=category_instance[0])
                 items_count = queryset.count()
+
+            owner = query_params.get("owner", None)
+            if owner:
+                queryset = queryset.filter(owner=int(owner))
                 
+
             min_price = query_params.get("min-price", None)
             max_price = query_params.get("max-price", None)
             if min_price and max_price:
@@ -38,9 +43,7 @@ class ProductListView(ListAPIView):
             elif min_price:
                 queryset = queryset.all().filter(price__gte = int(min_price))
             elif max_price:
-                queryset = queryset.all().filter(price__lte = int(max_price))
-
-            
+                queryset = queryset.all().filter(price__lte = int(max_price)) 
 
             sort = query_params.get("sort", None)
             if sort:
