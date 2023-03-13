@@ -1,6 +1,6 @@
 import React from "react";
 
-import "../css/button.css";
+import "./submitbutton.css";
 
 interface Props {
     name: string;

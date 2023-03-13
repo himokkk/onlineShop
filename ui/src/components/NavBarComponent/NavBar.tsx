@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import postData from "../functions/postData";
+import postData from "../../functions/postData";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
 
-import "../css/navbar.css";
+import "./navbar.css";
 
 const NavBar: React.FC = () => {
     const cookies = new Cookies();

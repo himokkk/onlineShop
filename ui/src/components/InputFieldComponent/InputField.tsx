@@ -1,7 +1,7 @@
 import React from "react";
 import { IconType } from "react-icons";
 
-import "../css/input.css";
+import "./input.css";
 
 interface Props {
     id: string;

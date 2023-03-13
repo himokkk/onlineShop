@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import getCookie from "../functions/getCookie";
-import getData from "../functions/getData";
-import Category from "../interfaces/category";
+import getCookie from "../../functions/getCookie";
 
-import closeModal from "../functions/closeModal";
-import showModal from "../functions/showModal";
+import closeModal from "../../functions/closeModal";
+import showModal from "../../functions/showModal";
 
-import InputField from "./InputField";
+import InputField from "../InputFieldComponent/InputField";
+
+import "./categorymodal.css";
 
 const CategoryCreateModal = () => {
     const modalRef = useRef(null);

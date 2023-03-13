@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineShop, AiOutlineMail } from "react-icons/ai";
 import { BsFillKeyFill } from "react-icons/bs";
 
-import InputField from "../components/InputField";
-import SubmitButton from "../components/SubmitButton";
+import InputField from "../components/InputFieldComponent/InputField";
+import SubmitButton from "../components/SubmitButtonComponent/SubmitButton";
 import postData from "../functions/postData";
 import resetErrors from "../functions/resetErrors";
 

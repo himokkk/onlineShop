@@ -1,19 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import getCookie from "../functions/getCookie";
-import getData from "../functions/getData";
-import Category from "../interfaces/category";
-import closeModal from "../functions/closeModal";
-import showModal from "../functions/showModal";
+import getCookie from "../../functions/getCookie";
+import getData from "../../functions/getData";
+import Category from "../../interfaces/category";
+import closeModal from "../../functions/closeModal";
+import showModal from "../../functions/showModal";
 
-import InputField from "./InputField";
-import SubmitButton from "./SubmitButton";
+import InputField from "../InputFieldComponent/InputField";
+import SubmitButton from "../SubmitButtonComponent/SubmitButton";
 
 import product_svg from "./product.svg";
 
 import { IoMdPricetag } from "react-icons/io";
 import { BiCategory } from "react-icons/bi";
 import { MdProductionQuantityLimits } from "react-icons/md";
+
+import "./productmodal.css";
 
 const ProductCreateModal = () => {
     const modalRef = useRef(null);

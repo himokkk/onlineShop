@@ -4,7 +4,7 @@ import Cookies from "universal-cookie";
 
 import getData from "../functions/getData";
 import postData from "../functions/postData";
-import NavBar from "../components/NavBar";
+import NavBar from "../components/NavBarComponent/NavBar";
 
 import "../css/profile.css";
 

@@ -3,9 +3,9 @@ import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 
-import NavBar from "../components/NavBar";
-import ProductCreateModal from "../components/ProductCreateModal";
-import CategoryCreateModal from "../components/CategoryCreateModal";
+import NavBar from "../components/NavBarComponent/NavBar";
+import ProductCreateModal from "../components/ProductCreateModalComponent/ProductCreateModal";
+import CategoryCreateModal from "../components/CategoryCreateModalComponent/CategoryCreateModal";
 import getData from "../functions/getData";
 import Category from "../interfaces/category";
 import Product from "../interfaces/product";
