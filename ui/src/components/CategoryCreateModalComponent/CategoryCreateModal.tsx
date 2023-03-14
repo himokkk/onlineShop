@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 
 import getCookie from "../../functions/getCookie";
-
-import closeModal from "../../functions/closeModal";
-import showModal from "../../functions/showModal";
 
 import InputField from "../InputFieldComponent/InputField";
 import FileInput from "../FileInputComponent/FileInput";
@@ -18,6 +15,8 @@ const CategoryCreateModal = () => {
     const errorRef = useRef(null);
     const productForm = useRef(null);
 
+    const [isVisible, setIsVisible] = useState<boolean>(false);
+
     const SubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (productForm.current) {
@@ -31,7 +30,7 @@ const CategoryCreateModal = () => {
                 },
                 body: form_data,
             }).then(response => {
-                if (response.ok) closeModal(modalRef);
+                if (response.ok) setIsVisible(false);
                 else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";
             });
         }
@@ -39,31 +38,35 @@ const CategoryCreateModal = () => {
 
     return (
         <div className="modal_main">
-            <div onClick={() => showModal(modalRef)} className="pointer">
+            <div onClick={() => setIsVisible(true)} className="pointer">
                 &#43;
             </div>
-            <div className="modal" ref={modalRef}>
-                <div className="modal_content">
-                    <span className="modal_close" onClick={() => closeModal(modalRef)}>
-                        &times;
-                    </span>
+            {isVisible ? (
+                <div className="modal" ref={modalRef}>
+                    <div className="modal_content">
+                        <span className="modal_close" onClick={() => setIsVisible(false)}>
+                            &times;
+                        </span>
 
-                    <span ref={errorRef}>Create a Category!</span>
-                    <form ref={productForm} onSubmit={SubmitForm}>
-                        <InputField
-                            id="name-input"
-                            name="name"
-                            placeholder="Category Name"
-                            label="Category Name"
-                            required={true}
-                            icon={BiCategory}
-                        />
+                        <span ref={errorRef}>Create a Category!</span>
+                        <form ref={productForm} onSubmit={SubmitForm}>
+                            <InputField
+                                id="name-input"
+                                name="name"
+                                placeholder="Category Name"
+                                label="Category Name"
+                                required={true}
+                                icon={BiCategory}
+                            />
 
-                        <FileInput name="svg" label="SVG Image" required={true} accept=".svg" />
-                        <SubmitButton name="Create Category" id="category-create-button" />
-                    </form>
+                            <FileInput name="svg" label="SVG Image" required={true} accept=".svg" />
+                            <SubmitButton name="Create Category" id="category-create-button" />
+                        </form>
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <div></div>
+            )}
         </div>
     );
 };

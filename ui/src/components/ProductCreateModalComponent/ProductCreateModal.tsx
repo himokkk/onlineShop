@@ -18,7 +18,6 @@ import { IoMdPricetag } from "react-icons/io";
 import { BiCategory } from "react-icons/bi";
 import { MdProductionQuantityLimits } from "react-icons/md";
 
-
 import "./productmodal.css";
 
 const ProductCreateModal = () => {
@@ -27,6 +26,7 @@ const ProductCreateModal = () => {
     const productForm = useRef(null);
 
     const [categories, setCategories] = useState<Category[]>([]);
+    const [isVisible, setIsVisible] = useState<boolean>(false);
 
     useEffect(() => {
         getData({ url: "/api/category/list/" }).then(response => {
@@ -47,7 +47,7 @@ const ProductCreateModal = () => {
                 },
                 body: form_data,
             }).then(response => {
-                if (response.ok) closeModal(modalRef);
+                if (response.ok) setIsVisible(false);
                 else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";
             });
         }
@@ -55,40 +55,50 @@ const ProductCreateModal = () => {
 
     return (
         <div className="modal_main">
-            <div onClick={() => showModal(modalRef)} className="pointer">
+            <div onClick={() => setIsVisible(true)} className="pointer">
                 &#43;
             </div>
-            <div className="modal" ref={modalRef}>
-                <div className="modal_content">
-                    <span className="modal_close" onClick={() => closeModal(modalRef)}>
-                        &times;
-                    </span>
-                    <img src={product_svg} alt="product_photo" className="prevent-select" />
-                    <span ref={errorRef}>Create a Product!</span>
-                    <form ref={productForm} onSubmit={SubmitForm}>
-                        <InputField
-                            id="product-input"
-                            name="name"
-                            placeholder="Product Name"
-                            label="Product Name"
-                            required={true}
-                            icon={MdProductionQuantityLimits}
-                        />
-                        <InputField
-                            id="product-price-input"
-                            name="price"
-                            placeholder="Price"
-                            label="Price"
-                            required={true}
-                            icon={IoMdPricetag}
-                        />
-                        <Select options={categories} name="category" id="category-select" default="Select a category" icon={BiCategory}/>
-                        <FileInput name="image" label="Image" required={true} accept=".jpg, .jpeg, .png"/>
-                        <TextArea name="description" label="Product Description" placeholder="Description" />
-                        <SubmitButton name="Create Product" />
-                    </form>
+            {isVisible ? (
+                <div className="modal" ref={modalRef}>
+                    <div className="modal_content">
+                        <span className="modal_close" onClick={() => setIsVisible(false)}>
+                            &times;
+                        </span>
+                        <img src={product_svg} alt="product_photo" className="prevent-select" />
+                        <span ref={errorRef}>Create a Product!</span>
+                        <form ref={productForm} onSubmit={SubmitForm}>
+                            <InputField
+                                id="product-input"
+                                name="name"
+                                placeholder="Product Name"
+                                label="Product Name"
+                                required={true}
+                                icon={MdProductionQuantityLimits}
+                            />
+                            <InputField
+                                id="product-price-input"
+                                name="price"
+                                placeholder="Price"
+                                label="Price"
+                                required={true}
+                                icon={IoMdPricetag}
+                            />
+                            <Select
+                                options={categories}
+                                name="category"
+                                id="category-select"
+                                default="Select a category"
+                                icon={BiCategory}
+                            />
+                            <FileInput name="image" label="Image" required={true} accept=".jpg, .jpeg, .png" />
+                            <TextArea name="description" label="Product Description" placeholder="Description" />
+                            <SubmitButton name="Create Product" />
+                        </form>
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <div></div>
+            )}
         </div>
     );
 };
