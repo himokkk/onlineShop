@@ -18,15 +18,6 @@ const HomePage: React.FC = () => {
     const navigate = useNavigate();
     const [categories, setCategories] = useState<Category[]>([]);
     const [category, setCategory] = useState<number>();
-    const [products, setProducts] = useState<Product[]>([]);
-    const [url, setURL] = useState<string>("");
-
-    const [size, setSize] = useState<number>(25);
-    const [productsCount, setProductsCount] = useState<number>(0);
-    const [minPrice, setMinPrice] = useState<number>(0);
-    const [maxPrice, setMaxPrice] = useState<number>(0);
-    const [page, setPage] = useState<number>(1);
-    const [sort, setSort] = useState<string>("");
 
     useEffect(() => {
         if (!cookies.get("token")) {
@@ -45,63 +36,10 @@ const HomePage: React.FC = () => {
         });
     }, []);
 
-    useEffect(() => {
-        let url = "/api/product/list/";
-        url += "?size=" + size;
-        if (sort) {
-            url += "&sort=" + sort;
-        }
-        if (category) {
-            url += "&category=" + category;
-        }
-
-        if (minPrice) {
-            url += "&min-price=" + minPrice;
-        }
-
-        if (maxPrice) {
-            url += "&max-price=" + maxPrice;
-        }
-
-        setPage(1);
-        setURL(url);
-    }, [category, size, sort, minPrice, maxPrice]);
-
-    useEffect(() => {
-        let url = "/api/product/list/";
-        url += "?size=" + size;
-        if (sort) {
-            url += "&sort=" + sort;
-        }
-        if (category) {
-            url += "&category=" + category;
-        }
-        url += "&page=" + page;
-        setURL(url);
-    }, [page]);
-
     const changeCategory = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const div = event.currentTarget as HTMLDivElement;
         const id = div.id.split("-")[1];
         setCategory(Number(id));
-    };
-
-    const changeSize = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        const div = event.currentTarget as HTMLDivElement;
-        const id = div.id.split("-")[1];
-        setSize(Number(id));
-    };
-
-    const changePageLeft = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if (page > 1) {
-            setPage(page - 1);
-        }
-    };
-
-    const changePageRight = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if (page < productsCount / size) {
-            setPage(page + 1);
-        }
     };
 
     useEffect(() => {
@@ -166,58 +104,8 @@ const HomePage: React.FC = () => {
                 </div>
                 <MdOutlineKeyboardArrowRight id="right-categories-arrow" />
             </div>
-            <div className="filters-container">
-                <div className="sort-select">
-                    <span>Sorting</span>
-                    <select name="sort" id="sort-select" onChange={e => setSort(e.target.value)}>
-                        <option selected disabled hidden>
-                            None
-                        </option>
-                        <option value="price_ascending">Price: ascending</option>
-                        <option value="price_descending">Price: descending</option>
-                        <option value="name_ascending">Name: ascending</option>
-                        <option value="name_descending">Name: descending</option>
-                        <option value="oldest">Date: newest</option>
-                        <option value="oldest">Date: newest</option>
-                    </select>
-                </div>
-                <div className="size-filters">
-                    <span id="size-10" onClick={changeSize}>
-                        10
-                    </span>
-                    <span id="size-25" onClick={changeSize}>
-                        25
-                    </span>
-                    <span id="size-50" onClick={changeSize}>
-                        50
-                    </span>
-                    <label>Price </label>
-                    <input
-                        type="text"
-                        className="price-range"
-                        placeholder="from"
-                        onChange={e => setMinPrice(Number(e.target.value))}
-                    />
-                    -
-                    <input
-                        type="text"
-                        className="price-range"
-                        placeholder="to"
-                        onChange={e => setMaxPrice(Number(e.target.value))}
-                    />
-                </div>
-                <div className="pages">
-                    <div onClick={changePageLeft}>
-                        <MdOutlineKeyboardArrowLeft id="left-page-arrow" />
-                    </div>
-                    {size * (page - 1) + 1}-{size * page}
-                    <div onClick={changePageRight}>
-                        <MdOutlineKeyboardArrowRight id="right-page-arrow" />
-                    </div>
-                    of {productsCount}
-                </div>
-            </div>
-            <ProductsList url={url} setCount={setProductsCount} />
+
+            <ProductsList category={category} />
         </div>
     );
 };
