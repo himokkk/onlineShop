@@ -5,6 +5,12 @@
     align-items: center;
     justify-content: space-around;
     background-color: #f97316;
+    font-weight: 600;
+}
+
+.nav-button {
+    color: black;
+    cursor: pointer;
 }
 
 #home-button {
@@ -18,9 +24,6 @@
     gap: 2.5rem;
 }
 
-.dropdown {
-}
-
 .dropdown img {
     position: relative;
     float: right;
@@ -32,16 +35,11 @@
 #dropdown {
     position: absolute;
     z-index: 10;
-    margin-top: 8rem;
+    margin-top: 9.5rem;
     background-color: #ffffff;
-    width: 11rem;
     border-radius: 0.25rem;
-    border-top-width: 1px;
-    border-color: #f3f4f6;
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.06);
-
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
+    padding: 0.25rem 5rem 0.25rem 1rem;
     color: #374151;
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -53,23 +51,16 @@
 
 .nav-profile {
     display: block;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    margin: 0.8rem;
 }
 
 .nav-settings {
     display: block;
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    margin: 0.8rem;
 }
 
 .nav-logout {
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
+    padding: 0.2rem;
     color: #374151;
     font-size: 0.875rem;
     line-height: 1.25rem;

@@ -3,8 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 import getCookie from "../../functions/getCookie";
 import getData from "../../functions/getData";
 import Category from "../../interfaces/category";
-import closeModal from "../../functions/closeModal";
-import showModal from "../../functions/showModal";
 
 import InputField from "../InputFieldComponent/InputField";
 import SubmitButton from "../SubmitButtonComponent/SubmitButton";

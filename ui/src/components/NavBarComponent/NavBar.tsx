@@ -52,10 +52,12 @@ const NavBar: React.FC = () => {
 
     return (
         <div className="navbar-container">
-            <div id="home-button">Home</div>
+            <Link to="/" id="home-button" className="nav-button">
+                Home
+            </Link>
             <div className="left-nav">
-                <div className="search-button">Search</div>
-                <div className="dropdown" id="dropdown-image" onClick={() => setShowDropdown(!showDropdown)}>
+                <div className="search-button nav-button">Search</div>
+                <div className="dropdown nav-button" id="dropdown-image" onClick={() => setShowDropdown(!showDropdown)}>
                     <img src={imageURL} className="dropdown-active" />
                 </div>
                 <div id="dropdown" className={showDropdown ? "dropdown-active" : "hidden"}>
