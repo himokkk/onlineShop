@@ -10,7 +10,9 @@
 }
 
 .categories-container {
+    position: relative;
     width: 77rem;
+    min-height: 6rem;
     display: flex;
     overflow-y: hidden;
     cursor: pointer;

@@ -6,6 +6,7 @@ import getData from "../../functions/getData";
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 import "./productlist.css";
+import LoadingSpinner from "../LoadingSpinnerComponent/LoadingSpinner";
 
 interface Props {
     category?: number;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const ProductList = (props: Props) => {
+    const [spinnerActive, setSpinnerActive] = useState<boolean>(true);
     const [productsCount, setProductsCount] = useState<number>(0);
     const [products, setProducts] = useState<Product[]>([]);
     const [url, setURL] = useState<string>("");
@@ -60,6 +62,7 @@ const ProductList = (props: Props) => {
 
     useEffect(() => {
         getData({ url: url }).then(response => {
+            setSpinnerActive(false);
             setProductsCount(response["count"]);
             setProducts(response["results"]);
         });
@@ -84,7 +87,7 @@ const ProductList = (props: Props) => {
     };
 
     return (
-        <div>
+        <div className="products-container">
             <div className="filters-container">
                 <div className="sort-select">
                     <span>Sorting</span>
@@ -137,6 +140,7 @@ const ProductList = (props: Props) => {
                 </div>
             </div>
             <div className="products-container">
+                <LoadingSpinner active={spinnerActive} />
                 {products.map((object: Product) => {
                     let name = object.name;
                     if (name.length > 18) {

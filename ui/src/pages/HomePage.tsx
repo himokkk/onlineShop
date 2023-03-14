@@ -8,16 +8,17 @@ import ProductCreateModal from "../components/ProductCreateModalComponent/Produc
 import CategoryCreateModal from "../components/CategoryCreateModalComponent/CategoryCreateModal";
 import getData from "../functions/getData";
 import Category from "../interfaces/category";
-import Product from "../interfaces/product";
 import ProductsList from "../components/ProductsListComponent/ProductsList";
 
 import "../css/home.css";
+import LoadingSpinner from "../components/LoadingSpinnerComponent/LoadingSpinner";
 
 const HomePage: React.FC = () => {
     const cookies = new Cookies();
     const navigate = useNavigate();
     const [categories, setCategories] = useState<Category[]>([]);
     const [category, setCategory] = useState<number>();
+    const [spinnerActive, setSpinnerActive] = useState<boolean>(true);
 
     useEffect(() => {
         if (!cookies.get("token")) {
@@ -34,6 +35,7 @@ const HomePage: React.FC = () => {
 
         getData({ url: "/api/category/list/" }).then(response => {
             setCategories(() => [allCategory, ...response]);
+            setSpinnerActive(false);
         });
     }, []);
 
@@ -80,6 +82,7 @@ const HomePage: React.FC = () => {
             <div className="categories-border">
                 <MdOutlineKeyboardArrowLeft id="left-categories-arrow" />
                 <div className="categories-container">
+                    <LoadingSpinner active={spinnerActive} />
                     {categories.map((object: Category) => {
                         if (object.name === "All") {
                             return (

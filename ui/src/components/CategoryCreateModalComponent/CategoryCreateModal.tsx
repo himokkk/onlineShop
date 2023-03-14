@@ -58,7 +58,6 @@ const CategoryCreateModal = () => {
                                 required={true}
                                 icon={BiCategory}
                             />
-
                             <FileInput name="svg" label="SVG Image" required={true} accept=".svg" />
                             <SubmitButton name="Create Category" id="category-create-button" />
                         </form>
