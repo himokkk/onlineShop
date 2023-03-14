@@ -9,6 +9,7 @@ import "./productlist.css";
 
 interface Props {
     category?: number;
+    owner?: number;
 }
 
 const ProductList = (props: Props) => {
@@ -22,14 +23,18 @@ const ProductList = (props: Props) => {
     const [minPrice, setMinPrice] = useState<number>(0);
     const [maxPrice, setMaxPrice] = useState<number>(0);
 
-    useEffect(() => {
+    const combineQueryParams = () => {
         let url = "/api/product/list/";
+
         url += "?size=" + size;
         if (sort) {
             url += "&sort=" + sort;
         }
         if (props.category) {
             url += "&category=" + props.category;
+        }
+        if (props.owner) {
+            url += "&owner=" + props.owner;
         }
         if (minPrice) {
             url += "&min-price=" + minPrice;
@@ -38,22 +43,19 @@ const ProductList = (props: Props) => {
         if (maxPrice) {
             url += "&max-price=" + maxPrice;
         }
+        if (page) {
+            url += "&page=" + page;
+        }
+        return url;
+    };
 
+    useEffect(() => {
         setPage(1);
-        setURL(url);
+        setURL(combineQueryParams);
     }, [props.category, size, sort, minPrice, maxPrice]);
 
     useEffect(() => {
-        let url = "/api/product/list/";
-        url += "?size=" + size;
-        if (sort) {
-            url += "&sort=" + sort;
-        }
-        if (props.category) {
-            url += "&category=" + props.category;
-        }
-        url += "&page=" + page;
-        setURL(url);
+        setURL(combineQueryParams());
     }, [page]);
 
     useEffect(() => {

@@ -12,8 +12,7 @@ class ProductListView(ListAPIView):
     queryset = Product.objects.all()
 
     def get(self, request):
-        queryset = self.queryset.all()
-        items_count = queryset.count()      
+        queryset = self.queryset.all()      
         
         query_params = self.request.query_params
         if query_params:
@@ -29,7 +28,6 @@ class ProductListView(ListAPIView):
                 if not category_instance:
                     return None
                 queryset = queryset.filter(category=category_instance[0])
-                items_count = queryset.count()
 
             owner = query_params.get("owner", None)
             if owner:
@@ -60,11 +58,13 @@ class ProductListView(ListAPIView):
                 elif sort == "oldest":
                     queryset = queryset.order_by('post_date')
 
-            page = query_params.get("page", 1)
-            start_index = size * (int(page) - 1)
-            end_index = start_index + size
-            queryset = queryset[start_index:end_index]
             
+        items_count = queryset.count()
+        page = query_params.get("page", 1)
+        start_index = size * (int(page) - 1)
+        end_index = start_index + size
+        queryset = queryset[start_index:end_index]
+        
         serializer = self.get_serializer(queryset, many=True)
         response_data = {'count': items_count, 'results': serializer.data}
         return Response(response_data)

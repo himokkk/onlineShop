@@ -31,6 +31,7 @@ const HomePage: React.FC = () => {
             name: "All",
             svg_url: "0",
         };
+
         getData({ url: "/api/category/list/" }).then(response => {
             setCategories(() => [allCategory, ...response]);
         });
