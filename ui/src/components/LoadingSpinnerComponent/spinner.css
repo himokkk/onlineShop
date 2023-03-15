@@ -2,7 +2,6 @@
     min-width: 100%;
     min-height: 100%;
     position: absolute;
-    z-index: 50;
     display: flex;
     justify-content: center;
     align-items: center;

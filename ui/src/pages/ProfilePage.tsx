@@ -4,7 +4,6 @@ import Cookies from "universal-cookie";
 
 import getData from "../functions/getData";
 import NavBar from "../components/NavBarComponent/NavBar";
-
 import ProductList from "../components/ProductsListComponent/ProductsList";
 
 import "../css/profile.css";
@@ -18,9 +17,6 @@ const ProfilePage: React.FC = () => {
     const [imageURL, setImageURL] = useState<string>("");
 
     useEffect(() => {
-        const form_data = new FormData();
-        form_data.append("token", cookies.get("token"));
-
         getData({ url: "/api/user/" + id }).then(response => {
             const image_url = response["image_url"];
             const username = response["username"];

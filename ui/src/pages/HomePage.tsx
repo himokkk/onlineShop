@@ -82,7 +82,7 @@ const HomePage: React.FC = () => {
             <div className="categories-border">
                 <MdOutlineKeyboardArrowLeft id="left-categories-arrow" />
                 <div className="categories-container">
-                    <LoadingSpinner active={spinnerActive} />
+                    {spinnerActive ? (<LoadingSpinner/>) : (<div></div>)}
                     {categories.map((object: Category) => {
                         if (object.name === "All") {
                             return (

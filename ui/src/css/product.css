@@ -1,0 +1,42 @@
+
+.product-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.product-picture {
+    width: 25rem;
+    height: 25rem;
+}
+
+.product-main {
+    margin-left: 3rem;
+}
+
+.product-main span {
+    font-size: 2rem;
+    line-height: 2.25rem;
+}
+
+.profile-main hr {
+    background-color: #10b981;
+    width: 24rem;
+    height: 0.25rem;
+}
+
+.product-description {
+    margin-top: 1rem;
+}
+
+#buy-button {
+    margin-top: 1rem;
+}

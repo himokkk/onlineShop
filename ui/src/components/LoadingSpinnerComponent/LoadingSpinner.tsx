@@ -2,23 +2,15 @@ import React from "react";
 
 import "./spinner.css";
 
-interface Props {
-    active?: boolean;
-}
-
-const LoadingSpinner = (props: Props) => {
+const LoadingSpinner = () => {
     return (
         <div className="lds">
-            {props.active ? (
-                <div className="lds-ring">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            ) : (
+            <div className="lds-ring">
                 <div></div>
-            )}
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
     );
 };

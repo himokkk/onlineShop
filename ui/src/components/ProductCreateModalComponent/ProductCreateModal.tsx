@@ -81,6 +81,14 @@ const ProductCreateModal = () => {
                                 required={true}
                                 icon={IoMdPricetag}
                             />
+                            <InputField
+                                id="product-shipping-price-input"
+                                name="shipping_price"
+                                placeholder="Shipping Price"
+                                label="Shipping Price"
+                                required={true}
+                                icon={IoMdPricetag}
+                            />
                             <Select
                                 options={categories}
                                 name="category"

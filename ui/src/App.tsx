@@ -5,6 +5,7 @@ import SignupPage from "./pages/SignupPage";
 import LogoutPage from "./pages/LogoutPage";
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
+import ProductPage from "./pages/ProductPage";
 
 const App: React.FC = () => {
     //console.log = console.warn = console.error = () => {};
@@ -17,6 +18,7 @@ const App: React.FC = () => {
             <Route path="/" element={<HomePage />}></Route>
             <Route path="/password/reset" element={<LoginPage />}></Route>
             <Route path="/profile/:id" element={<ProfilePage />}></Route>
+            <Route path="/product/:id" element={<ProductPage />}></Route>
         </Routes>
     );
 };

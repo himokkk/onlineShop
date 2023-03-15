@@ -1,4 +1,4 @@
-from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from django.db.models.query import QuerySet
 from django.db.models import Min
 from rest_framework.response import Response
@@ -12,8 +12,8 @@ class ProductListView(ListAPIView):
     queryset = Product.objects.all()
 
     def get(self, request):
-        queryset = self.queryset.all()      
-        
+        queryset = self.queryset.all()
+
         query_params = self.request.query_params
         if query_params:
             size = query_params.get("size", None)
@@ -32,16 +32,16 @@ class ProductListView(ListAPIView):
             owner = query_params.get("owner", None)
             if owner:
                 queryset = queryset.filter(owner=int(owner))
-                
 
             min_price = query_params.get("min-price", None)
             max_price = query_params.get("max-price", None)
             if min_price and max_price:
-                queryset = queryset.all().filter(price__lte = int(max_price), price__gte = int(min_price))
+                queryset = queryset.all().filter(
+                    price__lte=int(max_price), price__gte=int(min_price))
             elif min_price:
-                queryset = queryset.all().filter(price__gte = int(min_price))
+                queryset = queryset.all().filter(price__gte=int(min_price))
             elif max_price:
-                queryset = queryset.all().filter(price__lte = int(max_price)) 
+                queryset = queryset.all().filter(price__lte=int(max_price))
 
             sort = query_params.get("sort", None)
             if sort:
@@ -58,17 +58,22 @@ class ProductListView(ListAPIView):
                 elif sort == "oldest":
                     queryset = queryset.order_by('post_date')
 
-            
         items_count = queryset.count()
         page = query_params.get("page", 1)
         start_index = size * (int(page) - 1)
         end_index = start_index + size
         queryset = queryset[start_index:end_index]
-        
+
         serializer = self.get_serializer(queryset, many=True)
         response_data = {'count': items_count, 'results': serializer.data}
         return Response(response_data)
 
+
 class ProductCreateView(CreateAPIView):
     serializer_class = ProductCreateSerializer
+    queryset = Product.objects.all()
+
+
+class ProductRetrieveView(RetrieveAPIView):
+    serializer_class = ProductSerializer
     queryset = Product.objects.all()

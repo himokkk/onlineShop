@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import Product from "../../interfaces/product";
 import getData from "../../functions/getData";
@@ -140,7 +141,7 @@ const ProductList = (props: Props) => {
                 </div>
             </div>
             <div className="products-container">
-                <LoadingSpinner active={spinnerActive} />
+                {spinnerActive ? (<LoadingSpinner/>) : (<div></div>)}
                 {products.map((object: Product) => {
                     let name = object.name;
                     if (name.length > 18) {
@@ -153,11 +154,11 @@ const ProductList = (props: Props) => {
                         price += "...";
                     }
                     return (
-                        <div className="product" id={"product-" + object.id}>
+                        <Link to={"/product/" + object.id} className="product">
                             <img src={object.image_url} className="prevent-select" />
                             <span>{name}</span>
                             <div>Price: {price} zł</div>
-                        </div>
+                        </Link>
                     );
                 })}
             </div>

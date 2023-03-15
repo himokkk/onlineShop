@@ -11,6 +11,8 @@ from .category import Category
 class Product(models.Model):
     name = models.CharField(max_length=60, verbose_name=_("name"))
     price = models.FloatField(blank=True, null=True, verbose_name=_("price"))
+    shipping_price = models.FloatField(
+        default="0", verbose_name=_("shipping price"))
     description = models.TextField(default="", blank=True)
     owner = models.ForeignKey(
         UserProfile, null=True, on_delete=models.CASCADE)

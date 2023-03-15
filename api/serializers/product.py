@@ -10,8 +10,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ["id", "name", "price", "post_date",
-                  "category", "category_name", "owner", "owner_name", "image_url"]
+        fields = ["id", "name", "price", "shipping_price", "post_date",
+                  "category", "category_name", "owner", "owner_name", "image_url", "description"]
 
     def get_category_name(self, obj):
         if obj.category:
@@ -29,4 +29,5 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ["id", "name", "price", "category", "description", "image"]
+        fields = ["id", "name", "price", "shipping_price",
+                  "category", "description", "image"]

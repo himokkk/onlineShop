@@ -95,6 +95,10 @@
     cursor: pointer;
 }
 
+.product * {
+    cursor: pointer !important;
+}
+
 .product img {
     width: 5rem;
     height: 5rem;
