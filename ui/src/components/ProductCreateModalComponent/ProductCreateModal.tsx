@@ -93,6 +93,7 @@ const ProductCreateModal = () => {
                                 options={categories}
                                 name="category"
                                 id="category-select"
+                                label="Category"
                                 default="Select a category"
                                 icon={BiCategory}
                             />

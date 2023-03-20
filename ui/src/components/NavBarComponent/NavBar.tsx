@@ -3,6 +3,9 @@ import postData from "../../functions/postData";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
 
+import CategoryCreateModal from "../CategoryCreateModalComponent/CategoryCreateModal";
+import ProductCreateModal from "../ProductCreateModalComponent/ProductCreateModal";
+
 import "./navbar.css";
 
 const NavBar: React.FC = () => {
@@ -56,6 +59,8 @@ const NavBar: React.FC = () => {
                 Home
             </Link>
             <div className="left-nav">
+                <ProductCreateModal />
+                <CategoryCreateModal />
                 <div className="search-button nav-button">Search</div>
                 <div className="dropdown nav-button" id="dropdown-image" onClick={() => setShowDropdown(!showDropdown)}>
                     <img src={imageURL} className="dropdown-active" />

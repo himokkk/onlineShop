@@ -1,5 +1,6 @@
 .select {
     position: relative;
+    font-size: 2rem;
 }
 
 .select select {

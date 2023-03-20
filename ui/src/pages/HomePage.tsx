@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 import NavBar from "../components/NavBarComponent/NavBar";
-import ProductCreateModal from "../components/ProductCreateModalComponent/ProductCreateModal";
-import CategoryCreateModal from "../components/CategoryCreateModalComponent/CategoryCreateModal";
 import getData from "../functions/getData";
 import Category from "../interfaces/category";
 import ProductsList from "../components/ProductsListComponent/ProductsList";
@@ -77,8 +75,7 @@ const HomePage: React.FC = () => {
     return (
         <div className="home-container">
             <NavBar />
-            <ProductCreateModal />
-            <CategoryCreateModal />
+            
             <div className="categories-border">
                 <MdOutlineKeyboardArrowLeft id="left-categories-arrow" />
                 <div className="categories-container">

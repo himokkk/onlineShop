@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { BiSortZA } from "react-icons/bi";
 
 import Product from "../../interfaces/product";
 import getData from "../../functions/getData";
-
-import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import selectInterface from "../SelectComponent/selectInterface";
+import LoadingSpinner from "../LoadingSpinnerComponent/LoadingSpinner";
+import Select from "../SelectComponent/Select";
 
 import "./productlist.css";
-import LoadingSpinner from "../LoadingSpinnerComponent/LoadingSpinner";
 
 interface Props {
     category?: number;
@@ -25,6 +27,15 @@ const ProductList = (props: Props) => {
     const [sort, setSort] = useState<string>("");
     const [minPrice, setMinPrice] = useState<number>(0);
     const [maxPrice, setMaxPrice] = useState<number>(0);
+
+    const sortSelect: selectInterface[] = [
+        { id: "price_ascending", name: "Price: ascending" },
+        { id: "price_descending", name: "Price: descending" },
+        { id: "name_ascending", name: "Name: ascending" },
+        { id: "name_descending", name: "Name: descending" },
+        { id: "oldest", name: "Date: newest" },
+        { id: "newest", name: "Date: newest" },
+    ];
 
     const combineQueryParams = () => {
         let url = "/api/product/list/";
@@ -90,20 +101,7 @@ const ProductList = (props: Props) => {
     return (
         <div className="products-container">
             <div className="filters-container">
-                <div className="sort-select">
-                    <span>Sorting</span>
-                    <select name="sort" id="sort-select" onChange={e => setSort(e.target.value)}>
-                        <option selected disabled hidden>
-                            None
-                        </option>
-                        <option value="price_ascending">Price: ascending</option>
-                        <option value="price_descending">Price: descending</option>
-                        <option value="name_ascending">Name: ascending</option>
-                        <option value="name_descending">Name: descending</option>
-                        <option value="oldest">Date: newest</option>
-                        <option value="oldest">Date: newest</option>
-                    </select>
-                </div>
+                <Select default="Choose sorting" label="Sorting" options={sortSelect} name="sort" icon={BiSortZA} />
                 <div className="size-filters">
                     <span id="size-10" onClick={changeSize}>
                         10
@@ -141,7 +139,7 @@ const ProductList = (props: Props) => {
                 </div>
             </div>
             <div className="products-container">
-                {spinnerActive ? (<LoadingSpinner/>) : (<div></div>)}
+                {spinnerActive ? <LoadingSpinner /> : <div></div>}
                 {products.map((object: Product) => {
                     let name = object.name;
                     if (name.length > 18) {
