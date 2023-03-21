@@ -6,6 +6,7 @@ import getData from "../functions/getData";
 import NavBar from "../components/NavBarComponent/NavBar";
 import ProductList from "../components/ProductsListComponent/ProductsList";
 
+import "../css/basic.css";
 import "../css/profile.css";
 
 const ProfilePage: React.FC = () => {

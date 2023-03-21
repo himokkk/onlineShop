@@ -1,6 +1,6 @@
 .navbar-container {
     width: 100vw;
-    height: 4rem;
+    height: 4.5rem;
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -14,8 +14,11 @@
 }
 
 #home-button {
-    padding: 1.25rem;
     margin-left: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .left-nav {

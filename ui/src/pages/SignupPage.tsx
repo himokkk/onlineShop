@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, RefObject } from "react";
-import Cookies from "universal-cookie";
+import React, { useEffect, useRef, RefObject } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Cookies from "universal-cookie";
 import { AiOutlineShop, AiOutlineMail } from "react-icons/ai";
 import { BsFillKeyFill } from "react-icons/bs";
 
@@ -8,7 +8,9 @@ import InputField from "../components/InputFieldComponent/InputField";
 import SubmitButton from "../components/SubmitButtonComponent/SubmitButton";
 import postData from "../functions/postData";
 import resetErrors from "../functions/resetErrors";
+import setBlock from "../functions/setBlock";
 
+import "../css/basic.css";
 import "../css/login.css";
 
 const SignupPage: React.FC = () => {
@@ -27,11 +29,6 @@ const SignupPage: React.FC = () => {
             navigate("/");
         }
     }, []);
-
-    const setBlock = (ref: RefObject<HTMLDivElement>) => {
-        const div = ref.current as HTMLDivElement;
-        div.style.display = "block";
-    };
 
     const SubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();

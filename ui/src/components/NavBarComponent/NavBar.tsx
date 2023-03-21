@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import postData from "../../functions/postData";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
+import { AiOutlineShop } from "react-icons/ai";
 
 import CategoryCreateModal from "../CategoryCreateModalComponent/CategoryCreateModal";
 import ProductCreateModal from "../ProductCreateModalComponent/ProductCreateModal";
@@ -56,7 +57,8 @@ const NavBar: React.FC = () => {
     return (
         <div className="navbar-container">
             <Link to="/" id="home-button" className="nav-button">
-                Home
+                <AiOutlineShop  className="logo" size="50"/>
+                <div>Home</div>
             </Link>
             <div className="left-nav">
                 <ProductCreateModal />

@@ -8,6 +8,7 @@ import getData from "../functions/getData";
 import Category from "../interfaces/category";
 import ProductsList from "../components/ProductsListComponent/ProductsList";
 
+import "../css/basic.css";
 import "../css/home.css";
 import LoadingSpinner from "../components/LoadingSpinnerComponent/LoadingSpinner";
 

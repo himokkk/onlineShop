@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import Cookies from "universal-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineShop, AiOutlineMail } from "react-icons/ai";
@@ -7,12 +7,18 @@ import { BsFillKeyFill } from "react-icons/bs";
 import InputField from "../components/InputFieldComponent/InputField";
 import SubmitButton from "../components/SubmitButtonComponent/SubmitButton";
 import postData from "../functions/postData";
+import setBlock from "../functions/setBlock";
 import resetErrors from "../functions/resetErrors";
 
+import "../css/basic.css";
 import "../css/login.css";
 
 const LoginPage: React.FC = () => {
     const loginFormRef = useRef(null);
+    const usernameErrorRef = useRef(null);
+    const passwordErrorRef = useRef(null);
+    const incorrectErrorRef = useRef(null);
+    const internalErrorRef = useRef(null);
 
     const navigate = useNavigate();
     const cookies = new Cookies();
@@ -25,8 +31,18 @@ const LoginPage: React.FC = () => {
 
     const SubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        resetErrors([usernameErrorRef, passwordErrorRef, incorrectErrorRef]);
         if (loginFormRef.current) {
             let form_data = new FormData(loginFormRef.current);
+            if (!form_data.get("username")) {
+                setBlock(usernameErrorRef);
+                return;
+            }
+            if (!form_data.get("password")) {
+                setBlock(passwordErrorRef);
+                return;
+            }
             postData({ url: "/api/login/", data: form_data })
                 .then(response => {
                     if (response && response.ok) {
@@ -39,8 +55,12 @@ const LoginPage: React.FC = () => {
                         cookies.set("token", data["token"], { path: "/" });
                         navigate("/");
                     }
+                    else if(data["error"]) {
+                        setBlock(incorrectErrorRef);
+                    }
                 })
                 .catch(error => {
+                    setBlock(internalErrorRef);
                     console.error("Error fetching data:", error);
                 });
         }
@@ -61,7 +81,7 @@ const LoginPage: React.FC = () => {
                         label="Username"
                         icon={AiOutlineMail}
                     />
-                    <div className="hidden-text">Username required</div>
+                    <div className="hidden-text" ref={usernameErrorRef}>Username required</div>
                 </div>
 
                 <div className="input-container">
@@ -73,7 +93,9 @@ const LoginPage: React.FC = () => {
                         label="Password"
                         icon={BsFillKeyFill}
                     />
-                    <div className="hidden-text">Password required</div>
+                    <div className="hidden-text" ref={passwordErrorRef}>Password required</div>
+                    <div className="hidden-text" ref={internalErrorRef}>Internal Error</div>
+                    <div className="hidden-text" ref={incorrectErrorRef}>Incorrect username or password</div>
                 </div>
 
                 <div className="login-button">

@@ -1,5 +1,5 @@
 .submit-button {
-    background-color: #fb923c;
+    background-color: var(--orange);
     font-weight: 500;
     border-radius: 0.375rem;
     height: 3rem;
@@ -12,5 +12,5 @@
 }
 
 .submit-button:hover {
-    background-color: #f97316;
+    background-color: var(--orange);
 }

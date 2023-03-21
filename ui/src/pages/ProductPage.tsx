@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-import { useParams } from "react-router-dom";
 import getData from "../functions/getData";
 import NavBar from "../components/NavBarComponent/NavBar";
+import SubmitButton from "../components/SubmitButtonComponent/SubmitButton";
 
 import Cookies from "universal-cookie";
 
+import "../css/basic.css";
 import "../css/product.css";
-import SubmitButton from "../components/SubmitButtonComponent/SubmitButton";
 
 const ProductPage = (() => {
     const { id } = useParams();

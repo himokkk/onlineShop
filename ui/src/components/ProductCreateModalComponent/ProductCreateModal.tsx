@@ -53,8 +53,8 @@ const ProductCreateModal = () => {
 
     return (
         <div className="modal_main">
-            <div onClick={() => setIsVisible(true)} className="pointer">
-                &#43;
+            <div onClick={() => setIsVisible(true)} className="add_product_button">
+                Add Product
             </div>
             {isVisible ? (
                 <div className="modal" ref={modalRef}>
