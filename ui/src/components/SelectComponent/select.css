@@ -1,10 +1,11 @@
 .select {
     position: relative;
     font-size: 2rem;
+    width: 18.95rem;
 }
 
 .select select {
-    width: 18.95rem;
+    width: 100%;
     color: #406382;
     border: 1px solid black;
     background-color: white;
@@ -29,4 +30,7 @@
     width: 1.5rem;
     top: 1.3rem;
     left: 1.1rem;
+}
+
+.select option {
 }

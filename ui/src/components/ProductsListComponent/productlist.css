@@ -1,5 +1,7 @@
-.products-container {
+.products-main {
     position: relative;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
 }
 
 .filters-container {
@@ -10,17 +12,29 @@
     width: 77rem;
 }
 
-.filters-container span {
-    padding: 0 1rem;
-    color: blue;
-    cursor: pointer;
+#sorting-select {
+    width: 14rem;
 }
 
-.price-range {
-    border-radius: 9999px;
+.price-sort {
+    gap: 0.5rem;
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.price-sort span {
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: black;
+    margin: 0;
+    padding: 0;
+}
+
+#min_price,
+#max_price {
     width: 5rem;
-    height: 2rem;
-    padding-left: 1rem;
+    padding-left: 1.5rem;
 }
 
 .pages {
@@ -36,37 +50,80 @@
 }
 
 .products-container {
+    position: relative;
     width: 77rem;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     margin-top: 2rem;
     margin-bottom: 3rem;
 }
 
 .product {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 1rem 0 1rem 1rem;
-    width: 10rem;
-    height: 10rem;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 77rem;
     cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 1rem;
 }
 
-.product * {
-    cursor: pointer !important;
+.product:hover {
+    background-color: #eceff1;
+}
+
+.size-filters {
+    position: relative;
+    border: 1px solid black;
+    padding: 0.85rem 0;
+    border-radius: 0.25rem;
+}
+
+.size-filters span {
+    padding: 0.25rem 0.25rem;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 0 5px #6b7280;
+}
+
+.size-filters label {
+    position: absolute;
+    top: -0.75rem;
+    left: 1.9rem;
+    background-color: rgb(248 250 252);
+    z-index: 50;
+    padding: 0 0.3rem;
+    border-radius: 9999px;
 }
 
 .product img {
-    width: 5rem;
-    height: 5rem;
+    width: 10rem;
+    height: 10rem;
 }
+
 .product span {
-    margin-top: 0.25rem;
     text-align: center;
 }
-.product div {
-    font-size: 0.9rem;
+
+.product * {
+    color: black;
+}
+
+.product > div:first-child {
+    border-right: 1px solid #ddd;
+    grid-column: span 3;
+    display: flex;
+    margin: 1rem 0;
+    margin-left: 0.5rem;
+}
+
+.product > div:first-child div {
+    margin: 0.1rem 0.5rem;
+}
+
+.product > div:last-child {
+    grid-column: span 1;
+    margin: 1rem 0;
+    margin-left: 0.5rem;
+}
+
+.product-name {
+    font-size: 1.2rem;
 }

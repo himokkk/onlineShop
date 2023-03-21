@@ -10,6 +10,7 @@ interface Props {
     name: string;
     default: string;
     options: SelectInterface[];
+    setFunction?: Function;
     icon?: IconType;
 }
 
@@ -18,13 +19,18 @@ const Select = (props: Props) => {
         <div id={props.id} className="select prevent-select">
             <label htmlFor="select">{props.label}</label>
             {props.icon ? <props.icon className="select-icon" size="18" /> : <div></div>}
-            <select name={props.name}>
+            <select
+                name={props.name}
+                onChange={e => {
+                    if (props.setFunction) props.setFunction(e.target.value);
+                }}
+            >
                 <option selected disabled hidden>
                     {props.default}
                 </option>
                 {props.options.map((object: SelectInterface) => {
                     return (
-                        <option className="object prevent-select" value={object.id}>
+                        <option className="select-option prevent-select" value={object.id}>
                             {object.name}
                         </option>
                     );

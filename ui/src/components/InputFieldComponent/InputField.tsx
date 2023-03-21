@@ -4,9 +4,9 @@ import { IconType } from "react-icons";
 import "./input.css";
 
 interface Props {
-    id: string;
+    id?: string;
     placeholder: string;
-    name: string;
+    name?: string;
     label: string;
     icon?: IconType;
     password?: boolean;
@@ -31,6 +31,9 @@ const InputField: React.FC<Props> = (props: Props) => {
                 autoComplete="false"
                 className="prevent-select"
                 required={props.required}
+                onChange={e => {
+                    if (props.onChange) props.onChange(e.target.value);
+                }}
             />
         </div>
     );

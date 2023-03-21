@@ -8,6 +8,7 @@ import getData from "../../functions/getData";
 import selectInterface from "../SelectComponent/selectInterface";
 import LoadingSpinner from "../LoadingSpinnerComponent/LoadingSpinner";
 import Select from "../SelectComponent/Select";
+import InputField from "../InputFieldComponent/InputField";
 
 import "./productlist.css";
 
@@ -99,10 +100,25 @@ const ProductList = (props: Props) => {
     };
 
     return (
-        <div className="products-container">
+        <div className="products-main">
             <div className="filters-container">
-                <Select default="Choose sorting" label="Sorting" options={sortSelect} name="sort" icon={BiSortZA} />
+                <Select
+                    id="sorting-select"
+                    default="Choose sorting"
+                    setFunction={setSort}
+                    label="Sorting"
+                    options={sortSelect}
+                    name="sort"
+                    icon={BiSortZA}
+                />
+                <div className="price-sort">
+                    <InputField id="min_price" placeholder="min price" label="Min Price" onChange={setMinPrice} />
+                    <span>-</span>
+                    <InputField id="max_price" placeholder="max price" label="Max Price" onChange={setMaxPrice} />
+                </div>
                 <div className="size-filters">
+                    {/* #TODOWYRÓWNAĆ */}
+                    <label>Page Size</label>
                     <span id="size-10" onClick={changeSize}>
                         10
                     </span>
@@ -112,20 +128,6 @@ const ProductList = (props: Props) => {
                     <span id="size-50" onClick={changeSize}>
                         50
                     </span>
-                    <label>Price </label>
-                    <input
-                        type="text"
-                        className="price-range"
-                        placeholder="from"
-                        onChange={e => setMinPrice(Number(e.target.value))}
-                    />
-                    -
-                    <input
-                        type="text"
-                        className="price-range"
-                        placeholder="to"
-                        onChange={e => setMaxPrice(Number(e.target.value))}
-                    />
                 </div>
                 <div className="pages">
                     <div onClick={changePageLeft}>
@@ -141,21 +143,28 @@ const ProductList = (props: Props) => {
             <div className="products-container">
                 {spinnerActive ? <LoadingSpinner /> : <div></div>}
                 {products.map((object: Product) => {
-                    let name = object.name;
-                    if (name.length > 18) {
-                        name = name.slice(0, 15);
-                        name += "...";
-                    }
                     let price = String(object.price);
-                    if (price.length > 18) {
-                        price = price.slice(0, 10);
-                        price += "...";
+                    if (price.length > 8) {
+                        price = price.slice(0, 8);
+                    }
+                    let shipping_price = String(object.shipping_price);
+                    if (shipping_price.length > 8) {
+                        shipping_price = shipping_price.slice(0, 8);
                     }
                     return (
                         <Link to={"/product/" + object.id} className="product">
-                            <img src={object.image_url} className="prevent-select" />
-                            <span>{name}</span>
-                            <div>Price: {price} zł</div>
+                            <div>
+                                <img src={object.image_url} className="prevent-select" />
+                                <div>
+                                    <div className="product-name">{object.name}</div>
+                                    <div>{object.description}</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div>Price: {price} zł</div>
+                                <div>Shipping price: {shipping_price} zł</div>
+                                <div>Total price: {Number(price) + Number(shipping_price)} zł</div>
+                            </div>
                         </Link>
                     );
                 })}

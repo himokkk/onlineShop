@@ -75,11 +75,10 @@ const HomePage: React.FC = () => {
     return (
         <div className="home-container">
             <NavBar />
-            
             <div className="categories-border">
                 <MdOutlineKeyboardArrowLeft id="left-categories-arrow" />
                 <div className="categories-container">
-                    {spinnerActive ? (<LoadingSpinner/>) : (<div></div>)}
+                    {spinnerActive ? <LoadingSpinner /> : <div></div>}
                     {categories.map((object: Category) => {
                         if (object.name === "All") {
                             return (
