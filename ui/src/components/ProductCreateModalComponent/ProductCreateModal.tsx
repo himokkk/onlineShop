@@ -58,7 +58,7 @@ const ProductCreateModal = () => {
             </div>
             {isVisible ? (
                 <div className="modal" ref={modalRef}>
-                    <div className="modal_content">
+                    <div className="modal_content prevent-select">
                         <span className="modal_close" onClick={() => setIsVisible(false)}>
                             &times;
                         </span>

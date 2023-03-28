@@ -7,6 +7,7 @@ import NavBar from "../components/NavBarComponent/NavBar";
 import getData from "../functions/getData";
 import Category from "../interfaces/category";
 import ProductsList from "../components/ProductsListComponent/ProductsList";
+import postData from "../functions/postData";
 
 import "../css/basic.css";
 import "../css/home.css";
@@ -23,6 +24,14 @@ const HomePage: React.FC = () => {
         if (!cookies.get("token")) {
             navigate("/login");
         }
+
+        const form_data = new FormData();
+        form_data.append("content", "review123");
+        form_data.append("grade", "4");
+        form_data.append("product", "5");
+        postData({ url: "/api/review/create/", data: form_data }).then(response => {
+
+        });
     }, []);
 
     useEffect(() => {

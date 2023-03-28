@@ -1,6 +1,4 @@
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
-from django.db.models.query import QuerySet
-from django.db.models import Min
 from rest_framework.response import Response
 
 from ..models import Product, Category
