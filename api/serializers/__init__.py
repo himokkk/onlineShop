@@ -3,6 +3,7 @@ from .product import ProductSerializer, ProductCreateSerializer
 from .user import UserSerializer
 from .user_profile import UserProfileSerializer
 from .review import ReviewSerializer, ReviewCreateSerializer
+from .order import OrderSerializer
 
 __all__ = [
     "CategorySerializer",
@@ -12,5 +13,6 @@ __all__ = [
     "UserProfileSerializer",
     "UserSerializer",
     "ReviewSerializer",
-    "ReviewCreateSerializer"
+    "ReviewCreateSerializer",
+    "OrderSerializer"
 ]

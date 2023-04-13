@@ -13,7 +13,10 @@ from .views import (
     admin_logout_view,
     LoggedUserView,
     ReviewListView,
-    ReviewCreateView
+    ReviewCreateView,
+    OrderListView,
+    OrderCreateView,
+    OrderStatusView
 )
 
 urlpatterns = [
@@ -29,5 +32,8 @@ urlpatterns = [
     path("category/list/", CategoryListView.as_view()),
     path("category/create/", CategoryCreateView.as_view()),
     path("review/list/", ReviewListView.as_view()),
-    path("review/create/", ReviewCreateView.as_view())
+    path("review/create/", ReviewCreateView.as_view()),
+    path("order/list/", OrderListView.as_view()),
+    path("order/create/", OrderCreateView.as_view()),
+    path("order/status/<pk>", OrderStatusView.as_view())
 ]

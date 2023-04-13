@@ -25,13 +25,11 @@ const HomePage: React.FC = () => {
             navigate("/login");
         }
 
-        const form_data = new FormData();
-        form_data.append("content", "review123");
-        form_data.append("grade", "4");
-        form_data.append("product", "5");
-        postData({ url: "/api/review/create/", data: form_data }).then(response => {
-
-        });
+        // const form_data = new FormData();
+        // form_data.append("content", "review123");
+        // form_data.append("grade", "4");
+        // form_data.append("product", "5");
+        // postData({ url: "/api/review/create/", data: form_data }).then(response => {});
     }, []);
 
     useEffect(() => {
