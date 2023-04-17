@@ -8,6 +8,7 @@ class UserProfile(models.Model):
     image = models.ImageField(blank=True, null=True, upload_to="profile")
     description = models.TextField(default="")
     birth = models.DateField(blank=True, null=True)
+    cart = models.ManyToManyField("Product", blank=True, null=True)
 
     def __str__(self) -> str:
         return str(self.user)

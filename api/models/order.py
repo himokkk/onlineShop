@@ -1,10 +1,9 @@
 from django.contrib import admin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.core.exceptions import ValidationError
 
-from .user import UserProfile
-from .product import Product
+from . import UserProfile
+from . import Product
 
 
 class Order(models.Model):

@@ -16,7 +16,8 @@ from .views import (
     ReviewCreateView,
     OrderListView,
     OrderCreateView,
-    OrderStatusView
+    OrderStatusView,
+    CartAddView
 )
 
 urlpatterns = [
@@ -24,8 +25,9 @@ urlpatterns = [
     path("logout/", admin_logout_view),
     path("signup/", RegisterView.as_view()),
     path("user/<pk>", UserView.as_view()),
-    path("user/list", UserListView.as_view()),
+    path("user/list/", UserListView.as_view()),
     path("user/current/", LoggedUserView.as_view()),
+    path("cart/add/", CartAddView.as_view()),
     path("product/list/", ProductListView.as_view()),
     path("product/create/", ProductCreateView.as_view()),
     path("product/<pk>", ProductRetrieveView.as_view()),
