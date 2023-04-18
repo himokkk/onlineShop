@@ -1,4 +1,4 @@
-from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -20,18 +20,20 @@ class OrderCreateView(CreateAPIView):
     queryset = Order.objects.all()
 
     def create(self, request, *args, **kwargs):
+        data = request.data.dict()
         token = request.data.get("token", None)
-
-        request_data = request.data.copy()
         user = Token.objects.get(key=token).user
         user_profile = UserProfile.objects.get(user=user)
-        request_data["owner"] = user_profile
-        request_data["items"] = [instance.id for instance in user_profile.cart.all()]
-        user_profile.cart.clear()
-        serializer = self.get_serializer(data=request_data)
+        data["owner"] = user_profile
+
+        items = request.data.getlist("items[]")
+        data["items"] = items
+        #user_profile.cart.clear()
+        serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
+
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
@@ -65,8 +67,14 @@ class OrderStatusView(UpdateAPIView):
         except:
             return Response({"message": "User Token incorrect"}, status=status.HTTP_401_UNAUTHORIZED)
 
-        serializer = self.get_serializer(instance=self.get_object(), data=request_data, partial=True)
+        serializer = self.get_serializer(
+            instance=self.get_object(), data=request_data, partial=True)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
 
         return Response(serializer.data)
+
+
+class OrderRetrieveView(RetrieveAPIView):
+    serializer_class = OrderSerializer
+    queryset = Order.objects.all()

@@ -1,34 +1,30 @@
+import { SetStateAction } from "react";
 import getCookie from "../functions/getCookie";
 
 interface Props {
     url: string;
     div?: HTMLDivElement;
     data?: FormData;
+    setActiveSpinner?: Function;
 }
 
-let getData = async (props: Props) => {
-    if (props.div) {
-        props.div.classList.remove("hidden");
-        props.div.classList.add("animate-spin");
-    }
+let postData = async (props: Props) => {
     if (props.url.includes("null")) {
         return;
     }
+
     const csrftoken = getCookie("csrftoken") as string;
     let response = await fetch(props.url, {
         method: "POST",
         headers: {
-            "X-CSRFToken": csrftoken,
+            "X-CSRFToken": csrftoken
         },
         body: props.data,
     }).then((response) => {
         return response;
     });
-    if (props.div) {
-        props.div.classList.remove("animate-spin");
-        props.div.classList.add("hidden");
-    }
+    if(props.setActiveSpinner) props.setActiveSpinner(false);
     return response;
 };
 
-export default getData;
+export default postData;

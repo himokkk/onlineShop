@@ -17,7 +17,9 @@ from .views import (
     OrderListView,
     OrderCreateView,
     OrderStatusView,
-    CartAddView
+    OrderRetrieveView,
+    CartAddView,
+    CartRemoveView
 )
 
 urlpatterns = [
@@ -28,6 +30,7 @@ urlpatterns = [
     path("user/list/", UserListView.as_view()),
     path("user/current/", LoggedUserView.as_view()),
     path("cart/add/", CartAddView.as_view()),
+    path("cart/remove/", CartRemoveView.as_view()),
     path("product/list/", ProductListView.as_view()),
     path("product/create/", ProductCreateView.as_view()),
     path("product/<pk>", ProductRetrieveView.as_view()),
@@ -36,6 +39,7 @@ urlpatterns = [
     path("review/list/", ReviewListView.as_view()),
     path("review/create/", ReviewCreateView.as_view()),
     path("order/list/", OrderListView.as_view()),
+    path("order/<pk>", OrderRetrieveView.as_view()),
     path("order/create/", OrderCreateView.as_view()),
     path("order/status/<pk>", OrderStatusView.as_view())
 ]

@@ -1,0 +1,146 @@
+:root {
+    --gray: #ddd;
+}
+
+.product {
+    position: relative;
+}
+
+.product-1 {
+    display: flex;
+}
+
+.product-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    width: 50rem;
+    margin-bottom: 1rem;
+}
+
+.product-2 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    width: 30rem;
+    margin-bottom: 1rem;
+}
+
+.product-0 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+    width: 20rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.product-4 img {
+    width: 10rem;
+    height: 10rem;
+}
+
+.product-2 img {
+    width: 10rem;
+    height: 10rem;
+}
+
+.product-1 img {
+    width: 5rem;
+    height: 5rem;
+}
+
+.product-0 img {
+    width: 5rem;
+    height: 5rem;
+}
+
+.product span {
+    text-align: center;
+}
+
+.product * {
+    color: black;
+}
+
+.product > div:first-child {
+
+}
+
+.product-4 > div:first-child {
+    border-right: 1px solid #ddd;
+    grid-column: span 3;
+    display: flex;
+    margin: 1rem 0;
+    margin-left: 0.5rem;
+}
+
+.product-2 > div:first-child {
+    border-right: 1px solid #ddd;
+    grid-column: span 3;
+    display: flex;
+    margin: 1rem 0;
+    margin-left: 0.5rem;
+}
+
+.product-4 > div:first-child div {
+    margin: 0.1rem 0.5rem;
+}
+
+.product-2 > div:first-child div {
+    margin: 0.1rem 0.5rem;
+}
+
+.product > div:last-child {
+    grid-column: span 1;
+}
+
+.product-4 > div:last-child {
+    margin: 1rem 0;
+    margin-left: 0.5rem;
+}
+
+.product-2 > div:last-child {
+    margin: 1rem 0;
+    margin-left: 0.5rem;
+}
+
+.product-4 .product-name {
+    font-size: 1.2rem;
+}
+
+.product-2 .product-name {
+    font-size: 1.2rem;
+}
+
+.product-0 .product-name {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.right-container {
+    position: relative;
+}
+
+.product-0 .right-container {
+    position: absolute;
+    bottom: 0.75rem;
+    right: 0.75rem;
+}
+
+.product-4 .people_bought {
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0.5rem;
+}
+
+.product-2 .people_bought {
+    text-align: right;
+    position: absolute;
+    bottom: 0;
+    right: 0.5rem;
+}

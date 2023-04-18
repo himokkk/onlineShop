@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import getData from "../functions/getData";
+import postData from "../functions/postData";
 import NavBar from "../components/NavBarComponent/NavBar";
 import SubmitButton from "../components/SubmitButtonComponent/SubmitButton";
 
@@ -44,6 +45,28 @@ const ProductPage = (() => {
             }
         });
     }, []);
+
+    const AddToCart = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        const token = cookies.get("token");
+        const form_data = new FormData();
+        form_data.append("token", token);
+        // @ts-ignore
+        form_data.append("item", id as number);
+        
+        postData({ url: "/api/cart/add/", data: form_data })
+            .then(response => {
+                if (response && response.ok) {
+                    return response.json();
+                }
+                throw response;
+            })
+            .then(data => {
+                
+            })
+            .catch(error => {
+                console.error("Error fetching data:", error);
+            });
+    };
     
     return(
         <div>
@@ -58,9 +81,7 @@ const ProductPage = (() => {
                             Price: {price} zł <br/>
                             Shiping cost: {shippingPrice} zł<br/>
                             Total: {price + shippingPrice} zł <br/>
-                            <Link to={"/buy/" + id}>
-                                <SubmitButton name="buy" id="buy-button"/>
-                            </Link>
+                            <SubmitButton name="Add to cart" id="buy-button" onClick={AddToCart} />
                         </div>
                     </div>
                     <div className="profile-description">

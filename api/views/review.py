@@ -13,9 +13,3 @@ class ReviewListView(ListAPIView):
 class ReviewCreateView(CreateAPIView):
     serializer_class = ReviewCreateSerializer
     queryset = Review.objects.all()
-
-    def post(self, request):
-        result = super().post(request)
-        print(request.data.get("token", None))
-        print(request.user)
-        return result

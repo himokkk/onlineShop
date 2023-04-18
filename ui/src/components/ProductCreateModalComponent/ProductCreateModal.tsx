@@ -7,8 +7,8 @@ import Category from "../../interfaces/category";
 import InputField from "../InputFieldComponent/InputField";
 import SubmitButton from "../SubmitButtonComponent/SubmitButton";
 import TextArea from "../TextAreaComponent/TextArea";
-
 import FileInput from "../FileInputComponent/FileInput";
+
 import Select from "../SelectComponent/Select";
 import product_svg from "./product.svg";
 

@@ -1,6 +1,7 @@
 :root {
     --gray: #ddd;
 }
+
 .products-main {
     position: relative;
     margin-top: 1.5rem;
@@ -78,15 +79,6 @@
     margin-bottom: 3rem;
 }
 
-.product {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    width: 50rem;
-    cursor: pointer;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 1rem;
-}
-
 .product:hover {
     background-color: #eceff1;
 }
@@ -109,53 +101,7 @@
     top: -0.75rem;
     left: 1.3rem;
     background-color: rgb(248 250 252);
-    z-index: 50;
+    z-index: 10;
     padding: 0 0.3rem;
     border-radius: 9999px;
-}
-
-.product img {
-    width: 10rem;
-    height: 10rem;
-}
-
-.product span {
-    text-align: center;
-}
-
-.product * {
-    color: black;
-}
-
-.product > div:first-child {
-    border-right: 1px solid #ddd;
-    grid-column: span 3;
-    display: flex;
-    margin: 1rem 0;
-    margin-left: 0.5rem;
-}
-
-.product > div:first-child div {
-    margin: 0.1rem 0.5rem;
-}
-
-.product > div:last-child {
-    grid-column: span 1;
-    margin: 1rem 0;
-    margin-left: 0.5rem;
-}
-
-.product-name {
-    font-size: 1.2rem;
-}
-
-.right-container {
-    position: relative;
-}
-
-.people_bought {
-    text-align: right;
-    position: absolute;
-    bottom: 0;
-    right: 0.5rem;
 }

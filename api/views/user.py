@@ -55,3 +55,24 @@ class CartAddView(APIView):
         user_profile.cart.add(product_instance)
 
         return Response(self.serializer_class(user_profile).data)
+
+
+class CartRemoveView(APIView):
+    permission_classes = [TokenProvidedPermission]
+    serializer_class = UserProfileSerializer
+    queryset = UserProfile.objects.all()
+
+    def post(self, request):
+        token = request.data.get("token", None)
+        item = request.data.get("item", None)
+        if not item:
+            return Response({"message": "Product not provided"}, status=status.HTTP_401_UNAUTHORIZED)
+        try:
+            user = Token.objects.get(key=token).user
+            user_profile = UserProfile.objects.get(user=user)
+        except:
+            return Response({"message": "User Token incorrect"}, status=status.HTTP_401_UNAUTHORIZED)
+        product_instance = Product.objects.get(pk=int(item))
+        user_profile.cart.remove(product_instance)
+
+        return Response(self.serializer_class(user_profile).data)

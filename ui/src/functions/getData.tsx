@@ -1,6 +1,7 @@
 interface Props {
     url: string;
     div?: HTMLDivElement;
+    setActiveSpinner?: Function;
 }
 
 let getData = async (props: Props) => {
@@ -16,6 +17,7 @@ let getData = async (props: Props) => {
             "Content-Type": "application/json",
         },
     }).then((response) => response.json());
+    if(props.setActiveSpinner) props.setActiveSpinner(false);
     if (props.div) {
         props.div.classList.remove("animate-spin");
         props.div.classList.add("hidden");

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { BiSortZA } from "react-icons/bi";
-import { AiFillStar } from "react-icons/ai";
+
 
 import Product from "../../interfaces/product";
 import getData from "../../functions/getData";
@@ -10,6 +9,7 @@ import selectInterface from "../SelectComponent/selectInterface";
 import LoadingSpinner from "../LoadingSpinnerComponent/LoadingSpinner";
 import Select from "../SelectComponent/Select";
 import InputField from "../InputFieldComponent/InputField";
+import ProductComponent from "../ProductComponent/ProductComponent";
 
 import "./productlist.css";
 
@@ -200,40 +200,7 @@ const ProductList = (props: Props) => {
                 </div>
                 <div className="products-container">
                     {spinnerActive ? <LoadingSpinner /> : <div></div>}
-                    {products.map((object: Product) => {
-                        let price = String(object.price);
-                        if (price.length > 8) {
-                            price = price.slice(0, 8);
-                        }
-                        let shipping_price = String(object.shipping_price);
-                        if (shipping_price.length > 8) {
-                            shipping_price = shipping_price.slice(0, 8);
-                        }
-                        return (
-                            <Link to={"/product/" + object.id} className="product">
-                                <div>
-                                    <img src={object.image_url} className="prevent-select" />
-                                    <div>
-                                        <div className="product-name">{object.name}</div>
-                                        4.8 
-                                        <AiFillStar fill="#fb923c"/>
-                                        <AiFillStar fill="#fb923c"/>
-                                        <AiFillStar fill="#fb923c"/>
-                                        <AiFillStar fill="#fb923c"/>
-                                        <AiFillStar fill="#fb923c"/>
-                                        10 reviews
-                                        <div>{object.description}</div>
-                                    </div>
-                                </div>
-                                <div className="right-container">
-                                    <div>Price: {price} zł</div>
-                                    <div>Shipping price: {shipping_price} zł</div>
-                                    <div>Total price: {Number(price) + Number(shipping_price)} zł</div>
-                                    <div className="people_bought">0 people bought</div>
-                                </div>
-                            </Link>
-                        );
-                    })}
+                    {products.map((object: Product) => { return <ProductComponent product={object} size={4}/>})}
                 </div>
             </div>
         </div>
