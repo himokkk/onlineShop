@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { BiSortZA } from "react-icons/bi";
 
-
 import Product from "../../interfaces/product";
 import getData from "../../functions/getData";
 import selectInterface from "../SelectComponent/selectInterface";
@@ -84,7 +83,7 @@ const ProductList = (props: Props) => {
     }, [url]);
 
     useEffect(() => {
-        switch(priceOption) {
+        switch (priceOption) {
             case 1:
                 setMinPrice(0);
                 setMaxPrice(10);
@@ -106,7 +105,6 @@ const ProductList = (props: Props) => {
                 setMaxPrice(0);
                 break;
         }
-        
     }, [priceOption]);
 
     const changeSize = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -166,41 +164,47 @@ const ProductList = (props: Props) => {
                     />
                     <div className="price-sort">
                         <div>
-                            <input type="checkbox" checked={priceOption === 1}
-                                onChange={() => setPriceOption(1)}/>
+                            <input type="checkbox" checked={priceOption === 1} onChange={() => setPriceOption(1)} />
                             under 10 zł
                         </div>
                         <div>
-                            <input type="checkbox" checked={priceOption === 2}
-                                onChange={() => setPriceOption(2)}/>
+                            <input type="checkbox" checked={priceOption === 2} onChange={() => setPriceOption(2)} />
                             10zł to 15zł
                         </div>
                         <div>
-                            <input type="checkbox" checked={priceOption === 3}
-                                onChange={() => setPriceOption(3)}/>
+                            <input type="checkbox" checked={priceOption === 3} onChange={() => setPriceOption(3)} />
                             15zł to 25zł
                         </div>
                         <div>
-                            <input type="checkbox" checked={priceOption === 4}
-                                onChange={() => setPriceOption(4)}/>
+                            <input type="checkbox" checked={priceOption === 4} onChange={() => setPriceOption(4)} />
                             25zł to 35zł
                         </div>
                         <div>
-                            <input type="checkbox" checked={priceOption === 5}
-                                onChange={() => setPriceOption(5)}/>
+                            <input type="checkbox" checked={priceOption === 5} onChange={() => setPriceOption(5)} />
                             35zł and above
                         </div>
                         <div className="price_inputs">
-                            <InputField id="min_price" placeholder="min price" label="Min Price" onChange={setMinPrice} />
+                            <InputField
+                                id="min_price"
+                                placeholder="min price"
+                                label="Min Price"
+                                onChange={setMinPrice}
+                            />
                             <span>-</span>
-                            <InputField id="max_price" placeholder="max price" label="Max Price" onChange={setMaxPrice} />
+                            <InputField
+                                id="max_price"
+                                placeholder="max price"
+                                label="Max Price"
+                                onChange={setMaxPrice}
+                            />
                         </div>
                     </div>
-                    
                 </div>
                 <div className="products-container">
                     {spinnerActive ? <LoadingSpinner /> : <div></div>}
-                    {products.map((object: Product) => { return <ProductComponent product={object} size={4}/>})}
+                    {products.map((object: Product) => {
+                        return <ProductComponent product={object} size={4} />;
+                    })}
                 </div>
             </div>
         </div>

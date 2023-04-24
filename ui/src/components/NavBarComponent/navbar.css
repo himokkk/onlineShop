@@ -41,7 +41,7 @@
     position: relative;
 }
 
-#cart-dropdown-content ,
+#cart-dropdown-content,
 #profile-dropdown-content {
     border-top: 1px solid var(--orange);
     position: absolute;

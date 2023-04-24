@@ -11,11 +11,11 @@ import Cookies from "universal-cookie";
 import "../css/basic.css";
 import "../css/product.css";
 
-const ProductPage = (() => {
+const ProductPage = () => {
     const { id } = useParams();
     const cookies = new Cookies();
-    
-    const [name, setName] = useState<string>("");    
+
+    const [name, setName] = useState<string>("");
     const [imageURL, setImageURL] = useState<string>("");
     const [price, setPrice] = useState<number>(0);
     const [shippingPrice, setShippingPrice] = useState<number>(0);
@@ -52,7 +52,7 @@ const ProductPage = (() => {
         form_data.append("token", token);
         // @ts-ignore
         form_data.append("item", id as number);
-        
+
         postData({ url: "/api/cart/add/", data: form_data })
             .then(response => {
                 if (response && response.ok) {
@@ -60,37 +60,34 @@ const ProductPage = (() => {
                 }
                 throw response;
             })
-            .then(data => {
-                
-            })
+            .then(data => {})
             .catch(error => {
                 console.error("Error fetching data:", error);
             });
     };
-    
-    return(
+
+    return (
         <div>
             <NavBar />
-            <div  className="product-container">
+            <div className="product-container">
                 <div>
                     <div className="product-header">
                         <img src={imageURL} className="product-picture prevent-select" />
                         <div className="product-main">
                             <span>{name}</span>
                             <hr />
-                            Price: {price} zł <br/>
-                            Shiping cost: {shippingPrice} zł<br/>
-                            Total: {price + shippingPrice} zł <br/>
+                            Price: {price} zł <br />
+                            Shiping cost: {shippingPrice} zł
+                            <br />
+                            Total: {price + shippingPrice} zł <br />
                             <SubmitButton name="Add to cart" id="buy-button" onClick={AddToCart} />
                         </div>
                     </div>
-                    <div className="profile-description">
-                        Description: {description}
-                    </div>
+                    <div className="profile-description">Description: {description}</div>
                 </div>
             </div>
         </div>
-    )
-});
+    );
+};
 
 export default ProductPage;

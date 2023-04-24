@@ -16,8 +16,8 @@ let getData = async (props: Props) => {
         headers: {
             "Content-Type": "application/json",
         },
-    }).then((response) => response.json());
-    if(props.setActiveSpinner) props.setActiveSpinner(false);
+    }).then(response => response.json());
+    if (props.setActiveSpinner) props.setActiveSpinner(false);
     if (props.div) {
         props.div.classList.remove("animate-spin");
         props.div.classList.add("hidden");

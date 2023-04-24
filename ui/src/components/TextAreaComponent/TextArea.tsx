@@ -9,13 +9,13 @@ interface Props {
     placeholder?: string;
 }
 
-const TextArea = ((props: Props) => {
-    return(
+const TextArea = (props: Props) => {
+    return (
         <div id={props.id} className="textarea">
             <label>{props.label}</label>
             <textarea rows={6} placeholder={props.placeholder} name={props.name} />
         </div>
-    )
-});
+    );
+};
 
 export default TextArea;

@@ -54,8 +54,7 @@ const LoginPage: React.FC = () => {
                     if (data["token"]) {
                         cookies.set("token", data["token"], { path: "/" });
                         navigate("/");
-                    }
-                    else if(data["error"]) {
+                    } else if (data["error"]) {
                         setBlock(incorrectErrorRef);
                     }
                 })
@@ -81,7 +80,9 @@ const LoginPage: React.FC = () => {
                         label="Username"
                         icon={AiOutlineMail}
                     />
-                    <div className="hidden-text" ref={usernameErrorRef}>Username required</div>
+                    <div className="hidden-text" ref={usernameErrorRef}>
+                        Username required
+                    </div>
                 </div>
 
                 <div className="input-container">
@@ -93,9 +94,15 @@ const LoginPage: React.FC = () => {
                         label="Password"
                         icon={BsFillKeyFill}
                     />
-                    <div className="hidden-text" ref={passwordErrorRef}>Password required</div>
-                    <div className="hidden-text" ref={internalErrorRef}>Internal Error</div>
-                    <div className="hidden-text" ref={incorrectErrorRef}>Incorrect username or password</div>
+                    <div className="hidden-text" ref={passwordErrorRef}>
+                        Password required
+                    </div>
+                    <div className="hidden-text" ref={internalErrorRef}>
+                        Internal Error
+                    </div>
+                    <div className="hidden-text" ref={incorrectErrorRef}>
+                        Incorrect username or password
+                    </div>
                 </div>
 
                 <div className="login-button">

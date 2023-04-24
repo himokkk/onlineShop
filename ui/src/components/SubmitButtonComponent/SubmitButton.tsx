@@ -11,7 +11,12 @@ interface Props {
 
 const SubmitButton: React.FC<Props> = (props: Props) => {
     return (
-        <button id={props.id} className={"submit-button prevent-select "+props.class} type="submit" onClick={props.onClick}>
+        <button
+            id={props.id}
+            className={"submit-button prevent-select " + props.class}
+            type="submit"
+            onClick={props.onClick}
+        >
             {props.name}
         </button>
     );

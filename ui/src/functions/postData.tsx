@@ -17,13 +17,13 @@ let postData = async (props: Props) => {
     let response = await fetch(props.url, {
         method: "POST",
         headers: {
-            "X-CSRFToken": csrftoken
+            "X-CSRFToken": csrftoken,
         },
         body: props.data,
-    }).then((response) => {
+    }).then(response => {
         return response;
     });
-    if(props.setActiveSpinner) props.setActiveSpinner(false);
+    if (props.setActiveSpinner) props.setActiveSpinner(false);
     return response;
 };
 

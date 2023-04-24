@@ -5,10 +5,11 @@ import { AiFillStar } from "react-icons/ai";
 import Product from "../../interfaces/product";
 import "./product.css";
 
-interface Props{
+interface Props {
     product: Product;
     size: number;
 }
+
 const ProductComponent = (props: Props) => {
     let price = String(props.product.price);
     if (price.length > 8) {
@@ -24,22 +25,26 @@ const ProductComponent = (props: Props) => {
             <img src={props.product.image_url} className="prevent-select" />
             <div>
                 <div className="product-name">{props.product.name}</div>
-                { props.size != 0 ? <div>
-                    4.8
-                    <AiFillStar fill="#fb923c"/>
-                    <AiFillStar fill="#fb923c"/>
-                    <AiFillStar fill="#fb923c"/>
-                    <AiFillStar fill="#fb923c"/>
-                    <AiFillStar fill="#fb923c"/>
-                    10 reviews
-                    <div>{props.product.description}</div>
-                </div> : <div></div>}
+                {props.size != 0 ? (
+                    <div>
+                        4.8
+                        <AiFillStar fill="#fb923c" />
+                        <AiFillStar fill="#fb923c" />
+                        <AiFillStar fill="#fb923c" />
+                        <AiFillStar fill="#fb923c" />
+                        <AiFillStar fill="#fb923c" />
+                        10 reviews
+                        <div>{props.product.description}</div>
+                    </div>
+                ) : (
+                    <div></div>
+                )}
             </div>
             <div className="right-container">
                 <div>{price} zł</div>
-                { props.size != 0 ? <div>Shipping price: {shipping_price} zł</div> : <div></div>}
-                { props.size != 0 ? <div>Total price: {Number(price) + Number(shipping_price)} zł</div> : <div></div>}
-                { props.size != 0 ? <div className="people_bought">0 people bought</div> : <div></div>}
+                {props.size != 0 ? <div>Shipping price: {shipping_price} zł</div> : <div></div>}
+                {props.size != 0 ? <div>Total price: {Number(price) + Number(shipping_price)} zł</div> : <div></div>}
+                {props.size != 0 ? <div className="people_bought">0 people bought</div> : <div></div>}
             </div>
         </Link>
     );

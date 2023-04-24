@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import postData from "../../functions/postData";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
-import {AiFillStar, AiOutlineShop} from "react-icons/ai";
+import { AiFillStar, AiOutlineShop } from "react-icons/ai";
 import { BsCart4 } from "react-icons/bs";
 import { RiDeleteBin7Fill } from "react-icons/ri";
 
@@ -52,13 +52,13 @@ const NavBar: React.FC = () => {
     const Click = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const div = event.target as HTMLElement;
         try {
-            let dropdownElement = document.querySelector('#cart-dropdown') as HTMLDivElement;
-            let dropdownContent = document.querySelector('#cart-dropdown-content') as HTMLDivElement;
+            let dropdownElement = document.querySelector("#cart-dropdown") as HTMLDivElement;
+            let dropdownContent = document.querySelector("#cart-dropdown-content") as HTMLDivElement;
             if (dropdownElement.contains(div) && !dropdownContent.contains(div)) setShowCartDropdown(!showCartDropdown);
             else if (!dropdownElement.contains(div) && !dropdownContent.contains(div)) setShowCartDropdown(false);
 
-            dropdownElement = document.querySelector('#profile-dropdown') as HTMLDivElement;
-            dropdownContent = document.querySelector('#profile-dropdown-content') as HTMLDivElement;
+            dropdownElement = document.querySelector("#profile-dropdown") as HTMLDivElement;
+            dropdownContent = document.querySelector("#profile-dropdown-content") as HTMLDivElement;
             if (dropdownElement.contains(div) && !dropdownContent.contains(div)) setShowDropdown(!showDropdown);
             else if (!dropdownElement.contains(div) && !dropdownContent.contains(div)) setShowDropdown(false);
 
@@ -78,7 +78,10 @@ const NavBar: React.FC = () => {
     useEffect(() => {
         let sum = 0;
         let shippingSum = 0;
-        cart.forEach((object: Product) => {sum += object.price; shippingSum += object.shipping_price});
+        cart.forEach((object: Product) => {
+            sum += object.price;
+            shippingSum += object.shipping_price;
+        });
         setCartSum(sum);
         setCartShipping(shippingSum);
     }, [cart]);
@@ -93,15 +96,16 @@ const NavBar: React.FC = () => {
         postData({ url: "/api/cart/remove/", data: form_data })
             .then(response => {
                 if (response && response.ok) {
-                    setCart((cart) => {
-                        return cart.filter((product) => {return product.id !== Number(id)})
-                    })
+                    setCart(cart => {
+                        return cart.filter(product => {
+                            return product.id !== Number(id);
+                        });
+                    });
                     return response.json();
                 }
                 throw response;
             })
-            .then(data => {
-            })
+            .then(data => {})
             .catch(error => {
                 console.error("Error fetching data:", error);
             });
@@ -110,7 +114,7 @@ const NavBar: React.FC = () => {
     return (
         <div className="navbar-container">
             <Link to="/" id="home-button" className="nav-button">
-                <AiOutlineShop  className="logo" size="50"/>
+                <AiOutlineShop className="logo" size="50" />
                 <div>Home</div>
             </Link>
             <div className="left-nav">
@@ -118,10 +122,10 @@ const NavBar: React.FC = () => {
                 <CategoryCreateModal />
                 <div className="search-button nav-button">Search</div>
                 <div className="dropdown nav-button" id="cart-dropdown">
-                    <BsCart4/>
+                    <BsCart4 />
                     <div id="cart-dropdown-content" className={showCartDropdown ? "" : "hidden"}>
-                        {cart.map((object: Product)=> {
-                            return <ProductComponent product={object} size={1} />
+                        {cart.map((object: Product) => {
+                            return <ProductComponent product={object} size={1} />;
                         })}
                         <div className="cart-sum">
                             <div>Product price: {cartSum}</div>
@@ -134,8 +138,8 @@ const NavBar: React.FC = () => {
                     </div>
                 </div>
                 <div className="dropdown-container nav-button" id="profile-dropdown">
-                    <img src={imageURL}/>
-                    <div id="profile-dropdown-content" className={showDropdown ? "" : "hidden"} >
+                    <img src={imageURL} />
+                    <div id="profile-dropdown-content" className={showDropdown ? "" : "hidden"}>
                         <div>
                             <a href={"/#/profile/" + user_id} className="nav-profile">
                                 Profile

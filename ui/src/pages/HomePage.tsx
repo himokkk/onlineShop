@@ -3,15 +3,14 @@ import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 
+import ProductsList from "../components/ProductsListComponent/ProductsList";
+import LoadingSpinner from "../components/LoadingSpinnerComponent/LoadingSpinner";
 import NavBar from "../components/NavBarComponent/NavBar";
 import getData from "../functions/getData";
 import Category from "../interfaces/category";
-import ProductsList from "../components/ProductsListComponent/ProductsList";
-import postData from "../functions/postData";
 
 import "../css/basic.css";
 import "../css/home.css";
-import LoadingSpinner from "../components/LoadingSpinnerComponent/LoadingSpinner";
 
 const HomePage: React.FC = () => {
     const cookies = new Cookies();
