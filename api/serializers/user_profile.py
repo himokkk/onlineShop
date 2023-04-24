@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
-from . import ProductSerializer
 from ..models import UserProfile
+from . import ProductSerializer
+
 
 class UserProfileSerializer(serializers.ModelSerializer):
     image_url = serializers.SerializerMethodField()

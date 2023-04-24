@@ -4,24 +4,21 @@ from django.contrib import admin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from .user import UserProfile
 from .category import Category
+from .user import UserProfile
 
 
 class Product(models.Model):
     name = models.CharField(max_length=60, verbose_name=_("name"))
     price = models.FloatField(blank=True, null=True, verbose_name=_("price"))
-    shipping_price = models.FloatField(
-        default="0", verbose_name=_("shipping price"))
+    shipping_price = models.FloatField(default="0", verbose_name=_("shipping price"))
     description = models.TextField(default="", blank=True)
-    owner = models.ForeignKey(
-        UserProfile, null=True, on_delete=models.CASCADE)
+    owner = models.ForeignKey(UserProfile, null=True, on_delete=models.CASCADE)
     post_date = models.DateTimeField(
         default=datetime.datetime.now, verbose_name=_("post date")
     )
     image = models.ImageField(blank=True, null=True, upload_to="products")
-    category = models.ForeignKey(
-        Category, null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = _("Product")

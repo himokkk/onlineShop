@@ -1,8 +1,8 @@
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
 
-from ..models import Product, Category
-from ..serializers import ProductSerializer, ProductCreateSerializer
+from ..models import Category, Product
+from ..serializers import ProductCreateSerializer, ProductSerializer
 
 
 class ProductListView(ListAPIView):
@@ -35,7 +35,8 @@ class ProductListView(ListAPIView):
             max_price = query_params.get("max-price", None)
             if min_price and max_price:
                 queryset = queryset.all().filter(
-                    price__lte=int(max_price), price__gte=int(min_price))
+                    price__lte=int(max_price), price__gte=int(min_price)
+                )
             elif min_price:
                 queryset = queryset.all().filter(price__gte=int(min_price))
             elif max_price:
@@ -44,17 +45,17 @@ class ProductListView(ListAPIView):
             sort = query_params.get("sort", None)
             if sort:
                 if sort == "price_ascending":
-                    queryset = queryset.order_by('price')
+                    queryset = queryset.order_by("price")
                 elif sort == "price_descending":
-                    queryset = queryset.order_by('price').reverse()
+                    queryset = queryset.order_by("price").reverse()
                 elif sort == "name_ascending":
-                    queryset = queryset.order_by('name')
+                    queryset = queryset.order_by("name")
                 elif sort == "name_descending":
-                    queryset = queryset.order_by('name').reverse()
+                    queryset = queryset.order_by("name").reverse()
                 elif sort == "newest":
-                    queryset = queryset.order_by('post_date').reverse()
+                    queryset = queryset.order_by("post_date").reverse()
                 elif sort == "oldest":
-                    queryset = queryset.order_by('post_date')
+                    queryset = queryset.order_by("post_date")
 
         items_count = queryset.count()
         page = query_params.get("page", 1)
@@ -63,7 +64,7 @@ class ProductListView(ListAPIView):
         queryset = queryset[start_index:end_index]
 
         serializer = self.get_serializer(queryset, many=True)
-        response_data = {'count': items_count, 'results': serializer.data}
+        response_data = {"count": items_count, "results": serializer.data}
         return Response(response_data)
 
 

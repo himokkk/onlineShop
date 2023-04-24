@@ -1,26 +1,11 @@
 from django.urls import path
 
-from .views import (
-    CategoryListView,
-    CategoryCreateView,
-    LoginView,
-    ProductCreateView,
-    ProductListView,
-    ProductRetrieveView,
-    RegisterView,
-    UserListView,
-    UserView,
-    admin_logout_view,
-    LoggedUserView,
-    ReviewListView,
-    ReviewCreateView,
-    OrderListView,
-    OrderCreateView,
-    OrderStatusView,
-    OrderRetrieveView,
-    CartAddView,
-    CartRemoveView
-)
+from .views import (CartAddView, CartRemoveView, CategoryCreateView,
+                    CategoryListView, LoggedUserView, LoginView,
+                    OrderCreateView, OrderListView, OrderRetrieveView,
+                    OrderStatusView, ProductCreateView, ProductListView,
+                    ProductRetrieveView, RegisterView, ReviewCreateView,
+                    ReviewListView, UserListView, UserView, admin_logout_view)
 
 urlpatterns = [
     path("login/", LoginView.as_view()),
@@ -41,5 +26,5 @@ urlpatterns = [
     path("order/list/", OrderListView.as_view()),
     path("order/<pk>", OrderRetrieveView.as_view()),
     path("order/create/", OrderCreateView.as_view()),
-    path("order/status/<pk>", OrderStatusView.as_view())
+    path("order/status/<pk>", OrderStatusView.as_view()),
 ]

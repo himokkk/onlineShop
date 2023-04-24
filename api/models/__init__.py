@@ -1,7 +1,7 @@
 from .category import Category
-from .product import Product
-from .user import UserProfile
-from .review import Review
 from .order import Order
+from .product import Product
+from .review import Review
+from .user import UserProfile
 
 __all__ = ["Category", "Product", "UserProfile", "Review", "Order"]

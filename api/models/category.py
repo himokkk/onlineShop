@@ -1,14 +1,15 @@
+import re
+
 from django.contrib import admin
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.core.exceptions import ValidationError
-import re
 
 
 def is_svg(file):
-    SVG_R = r'(?:<\?xml\b[^>]*>[^<]*)?(?:<!--.*?-->[^<]*)*(?:<svg|<!DOCTYPE svg)\b'
+    SVG_R = r"(?:<\?xml\b[^>]*>[^<]*)?(?:<!--.*?-->[^<]*)*(?:<svg|<!DOCTYPE svg)\b"
     SVG_RE = re.compile(SVG_R, re.DOTALL)
-    file_contents = file.read().decode('latin_1')
+    file_contents = file.read().decode("latin_1")
     is_svg = SVG_RE.match(file_contents) is not None
     return is_svg
 
@@ -20,7 +21,9 @@ class Category(models.Model):
         if not is_svg(file):
             raise ValidationError("File not svg")
 
-    svg = models.FileField(blank=True, null=True, upload_to="category", validators=[validate_svg])
+    svg = models.FileField(
+        blank=True, null=True, upload_to="category", validators=[validate_svg]
+    )
 
     class Meta:
         verbose_name = _("Category")

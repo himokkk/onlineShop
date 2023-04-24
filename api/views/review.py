@@ -2,7 +2,7 @@ from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
 
 from ..models import Review
-from ..serializers import ReviewSerializer, ReviewCreateSerializer
+from ..serializers import ReviewCreateSerializer, ReviewSerializer
 
 
 class ReviewListView(ListAPIView):

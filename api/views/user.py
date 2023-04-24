@@ -1,12 +1,12 @@
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
 from rest_framework import status
+from rest_framework.authtoken.models import Token
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
-from ..models import UserProfile, Product
-from ..serializers import UserProfileSerializer
+from ..models import Product, UserProfile
 from ..permission import TokenProvidedPermission
+from ..serializers import UserProfileSerializer
 
 
 class LoggedUserView(APIView):
@@ -45,12 +45,16 @@ class CartAddView(APIView):
         token = request.data.get("token", None)
         item = request.data.get("item", None)
         if not item:
-            return Response({"message": "Product not provided"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {"message": "Product not provided"}, status=status.HTTP_401_UNAUTHORIZED
+            )
         try:
             user = Token.objects.get(key=token).user
             user_profile = UserProfile.objects.get(user=user)
         except:
-            return Response({"message": "User Token incorrect"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {"message": "User Token incorrect"}, status=status.HTTP_401_UNAUTHORIZED
+            )
         product_instance = Product.objects.get(pk=int(item))
         user_profile.cart.add(product_instance)
 
@@ -66,12 +70,16 @@ class CartRemoveView(APIView):
         token = request.data.get("token", None)
         item = request.data.get("item", None)
         if not item:
-            return Response({"message": "Product not provided"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {"message": "Product not provided"}, status=status.HTTP_401_UNAUTHORIZED
+            )
         try:
             user = Token.objects.get(key=token).user
             user_profile = UserProfile.objects.get(user=user)
         except:
-            return Response({"message": "User Token incorrect"}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                {"message": "User Token incorrect"}, status=status.HTTP_401_UNAUTHORIZED
+            )
         product_instance = Product.objects.get(pk=int(item))
         user_profile.cart.remove(product_instance)
 
