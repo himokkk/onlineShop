@@ -10,9 +10,39 @@ from ..serializers import OrderSerializer
 
 
 class OrderListView(ListAPIView):
+    permission_classes = [TokenProvidedPermission]
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
 
+    def post(self, request):
+        queryset = self.queryset.all()
+
+        query_params = self.request.data
+        token = query_params.get("token", None)
+        print(token) ### TODO ###
+        user = Token.objects.get(key=token).user
+        user_profile = UserProfile.objects.get(user=user)
+        queryset = queryset.filter(owner=user_profile)
+        if query_params:
+
+
+            size = query_params.get("size", None)
+            if size:
+                size = int(size)
+            else:
+                size = 25
+
+
+
+        # items_count = queryset.count()
+        # page = query_params.get("page", 1)
+        # start_index = size * (int(page) - 1)
+        # end_index = start_index + size
+        # queryset = queryset[start_index:end_index]
+
+        serializer = self.get_serializer(queryset, many=True)
+        response_data = {"results": serializer.data}
+        return Response(response_data)
 
 class OrderCreateView(CreateAPIView):
     permission_classes = [TokenProvidedPermission]
