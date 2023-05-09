@@ -6,7 +6,7 @@ from rest_framework.response import Response
 
 from ..models import Order, UserProfile
 from ..permission import TokenProvidedPermission
-from ..serializers import OrderSerializer
+from ..serializers import OrderSerializer, OrderStatusSerializer
 
 
 class OrderListView(ListAPIView):
@@ -19,30 +19,24 @@ class OrderListView(ListAPIView):
 
         query_params = self.request.data
         token = query_params.get("token", None)
-        print(token) ### TODO ###
         user = Token.objects.get(key=token).user
         user_profile = UserProfile.objects.get(user=user)
         queryset = queryset.filter(owner=user_profile)
         if query_params:
-
-
             size = query_params.get("size", None)
             if size:
                 size = int(size)
             else:
                 size = 25
 
-
-
         # items_count = queryset.count()
         # page = query_params.get("page", 1)
         # start_index = size * (int(page) - 1)
         # end_index = start_index + size
         # queryset = queryset[start_index:end_index]
-
         serializer = self.get_serializer(queryset, many=True)
-        response_data = {"results": serializer.data}
-        return Response(response_data)
+        return Response(serializer.data)
+
 
 class OrderCreateView(CreateAPIView):
     permission_classes = [TokenProvidedPermission]
@@ -54,16 +48,15 @@ class OrderCreateView(CreateAPIView):
         token = request.data.get("token", None)
         user = Token.objects.get(key=token).user
         user_profile = UserProfile.objects.get(user=user)
-        data["owner"] = user_profile
-
+        data["owner"] = user_profile.id
         items = request.data.getlist("items[]")
         data["items"] = items
         # user_profile.cart.clear()
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
+        print(data)
         headers = self.get_success_headers(serializer.data)
-
         return Response(
             serializer.data, status=status.HTTP_201_CREATED, headers=headers
         )
@@ -71,12 +64,11 @@ class OrderCreateView(CreateAPIView):
 
 class OrderStatusView(UpdateAPIView):
     permission_classes = [TokenProvidedPermission]
-    serializer_class = OrderSerializer
+    serializer_class = OrderStatusSerializer
     queryset = Order.objects.all()
     lookup_field = "pk"
 
     def partial_update(self, request, pk):
-        # Remove fields that should not be updated from request data
         request_data = request.data.copy()
         request_data.pop("items", None)
         request_data.pop("package_number", None)
@@ -104,7 +96,6 @@ class OrderStatusView(UpdateAPIView):
             return Response(
                 {"message": "User Token incorrect"}, status=status.HTTP_401_UNAUTHORIZED
             )
-
         serializer = self.get_serializer(
             instance=self.get_object(), data=request_data, partial=True
         )

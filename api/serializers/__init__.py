@@ -1,5 +1,5 @@
 from .category import CategoryCreateSerializer, CategorySerializer
-from .order import OrderSerializer
+from .order import OrderSerializer, OrderStatusSerializer
 from .product import ProductCreateSerializer, ProductSerializer
 from .review import ReviewCreateSerializer, ReviewSerializer
 from .user import UserSerializer
@@ -15,4 +15,5 @@ __all__ = [
     "ReviewSerializer",
     "ReviewCreateSerializer",
     "OrderSerializer",
+    "OrderStatusSerializer"
 ]

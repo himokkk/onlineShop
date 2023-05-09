@@ -28,7 +28,7 @@ const PayPage: React.FC = () => {
         form_data.append("status", "paid");
         const csrftoken = getCookie("csrftoken") as string;
         fetch("api/order/status/" + id, {
-            method: "PUT",
+            method: "PATCH",
             headers: {
                 "X-CSRFToken": csrftoken,
             },
