@@ -55,7 +55,7 @@ class OrderCreateView(CreateAPIView):
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
-        print(data)
+
         headers = self.get_success_headers(serializer.data)
         return Response(
             serializer.data, status=status.HTTP_201_CREATED, headers=headers
@@ -71,7 +71,6 @@ class OrderStatusView(UpdateAPIView):
     def partial_update(self, request, pk):
         request_data = request.data.copy()
         request_data.pop("items", None)
-        request_data.pop("package_number", None)
 
         order_status = request_data.get("status")
         token = request.data.get("token", None)
@@ -79,6 +78,8 @@ class OrderStatusView(UpdateAPIView):
             user = Token.objects.get(key=token).user
             user_profile = UserProfile.objects.get(user=user)
             order_instance = Order.objects.get(pk=pk)
+            if order_status != "sent":
+                request_data.pop("package_number", None)
             if order_status == "sent" or order_status == "delivered":
                 items = order_instance.items
                 if not items.first() or not user_profile == items.first().owner:

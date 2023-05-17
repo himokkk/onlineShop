@@ -9,6 +9,7 @@ import ProductPage from "./pages/ProductPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import PayPage from "./pages/PayPage";
 import OrdersListPage from "./pages/OrdersListPage";
+import OrderPage from "./pages/OrderPage";
 
 const App: React.FC = () => {
     //console.log = console.warn = console.error = () => {};
@@ -25,6 +26,7 @@ const App: React.FC = () => {
             <Route path="/checkout/" element={<CheckoutPage />}></Route>
             <Route path="/pay/:id" element={<PayPage />}></Route>
             <Route path="/orders/" element={<OrdersListPage />}></Route>
+            <Route path="/order/:id" element={<OrderPage />}></Route>
         </Routes>
     );
 };

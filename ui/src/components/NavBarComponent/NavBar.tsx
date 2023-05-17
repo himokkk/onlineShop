@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import postData from "../../functions/postData";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
-import { AiFillStar, AiOutlineShop } from "react-icons/ai";
+import { AiOutlineShop } from "react-icons/ai";
 import { BsCart4 } from "react-icons/bs";
-import { RiDeleteBin7Fill } from "react-icons/ri";
 
 import ProductComponent from "../ProductComponent/ProductComponent";
 import CategoryCreateModal from "../CategoryCreateModalComponent/CategoryCreateModal";
@@ -125,7 +124,12 @@ const NavBar: React.FC = () => {
                     <BsCart4 />
                     <div id="cart-dropdown-content" className={showCartDropdown ? "" : "hidden"}>
                         {cart.map((object: Product) => {
-                            return <ProductComponent product={object} size={1} />;
+                            return <div className="product_container">
+                                    <ProductComponent product={object} size={1} />
+                                        <div className="remove_cart" onClick={RemoveFromCart} id={"item-"+object.id}>
+                                            x
+                                        </div>
+                                    </div>;
                         })}
                         <div className="cart-sum">
                             <div>Product price: {cartSum}</div>

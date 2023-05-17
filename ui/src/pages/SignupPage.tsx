@@ -127,7 +127,7 @@ const SignupPage: React.FC = () => {
                 </div>
                 <div className="login">
                     <div>Already has an account?</div>
-                    <Link to="/login" className="link">
+                    <Link to="/login" className="blue_link">
                         Log in!
                     </Link>
                 </div>

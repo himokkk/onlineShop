@@ -60,6 +60,15 @@
     right: 0;
 }
 
+.product_container {
+    display: flex;
+    align-items: center;
+}
+
+.remove_cart {
+    padding: 0.5rem;
+}
+
 #profile-dropdown-content {
     margin-top: 3rem;
 }

@@ -1,0 +1,30 @@
+.order_container {
+    margin-bottom: 1rem;
+    display: flex;
+}
+
+.link:link {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.link:visited {
+    color: black;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.link:active {
+    color: black;
+    background-color: transparent;
+}
+
+.change_status {
+    border: 1px solid red;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    color: black;
+}

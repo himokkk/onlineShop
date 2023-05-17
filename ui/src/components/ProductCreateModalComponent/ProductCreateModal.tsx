@@ -11,6 +11,7 @@ import FileInput from "../FileInputComponent/FileInput";
 
 import Select from "../SelectComponent/Select";
 import product_svg from "./product.svg";
+import Cookies from "universal-cookie";
 
 import { IoMdPricetag } from "react-icons/io";
 import { BiCategory } from "react-icons/bi";
@@ -19,6 +20,7 @@ import { MdProductionQuantityLimits } from "react-icons/md";
 import "./productmodal.css";
 
 const ProductCreateModal = () => {
+    const cookies = new Cookies();
     const modalRef = useRef(null);
     const errorRef = useRef(null);
     const productForm = useRef(null);
@@ -37,7 +39,8 @@ const ProductCreateModal = () => {
         if (productForm.current) {
             let form_data = new FormData(productForm.current);
             const csrftoken = getCookie("csrftoken") as string;
-
+            const token = cookies.get("token");
+            form_data.append("token", token);
             fetch("/api/product/create/", {
                 method: "POST",
                 headers: {
