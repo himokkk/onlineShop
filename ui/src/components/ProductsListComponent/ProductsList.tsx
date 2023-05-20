@@ -15,6 +15,7 @@ import "./productlist.css";
 interface Props {
     category?: number;
     owner?: number;
+    defaultSize?: number;
 }
 
 const ProductList = (props: Props) => {
@@ -23,7 +24,7 @@ const ProductList = (props: Props) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [url, setURL] = useState<string>("");
 
-    const [size, setSize] = useState<number>(25);
+    const [size, setSize] = useState<number>(props.defaultSize ? props.defaultSize : 25);
     const [page, setPage] = useState<number>(1);
     const [sort, setSort] = useState<string>("");
     const [minPrice, setMinPrice] = useState<number>(0);

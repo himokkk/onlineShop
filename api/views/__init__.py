@@ -5,7 +5,7 @@ from .order import (OrderCreateView, OrderListView, OrderRetrieveView,
 from .product import ProductCreateView, ProductListView, ProductRetrieveView
 from .review import ReviewCreateView, ReviewListView
 from .user import (CartAddView, CartRemoveView, LoggedUserView, UserCreateView,
-                   UserListView, UserView)
+                   UserListView, UserView, ChangeUserImageView)
 
 __all__ = [
     "LoginView",
@@ -28,4 +28,5 @@ __all__ = [
     "OrderCreateView",
     "OrderStatusView",
     "OrderRetrieveView",
+    "ChangeUserImageView",
 ]

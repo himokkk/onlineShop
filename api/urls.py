@@ -4,7 +4,7 @@ from .views import (CartAddView, CartRemoveView, CategoryCreateView,
                     CategoryListView, LoggedUserView, LoginView,
                     OrderCreateView, OrderListView, OrderRetrieveView,
                     OrderStatusView, ProductCreateView, ProductListView,
-                    ProductRetrieveView, RegisterView, ReviewCreateView,
+                    ProductRetrieveView, RegisterView, ReviewCreateView, ChangeUserImageView,
                     ReviewListView, UserListView, UserView, admin_logout_view)
 
 urlpatterns = [
@@ -14,6 +14,7 @@ urlpatterns = [
     path("user/<pk>", UserView.as_view()),
     path("user/list/", UserListView.as_view()),
     path("user/current/", LoggedUserView.as_view()),
+    path("user/avatar_change/", ChangeUserImageView.as_view()),
     path("cart/add/", CartAddView.as_view()),
     path("cart/remove/", CartRemoveView.as_view()),
     path("product/list/", ProductListView.as_view()),

@@ -8,6 +8,13 @@
     margin-bottom: 3rem;
 }
 
+.picture_container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .products_container {
     display: flex;
     justify-content: center;
@@ -45,7 +52,6 @@
     margin: 1rem;
     display: flex;
     align-items: center;
-    margin-top: 1rem;
 }
 
 .price-sort span {
@@ -76,7 +82,6 @@
 
 .products-container {
     position: relative;
-    margin-bottom: 3rem;
 }
 
 .product:hover {

@@ -1,0 +1,19 @@
+.submit-button {
+    width: 19rem;
+}
+
+.profile_picture_change_button {
+    position: absolute;
+    padding: 0.5rem;
+    border-radius: 0.6rem;
+    background-color: var(--orange);
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.profile_picture_modal_main {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

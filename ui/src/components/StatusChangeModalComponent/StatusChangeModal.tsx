@@ -40,7 +40,7 @@ const StatusChangeModal = (props: Props) => {
     return (
         <div className="modal_main">
             <div onClick={() => setIsVisible(true)} className="change_status prevent-select">
-                change status
+                Send package
             </div>
             {isVisible ? (
                 <div className="modal">
@@ -49,7 +49,7 @@ const StatusChangeModal = (props: Props) => {
                             &times;
                         </span>
                         <form ref={statusFormRef} onSubmit={SubmitForm}>
-                            Change status of order #{props.id}
+                            Send package #{props.id}
                             <InputField label="Package number" name="package_number" placeholder="Package number" />
                             <SubmitButton name="Submit package number" />
                         </form>

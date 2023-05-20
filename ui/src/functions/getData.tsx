@@ -1,3 +1,5 @@
+import Cookies from "universal-cookie";
+
 interface Props {
     url: string;
     div?: HTMLDivElement;
@@ -5,6 +7,7 @@ interface Props {
 }
 
 let getData = async (props: Props) => {
+    const cookies = new Cookies();
     if (props.div) {
         props.div.classList.remove("hidden");
         props.div.classList.add("animate-spin");
@@ -15,6 +18,7 @@ let getData = async (props: Props) => {
     let response = await fetch(props.url, {
         headers: {
             "Content-Type": "application/json",
+            Authorization: cookies.get("token"),
         },
     }).then(response => response.json());
     if (props.setActiveSpinner) props.setActiveSpinner(false);
