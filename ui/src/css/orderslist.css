@@ -1,6 +1,34 @@
+.orders_container {
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.orders_content {
+    height: 60vh;
+    padding: 1rem 1rem;
+    padding-bottom: 1.5rem;
+    border: 1px solid #ddd;
+}
+
 .order_container {
     margin-bottom: 1rem;
     display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.orders_list {
+    height: 90%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.order_container:hover {
+    background-color: #eceff1;
 }
 
 .link:link {
@@ -21,10 +49,25 @@
 }
 
 .change_status {
-    border: 1px solid red;
+    border: 1px solid var(--orange);
     border-radius: 15px;
     display: flex;
     justify-content: center;
     cursor: pointer;
     color: black;
+    font-size: 1rem;
+    padding: 0.8rem 0.6rem;
+    margin-left: 2rem;
+
+}
+
+.status_change_buttons_container {
+    display: flex;
+}
+
+.status_change_button {
+    border: 1px solid var(--orange);
+    padding: 1rem;
+    margin: 0.5rem;
+    cursor: pointer;
 }

@@ -106,9 +106,7 @@ const ProductCreateModal = () => {
                         </form>
                     </div>
                 </div>
-            ) : (
-                <div></div>
-            )}
+            ) : null}
         </div>
     );
 };

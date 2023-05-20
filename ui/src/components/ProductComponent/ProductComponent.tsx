@@ -36,15 +36,13 @@ const ProductComponent = (props: Props) => {
                         10 reviews
                         <div>{props.product.description}</div>
                     </div>
-                ) : (
-                    <div></div>
-                )}
+                ) : null}
             </div>
             <div className="right-container">
                 <div>{price} zł</div>
-                {props.size != 0 ? <div>Shipping price: {shipping_price} zł</div> : <div></div>}
-                {props.size != 0 ? <div>Total price: {Number(price) + Number(shipping_price)} zł</div> : <div></div>}
-                {props.size != 0 ? <div className="people_bought">0 people bought</div> : <div></div>}
+                {props.size != 0 ? <div>Shipping price: {shipping_price} zł</div> : null}
+                {props.size != 0 ? <div>Total price: {Number(price) + Number(shipping_price)} zł</div> : null}
+                {props.size != 0 ? <div className="people_bought">0 people bought</div> : null}
             </div>
         </Link>
     );

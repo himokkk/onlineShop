@@ -201,7 +201,7 @@ const ProductList = (props: Props) => {
                     </div>
                 </div>
                 <div className="products-container">
-                    {spinnerActive ? <LoadingSpinner /> : <div></div>}
+                    {spinnerActive ? <LoadingSpinner /> : null}
                     {products.map((object: Product) => {
                         return <ProductComponent product={object} size={4} />;
                     })}

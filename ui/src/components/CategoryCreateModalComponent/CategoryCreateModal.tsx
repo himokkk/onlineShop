@@ -63,9 +63,7 @@ const CategoryCreateModal = () => {
                         </form>
                     </div>
                 </div>
-            ) : (
-                <div></div>
-            )}
+            ) : null}
         </div>
     );
 };

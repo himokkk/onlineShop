@@ -18,7 +18,7 @@ const Select = (props: Props) => {
     return (
         <div id={props.id} className="select prevent-select">
             <label htmlFor="select">{props.label}</label>
-            {props.icon ? <props.icon className="select-icon" size="18" /> : <div></div>}
+            {props.icon ? <props.icon className="select-icon" size="18" /> : null}
             <select
                 name={props.name}
                 onChange={e => {

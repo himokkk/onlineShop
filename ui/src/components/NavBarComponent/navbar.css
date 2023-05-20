@@ -49,7 +49,7 @@
     background-color: #ffffff;
     border-radius: 0.25rem;
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.06);
-    padding: 0.5rem 1rem 0.5rem 1rem;
+    padding: 0.5rem;
     color: #374151;
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -63,6 +63,11 @@
 .product_container {
     display: flex;
     align-items: center;
+    padding: 0.5rem;
+}
+
+.product_container:hover {
+    background-color: #eceff1;
 }
 
 .remove_cart {

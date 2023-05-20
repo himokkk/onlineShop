@@ -114,7 +114,6 @@ const NavBar: React.FC = () => {
         <div className="navbar-container">
             <Link to="/" id="home-button" className="nav-button">
                 <AiOutlineShop className="logo" size="50" />
-                <div>Home</div>
             </Link>
             <div className="left-nav">
                 <ProductCreateModal />
@@ -124,12 +123,14 @@ const NavBar: React.FC = () => {
                     <BsCart4 />
                     <div id="cart-dropdown-content" className={showCartDropdown ? "" : "hidden"}>
                         {cart.map((object: Product) => {
-                            return <div className="product_container">
+                            return (
+                                <div className="product_container">
                                     <ProductComponent product={object} size={1} />
-                                        <div className="remove_cart" onClick={RemoveFromCart} id={"item-"+object.id}>
-                                            x
-                                        </div>
-                                    </div>;
+                                    <div className="remove_cart" onClick={RemoveFromCart} id={"item-" + object.id}>
+                                        x
+                                    </div>
+                                </div>
+                            );
                         })}
                         <div className="cart-sum">
                             <div>Product price: {cartSum}</div>

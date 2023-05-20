@@ -22,12 +22,17 @@ class OrderListView(ListAPIView):
         user = Token.objects.get(key=token).user
         user_profile = UserProfile.objects.get(user=user)
         queryset = queryset.filter(owner=user_profile)
+
+        status = self.request.GET.get("status", None)
+        if status:
+            queryset = queryset.filter(status=status)
         if query_params:
             size = query_params.get("size", None)
             if size:
                 size = int(size)
             else:
                 size = 25
+
 
         # items_count = queryset.count()
         # page = query_params.get("page", 1)
