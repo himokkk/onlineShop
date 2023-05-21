@@ -82,6 +82,7 @@
 
 .products-container {
     position: relative;
+    min-width: 45rem;
 }
 
 .product:hover {

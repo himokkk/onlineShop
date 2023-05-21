@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import getData from "../functions/getData";
 import NavBar from "../components/NavBarComponent/NavBar";
@@ -32,11 +32,6 @@ const ProfilePage: React.FC = () => {
         });
     }, []);
 
-    const changeProfilePicture = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files;
-        console.log("image changed");
-    };
-
     return (
         <div>
             <NavBar />
@@ -49,9 +44,13 @@ const ProfilePage: React.FC = () => {
                 ) : (
                     <img src={imageURL} className="profile-picture prevent-select" />
                 )}
-
                 <div className="profile-main">
-                    <span>{username}</span>
+                    <div className="upper_bar">
+                        <span>{username}</span>
+                        <Link to={"/message/" + id} className="black_link">
+                            <div className="message_button">message</div>
+                        </Link>
+                    </div>
                     <hr />
                     <div className="profile-description">{description}</div>
                 </div>

@@ -6,6 +6,7 @@ from .product import ProductCreateView, ProductListView, ProductRetrieveView
 from .review import ReviewCreateView, ReviewListView
 from .user import (CartAddView, CartRemoveView, LoggedUserView, UserCreateView,
                    UserListView, UserView, ChangeUserImageView, PasswordResetView, GetPasswordResetHashView)
+from .message import MessageCreateView, MessageListView
 
 __all__ = [
     "LoginView",
@@ -31,4 +32,6 @@ __all__ = [
     "ChangeUserImageView",
     "PasswordResetView",
     "GetPasswordResetHashView",
+    "MessageCreateView",
+    "MessageListView"
 ]

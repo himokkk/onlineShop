@@ -1,5 +1,6 @@
 import { SetStateAction } from "react";
 import getCookie from "../functions/getCookie";
+import Cookies from "universal-cookie";
 
 interface Props {
     url: string;
@@ -9,6 +10,9 @@ interface Props {
 }
 
 let postData = async (props: Props) => {
+    const cookies = new Cookies();
+    const token = cookies.get("token");
+
     if (props.url.includes("null")) {
         return;
     }
@@ -18,6 +22,7 @@ let postData = async (props: Props) => {
         method: "POST",
         headers: {
             "X-CSRFToken": csrftoken,
+            Authorization: token,
         },
         body: props.data,
     }).then(response => {

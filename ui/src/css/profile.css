@@ -30,3 +30,19 @@
 .profile-description {
     margin-top: 1rem;
 }
+
+.upper_bar {
+    display: flex;
+}
+
+.message_button {
+    background-color: var(--orange);
+    padding: 0.5rem;
+    margin-left: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.black_link {
+    color: black;
+}

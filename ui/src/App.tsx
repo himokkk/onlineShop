@@ -12,6 +12,7 @@ import OrdersListPage from "./pages/OrdersListPage";
 import OrderPage from "./pages/OrderPage";
 import ForgottenPasswordPage from "./pages/ForgottenPasswordPage";
 import PasswordResetPage from "./pages/PasswordResetPage";
+import ConversationPage from "./pages/ConversationPage";
 
 const App: React.FC = () => {
     //console.log = console.warn = console.error = () => {};
@@ -30,6 +31,7 @@ const App: React.FC = () => {
             <Route path="/pay/:id" element={<PayPage />}></Route>
             <Route path="/orders/" element={<OrdersListPage />}></Route>
             <Route path="/order/:id" element={<OrderPage />}></Route>
+            <Route path="/message/:id" element={<ConversationPage />}></Route>
         </Routes>
     );
 };
