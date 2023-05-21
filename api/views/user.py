@@ -6,14 +6,16 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+from django.contrib.auth.hashers import make_password
 from rest_framework.parsers import MultiPartParser, FormParser
 import hashlib
 import random
 import string
 
+
 from ..models import Product, UserProfile, Hash
 from ..permission import TokenProvidedPermission
-from ..serializers import UserProfileSerializer
+from ..serializers import UserProfileSerializer, UserSerializer
 
 
 class LoggedUserView(APIView):
@@ -55,6 +57,7 @@ class UserListView(ListAPIView):
 class UserCreateView(CreateAPIView):
     serializer_class = UserProfileSerializer
     queryset = UserProfile.objects.all()
+
 
 
 class ChangeUserImageView(APIView):
