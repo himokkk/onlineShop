@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+import configparser
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -67,6 +68,20 @@ DATABASES = {
         "PORT": "5432",
     }
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+current_file_path = os.getcwd()
+config_path = os.path.join(current_file_path, "shop", "config.ini")
+config = configparser.ConfigParser()
+config.read(config_path)
+
+EMAIL_HOST = config.get("SMTP", "HOST")
+EMAIL_PORT = config.get("SMTP", "PORT")
+EMAIL_USE_TLS = True  # Set it to False if your server does not use TLS/SSL
+EMAIL_HOST_USER = config.get("SMTP", "HOST_USER")
+EMAIL_HOST_PASSWORD = config.get("SMTP", "HOST_PASSWORD")
 
 AUTH_PASSWORD_VALIDATORS = [
     {

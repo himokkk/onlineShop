@@ -5,7 +5,7 @@ from .views import (CartAddView, CartRemoveView, CategoryCreateView,
                     OrderCreateView, OrderListView, OrderRetrieveView,
                     OrderStatusView, ProductCreateView, ProductListView,
                     ProductRetrieveView, RegisterView, ReviewCreateView, ChangeUserImageView,
-                    ReviewListView, UserListView, UserView, admin_logout_view)
+                    ReviewListView, UserListView, UserView, admin_logout_view, PasswordResetView, GetPasswordResetHashView)
 
 urlpatterns = [
     path("login/", LoginView.as_view()),
@@ -15,6 +15,8 @@ urlpatterns = [
     path("user/list/", UserListView.as_view()),
     path("user/current/", LoggedUserView.as_view()),
     path("user/avatar_change/", ChangeUserImageView.as_view()),
+    path("user/reset_password/<hash>", PasswordResetView.as_view()),
+    path("user/reset_password/", GetPasswordResetHashView.as_view()),
     path("cart/add/", CartAddView.as_view()),
     path("cart/remove/", CartRemoveView.as_view()),
     path("product/list/", ProductListView.as_view()),

@@ -1,0 +1,14 @@
+.back_to_login,
+.sign_up {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.sign_up {
+    padding-top: 0.8rem;
+}
+
+.back_to_login {
+    padding-top: 0.2rem;
+}
