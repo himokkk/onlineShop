@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import getData from "../functions/getData";
 
 import "../css/conversation.css";
@@ -14,13 +14,21 @@ import NavBar from "../components/NavBarComponent/NavBar";
 const ConversationPage: React.FC = () => {
     const { id } = useParams();
     const formRef = useRef(null);
-    const cookies = new Cookies();
 
     const [messages, setMessages] = useState<Message[]>([]);
     const [isOwner, setIsOwner] = useState<boolean>(false);
     const [username, setUsername] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [imageURL, setImageURL] = useState<string>("");
+
+    const cookies = new Cookies();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!cookies.get("token")) {
+            navigate("/login");
+        }
+    }, []);
 
     useEffect(() => {
         getData({ url: "/api/user/" + id }).then(response => {

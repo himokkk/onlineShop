@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import postData from "../functions/postData";
 import "../css/orders.css";
@@ -13,6 +13,12 @@ const OrdersListPage: React.FC = () => {
     const [orders, setOrders] = useState<Order[]>([]);
     const [status, setStatus] = useState<string>("waiting for payment");
     const cookies = new Cookies();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!cookies.get("token")) {
+            navigate("/login");
+        }
+    }, []);
 
     useEffect(() => {
         const token = cookies.get("token");

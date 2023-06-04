@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 
 import LoadingSpinner from "../components/LoadingSpinnerComponent/LoadingSpinner";
@@ -13,6 +13,13 @@ const PayPage: React.FC = () => {
     const [spinnerActive, setSpinnerActive] = useState<boolean>(true);
 
     const cookies = new Cookies();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!cookies.get("token")) {
+            navigate("/login");
+        }
+    }, []);
 
     useEffect(() => {
         getData({ url: "/api/order/" + id }).then(response => {

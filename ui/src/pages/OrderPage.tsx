@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Order from "../interfaces/order";
 import getData from "../functions/getData";
 import ProductList from "../components/ProductsListComponent/ProductsList";
+import Cookies from "universal-cookie";
 const OrderPage: React.FC = () => {
     const { id } = useParams();
     const [order, setOrder] = useState<Order>();
+
+    const cookies = new Cookies();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!cookies.get("token")) {
+            navigate("/login");
+        }
+    }, []);
 
     useEffect(() => {
         getData({ url: "api/order/" + id }).then(data => {

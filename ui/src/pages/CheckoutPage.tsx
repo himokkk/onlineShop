@@ -23,6 +23,12 @@ const CheckoutPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (!cookies.get("token")) {
+            navigate("/login");
+        }
+    }, []);
+
+    useEffect(() => {
         const token = cookies.get("token");
         const form_data = new FormData();
         form_data.append("token", token);
