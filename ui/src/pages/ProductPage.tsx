@@ -85,6 +85,7 @@ const ProductPage = () => {
                             <br />
                             Total: {price + shippingPrice} zł <br />
                             <SubmitButton name="Add to cart" id="buy-button" onClick={AddToCart} />
+                            User: <a href={"/#/profile/" + ownerId}>{ownerName ? ownerName : "Unknown"}</a>
                         </div>
                     </div>
                     <div className="profile-description">Description: {description}</div>
