@@ -71,3 +71,7 @@
     margin: 0.5rem;
     cursor: pointer;
 }
+
+#orange_button {
+    background-color: var(--orange);
+}

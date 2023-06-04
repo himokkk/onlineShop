@@ -25,6 +25,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "owner",
             "owner_name",
             "image_url",
+            "image",
             "description",
             "has_review"
         ]

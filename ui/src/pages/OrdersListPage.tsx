@@ -46,16 +46,38 @@ const OrdersListPage: React.FC = () => {
             <div className="orders_container">
                 <div className="orders_content">
                     <div className="status_change_buttons_container prevent-select">
-                        <div className="status_change_button" onClick={() => setStatus("waiting for payment")}>
+                        <div
+                            className={
+                                status === "waiting for payment"
+                                    ? "orange_button status_change_button"
+                                    : "status_change_button"
+                            }
+                            onClick={() => setStatus("waiting for payment")}
+                        >
                             Not paid
                         </div>
-                        <div className="status_change_button" onClick={() => setStatus("paid")}>
+                        <div
+                            onClick={() => setStatus("paid")}
+                            className={
+                                status === "paid" ? "orange_button status_change_button" : "status_change_button"
+                            }
+                        >
                             Paid
                         </div>
-                        <div className="status_change_button" onClick={() => setStatus("sent")}>
+                        <div
+                            className={
+                                status === "sent" ? "orange_button status_change_button" : "status_change_button"
+                            }
+                            onClick={() => setStatus("sent")}
+                        >
                             Sent
                         </div>
-                        <div className="status_change_button" onClick={() => setStatus("delivered")}>
+                        <div
+                            className={
+                                status === "delivered" ? "orange_button status_change_button" : "status_change_button"
+                            }
+                            onClick={() => setStatus("delivered")}
+                        >
                             Delivered
                         </div>
                     </div>
