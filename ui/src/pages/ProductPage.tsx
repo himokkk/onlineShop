@@ -5,11 +5,13 @@ import getData from "../functions/getData";
 import postData from "../functions/postData";
 import NavBar from "../components/NavBarComponent/NavBar";
 import SubmitButton from "../components/SubmitButtonComponent/SubmitButton";
+import Review from "../interfaces/review";
 
 import Cookies from "universal-cookie";
 
 import "../css/basic.css";
 import "../css/product.css";
+import RatingComponent from "../components/RatingComponent/RatingComponent";
 
 const ProductPage = () => {
     const { id } = useParams();
@@ -23,6 +25,7 @@ const ProductPage = () => {
     const [ownerId, setOwnerId] = useState<number>(0);
     const [ownerName, setOwnerName] = useState<string>("");
     const [description, setDescription] = useState<string>("");
+    const [reviews, setReviews] = useState<Review[]>([]);
 
     useEffect(() => {
         const form_data = new FormData();
@@ -43,6 +46,7 @@ const ProductPage = () => {
             } else {
                 setImageURL("media/product/default.png");
             }
+            setReviews(response["reviews"]);
         });
     }, []);
 
@@ -70,7 +74,7 @@ const ProductPage = () => {
         <div>
             <NavBar />
             <div className="product-container">
-                <div>
+                <div className="profile">
                     <div className="product-header">
                         <img src={imageURL} className="product-picture prevent-select" />
                         <div className="product-main">
@@ -84,6 +88,25 @@ const ProductPage = () => {
                         </div>
                     </div>
                     <div className="profile-description">Description: {description}</div>
+                </div>
+                <div>
+                    <div>
+                        {reviews.map(review => (
+                            <div className="review_container">
+                                User: <a href={"/#/profile/" + review.owner}>{review.owner_name}</a>
+                                {review.review_type === "overall" ? (
+                                    <RatingComponent defaultValue={review.overall_rating} />
+                                ) : (
+                                    <div>
+                                        Quality: <RatingComponent defaultValue={review.quality_rating} />
+                                        Communication: <RatingComponent defaultValue={review.communication_rating} />
+                                        Delivery: <RatingComponent defaultValue={review.delivery_rating} />
+                                    </div>
+                                )}
+                                <div>Description: {review.description}</div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

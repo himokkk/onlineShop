@@ -40,3 +40,13 @@
 #buy-button {
     margin-top: 1rem;
 }
+
+.profile {
+    border-bottom: 1px solid black;
+    padding-bottom: 1rem;
+}
+
+.review_container {
+    padding: 1rem;
+    border-bottom: 1px solid black;
+}

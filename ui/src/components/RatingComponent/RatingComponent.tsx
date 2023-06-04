@@ -2,14 +2,15 @@ import React, { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 
 interface Props {
-    setRating: Function;
+    setRating?: Function;
+    defaultValue?: number;
 }
 
 const RatingComponent = (props: Props) => {
-    const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState(props.defaultValue ? props.defaultValue : 0);
 
     useEffect(() => {
-        props.setRating(rating);
+        if (props.setRating) props.setRating(rating);
     }, [rating]);
 
     return (

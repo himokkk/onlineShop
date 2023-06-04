@@ -7,6 +7,7 @@ interface Order {
     communication_rating: number;
     description: string;
     owner: number;
+    owner_name: string;
     post_date: Date;
 }
 
