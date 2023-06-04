@@ -3,7 +3,7 @@ from .login import LoginView, RegisterView, admin_logout_view
 from .order import (OrderCreateView, OrderListView, OrderRetrieveView,
                     OrderStatusView)
 from .product import ProductCreateView, ProductListView, ProductRetrieveView
-from .review import ReviewCreateView, ReviewListView
+from .review import ReviewUpdateView, ReviewListView
 from .user import (CartAddView, CartRemoveView, LoggedUserView, UserCreateView,
                    UserListView, UserView, ChangeUserImageView, PasswordResetView, GetPasswordResetHashView)
 from .message import MessageCreateView, MessageListView
@@ -24,7 +24,7 @@ __all__ = [
     "admin_logout_view",
     "LoggedUserView",
     "ReviewListView",
-    "ReviewCreateView",
+    "ReviewUpdateView",
     "OrderListView",
     "OrderCreateView",
     "OrderStatusView",

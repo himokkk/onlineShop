@@ -9,14 +9,14 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ["id", "content", "grade", "owner", "owner_name", "post_date"]
+        fields = '__all__'
 
     def get_owner_name(self, obj):
         if obj.owner:
-            return str(obj.owner)
+             return str(obj.owner)
 
 
 class ReviewCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
-        fields = ["content", "grade", "product"]
+        fields = '__all__'

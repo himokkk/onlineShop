@@ -6,7 +6,6 @@ import { AiOutlineShop } from "react-icons/ai";
 import { BsCart4 } from "react-icons/bs";
 
 import ProductComponent from "../ProductComponent/ProductComponent";
-import CategoryCreateModal from "../CategoryCreateModalComponent/CategoryCreateModal";
 import ProductCreateModal from "../ProductCreateModalComponent/ProductCreateModal";
 import Product from "../../interfaces/product";
 
@@ -117,8 +116,6 @@ const NavBar: React.FC = () => {
             </Link>
             <div className="left-nav">
                 <ProductCreateModal />
-                <CategoryCreateModal />
-                <div className="search-button nav-button">Search</div>
                 <div className="dropdown nav-button" id="cart-dropdown">
                     <BsCart4 />
                     <div id="cart-dropdown-content" className={showCartDropdown ? "" : "hidden"}>
@@ -149,8 +146,8 @@ const NavBar: React.FC = () => {
                             <a href={"/#/profile/" + user_id} className="nav-profile">
                                 Profile
                             </a>
-                            <a href="#" className="nav-settings">
-                                Settings
+                            <a href="/#/orders" className="nav-settings">
+                                Orders
                             </a>
                         </div>
                         <Link to="/logout" className="nav-logout">

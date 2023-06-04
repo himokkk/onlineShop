@@ -15,6 +15,8 @@ interface Order {
     street: string;
     apartament: string;
     postal_code: string;
+    total_products_cost: number;
+    total_shipping_cost: number;
 }
 
 export default Order;

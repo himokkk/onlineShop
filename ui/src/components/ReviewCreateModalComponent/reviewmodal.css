@@ -1,0 +1,44 @@
+.submit-button {
+    width: 19rem;
+}
+
+.add_product_button {
+    font-size: 1rem;
+    padding: 0.5rem;
+    background-color: var(--orange);
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.rating {
+  display: inline-block;
+}
+
+.rating input {
+  display: none;
+}
+
+.type__button {
+  padding: 10px 20px;
+
+}
+
+.orange_button {
+  background-color: var(--orange);
+}
+
+.type__buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.detailed_rating {
+    display: flex;
+    flex-direction: column;
+}
+
+.review_form span{
+    text-align: left;
+    font-size: 1.5rem;
+}
+

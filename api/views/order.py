@@ -1,12 +1,14 @@
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from django.shortcuts import get_object_or_404
 from rest_framework.generics import (CreateAPIView, ListAPIView,
                                      RetrieveAPIView, UpdateAPIView)
 from rest_framework.response import Response
 
-from ..models import Order, UserProfile
+from ..models import Order, UserProfile, Review, Product
 from ..permission import TokenProvidedPermission
 from ..serializers import OrderSerializer, OrderStatusSerializer
+from django.utils import timezone
 
 
 class OrderListView(ListAPIView):
@@ -39,6 +41,11 @@ class OrderListView(ListAPIView):
         # start_index = size * (int(page) - 1)
         # end_index = start_index + size
         # queryset = queryset[start_index:end_index]
+        if status == "sent":
+            for instance in queryset:
+                if timezone.now() - timezone.timedelta(minutes=2) > instance.modified_date:
+                    instance.status = "delivered"
+                    instance.save()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -56,6 +63,8 @@ class OrderCreateView(CreateAPIView):
         data["owner"] = user_profile.id
         items = request.data.getlist("items[]")
         data["items"] = items
+        for item in items:
+            Review.objects.get_or_create(owner=user_profile, product_id=item)
         # user_profile.cart.clear()
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
@@ -114,3 +123,12 @@ class OrderStatusView(UpdateAPIView):
 class OrderRetrieveView(RetrieveAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+
+        if instance.status == "sent" and timezone.now() - timezone.timedelta(minutes=2) > instance.modified_date:
+            instance.status = "delivered"
+            instance.save()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)

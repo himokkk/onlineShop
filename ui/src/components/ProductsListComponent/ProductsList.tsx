@@ -11,11 +11,16 @@ import InputField from "../InputFieldComponent/InputField";
 import ProductComponent from "../ProductComponent/ProductComponent";
 
 import "./productlist.css";
+import ReviewCreateModal from "../ReviewCreateModalComponent/ReviewCreateModal";
 
 interface Props {
     category?: number;
     owner?: number;
     defaultSize?: number;
+    productsSize?: number;
+    products?: Product[];
+    canBeReviewed?: boolean;
+    bars?: boolean;
 }
 
 const ProductList = (props: Props) => {
@@ -76,6 +81,11 @@ const ProductList = (props: Props) => {
     }, [page]);
 
     useEffect(() => {
+        if (props.products) {
+            setProducts(props.products);
+            setSpinnerActive(false);
+            return;
+        }
         getData({ url: url }).then(response => {
             setSpinnerActive(false);
             setProductsCount(response["count"]);
@@ -128,83 +138,100 @@ const ProductList = (props: Props) => {
 
     return (
         <div className="products-main">
-            <div className="sorting_container">
-                <div className="size-filters">
-                    <label>Page Size</label>
-                    <span id="size-10" onClick={changeSize}>
-                        10
-                    </span>
-                    <span id="size-25" onClick={changeSize}>
-                        25
-                    </span>
-                    <span id="size-50" onClick={changeSize}>
-                        50
-                    </span>
-                </div>
-                <div className="pages">
-                    <div onClick={changePageLeft}>
-                        <MdOutlineKeyboardArrowLeft id="left-page-arrow" />
+            {props.bars ? null : (
+                <div className="sorting_container">
+                    <div className="size-filters">
+                        <label>Page Size</label>
+                        <span id="size-10" onClick={changeSize}>
+                            10
+                        </span>
+                        <span id="size-25" onClick={changeSize}>
+                            25
+                        </span>
+                        <span id="size-50" onClick={changeSize}>
+                            50
+                        </span>
                     </div>
-                    {size * (page - 1) + 1}-{size * page > productsCount ? productsCount : size * page}
-                    <div onClick={changePageRight}>
-                        <MdOutlineKeyboardArrowRight id="right-page-arrow" />
+                    <div className="pages">
+                        <div onClick={changePageLeft}>
+                            <MdOutlineKeyboardArrowLeft id="left-page-arrow" />
+                        </div>
+                        {size * (page - 1) + 1}-{size * page > productsCount ? productsCount : size * page}
+                        <div onClick={changePageRight}>
+                            <MdOutlineKeyboardArrowRight id="right-page-arrow" />
+                        </div>
+                        of {productsCount}
                     </div>
-                    of {productsCount}
                 </div>
-            </div>
+            )}
             <div className="products_container">
-                <div className="filters-container">
-                    <Select
-                        id="sorting-select"
-                        default="Choose sorting"
-                        setFunction={setSort}
-                        label="Sorting"
-                        options={sortSelect}
-                        name="sort"
-                        icon={BiSortZA}
-                    />
-                    <div className="price-sort">
-                        <div>
-                            <input type="checkbox" checked={priceOption === 1} onChange={() => setPriceOption(1)} />
-                            under 10 zł
-                        </div>
-                        <div>
-                            <input type="checkbox" checked={priceOption === 2} onChange={() => setPriceOption(2)} />
-                            10zł to 15zł
-                        </div>
-                        <div>
-                            <input type="checkbox" checked={priceOption === 3} onChange={() => setPriceOption(3)} />
-                            15zł to 25zł
-                        </div>
-                        <div>
-                            <input type="checkbox" checked={priceOption === 4} onChange={() => setPriceOption(4)} />
-                            25zł to 35zł
-                        </div>
-                        <div>
-                            <input type="checkbox" checked={priceOption === 5} onChange={() => setPriceOption(5)} />
-                            35zł and above
-                        </div>
-                        <div className="price_inputs">
-                            <InputField
-                                id="min_price"
-                                placeholder="min price"
-                                label="Min Price"
-                                onChange={setMinPrice}
-                            />
-                            <span>-</span>
-                            <InputField
-                                id="max_price"
-                                placeholder="max price"
-                                label="Max Price"
-                                onChange={setMaxPrice}
-                            />
+                {props.bars ? null : (
+                    <div className="filters-container">
+                        <Select
+                            id="sorting-select"
+                            default="Choose sorting"
+                            setFunction={setSort}
+                            label="Sorting"
+                            options={sortSelect}
+                            name="sort"
+                            icon={BiSortZA}
+                        />
+                        <div className="price-sort">
+                            <div>
+                                <input type="checkbox" checked={priceOption === 1} onChange={() => setPriceOption(1)} />
+                                under 10 zł
+                            </div>
+                            <div>
+                                <input type="checkbox" checked={priceOption === 2} onChange={() => setPriceOption(2)} />
+                                10zł to 15zł
+                            </div>
+                            <div>
+                                <input type="checkbox" checked={priceOption === 3} onChange={() => setPriceOption(3)} />
+                                15zł to 25zł
+                            </div>
+                            <div>
+                                <input type="checkbox" checked={priceOption === 4} onChange={() => setPriceOption(4)} />
+                                25zł to 35zł
+                            </div>
+                            <div>
+                                <input type="checkbox" checked={priceOption === 5} onChange={() => setPriceOption(5)} />
+                                35zł and above
+                            </div>
+                            <div className="price_inputs">
+                                <InputField
+                                    id="min_price"
+                                    placeholder="min price"
+                                    label="Min Price"
+                                    onChange={setMinPrice}
+                                />
+                                <span>-</span>
+                                <InputField
+                                    id="max_price"
+                                    placeholder="max price"
+                                    label="Max Price"
+                                    onChange={setMaxPrice}
+                                />
+                            </div>
                         </div>
                     </div>
-                </div>
+                )}
                 <div className="products-container">
                     {spinnerActive ? <LoadingSpinner /> : null}
                     {products.map((object: Product) => {
-                        return <ProductComponent product={object} size={4} />;
+                        if (!props.canBeReviewed || object.has_review)
+                            return (
+                                <ProductComponent product={object} size={props.productsSize ? props.productsSize : 4} />
+                            );
+                        else
+                            return (
+                                <div>
+                                    <ProductComponent
+                                        product={object}
+                                        size={props.productsSize ? props.productsSize : 4}
+                                    />
+                                    <ReviewCreateModal product_id={object.id} />
+                                </div>
+                            );
                     })}
                 </div>
             </div>

@@ -25,24 +25,12 @@ const ProductComponent = (props: Props) => {
             <img src={props.product.image_url} className="prevent-select" />
             <div>
                 <div className="product-name">{props.product.name}</div>
-                {props.size != 0 ? (
-                    <div>
-                        4.8
-                        <AiFillStar fill="#fb923c" />
-                        <AiFillStar fill="#fb923c" />
-                        <AiFillStar fill="#fb923c" />
-                        <AiFillStar fill="#fb923c" />
-                        <AiFillStar fill="#fb923c" />
-                        10 reviews
-                        <div>{props.product.description}</div>
-                    </div>
-                ) : null}
+                {props.size != 0 ? <div>{props.product.description}</div> : null}
             </div>
             <div className="right-container">
                 <div>{price} zł</div>
                 {props.size != 0 ? <div>Shipping price: {shipping_price} zł</div> : null}
                 {props.size != 0 ? <div>Total price: {Number(price) + Number(shipping_price)} zł</div> : null}
-                {props.size != 0 ? <div className="people_bought">0 people bought</div> : null}
             </div>
         </Link>
     );
