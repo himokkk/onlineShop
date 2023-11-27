@@ -4,3 +4,4 @@ media/
 .devcontainer/
 .vscode/
 *.ini
+venv/

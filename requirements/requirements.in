@@ -1,0 +1,6 @@
+Django
+psycopg2
+djangorestframework
+Pillow
+configparser
+django-extensions
