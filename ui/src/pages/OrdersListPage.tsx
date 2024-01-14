@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
-import postData from "../functions/postData";
+import apiCall from "../functions/apiCall";
 import "../css/orders.css";
 
 import Order from "../interfaces/order";
@@ -21,11 +21,9 @@ const OrdersListPage: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        const token = cookies.get("token");
         const form_data = new FormData();
-        form_data.append("token", token);
         let url = "/api/order/list/?status=" + status;
-        postData({ url: url, data: form_data })
+        apiCall({ url: url, method: "POST", data: form_data })
             .then(response => {
                 if (response && response.ok) {
                     return response.json();

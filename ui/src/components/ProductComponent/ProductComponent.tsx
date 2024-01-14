@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { AiFillStar } from "react-icons/ai";
 
 import Product from "../../interfaces/product";
 import "./product.css";

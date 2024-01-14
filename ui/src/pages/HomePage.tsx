@@ -6,11 +6,11 @@ import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-i
 import ProductsList from "../components/ProductsListComponent/ProductsList";
 import LoadingSpinner from "../components/LoadingSpinnerComponent/LoadingSpinner";
 import NavBar from "../components/NavBarComponent/NavBar";
-import getData from "../functions/getData";
 import Category from "../interfaces/category";
 
 import "../css/basic.css";
 import "../css/home.css";
+import apiCall from "../functions/apiCall";
 
 const HomePage: React.FC = () => {
     const cookies = new Cookies();
@@ -28,7 +28,7 @@ const HomePage: React.FC = () => {
         // form_data.append("content", "review123");
         // form_data.append("grade", "4");
         // form_data.append("product", "5");
-        // postData({ url: "/api/review/create/", data: form_data }).then(response => {});
+        // callApi({ url: "/api/review/create/", data: form_data }).then(response => {});
     }, []);
 
     useEffect(() => {
@@ -38,7 +38,7 @@ const HomePage: React.FC = () => {
             svg_url: "0",
         };
 
-        getData({ url: "/api/category/list/" }).then(response => {
+        apiCall({ url: "/api/category/list/", method: "GET" }).then(response => {
             setCategories(() => [allCategory, ...response]);
             setSpinnerActive(false);
         });

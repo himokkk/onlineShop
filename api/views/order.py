@@ -1,18 +1,19 @@
+from django.shortcuts import get_object_or_404
+from django.utils import timezone
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from django.shortcuts import get_object_or_404
 from rest_framework.generics import (CreateAPIView, ListAPIView,
                                      RetrieveAPIView, UpdateAPIView)
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from ..models import Order, UserProfile, Review, Product
+from ..models import Order, Product, Review, UserProfile
 from ..permission import TokenProvidedPermission
 from ..serializers import OrderSerializer, OrderStatusSerializer
-from django.utils import timezone
 
 
 class OrderListView(ListAPIView):
-    permission_classes = [TokenProvidedPermission]
+    permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
 
@@ -20,9 +21,8 @@ class OrderListView(ListAPIView):
         queryset = self.queryset.all()
 
         query_params = self.request.data
-        token = query_params.get("token", None)
-        user = Token.objects.get(key=token).user
-        user_profile = UserProfile.objects.get(user=user)
+
+        user_profile = request.user.profile
         queryset = queryset.filter(owner=user_profile)
 
         status = self.request.GET.get("status", None)
@@ -35,7 +35,6 @@ class OrderListView(ListAPIView):
             else:
                 size = 25
 
-
         # items_count = queryset.count()
         # page = query_params.get("page", 1)
         # start_index = size * (int(page) - 1)
@@ -43,7 +42,10 @@ class OrderListView(ListAPIView):
         # queryset = queryset[start_index:end_index]
         if status == "sent":
             for instance in queryset:
-                if timezone.now() - timezone.timedelta(minutes=2) > instance.modified_date:
+                if (
+                    timezone.now() - timezone.timedelta(minutes=2)
+                    > instance.modified_date
+                ):
                     instance.status = "delivered"
                     instance.save()
         serializer = self.get_serializer(queryset, many=True)
@@ -51,21 +53,19 @@ class OrderListView(ListAPIView):
 
 
 class OrderCreateView(CreateAPIView):
-    permission_classes = [TokenProvidedPermission]
+    permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
 
     def create(self, request, *args, **kwargs):
         data = request.data.dict()
-        token = request.data.get("token", None)
-        user = Token.objects.get(key=token).user
-        user_profile = UserProfile.objects.get(user=user)
+        user_profile = request.user.profile
         data["owner"] = user_profile.id
         items = request.data.getlist("items[]")
         data["items"] = items
         for item in items:
             Review.objects.get_or_create(owner=user_profile, product_id=item)
-        # user_profile.cart.clear()
+        user_profile.cart.clear()
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
@@ -77,7 +77,7 @@ class OrderCreateView(CreateAPIView):
 
 
 class OrderStatusView(UpdateAPIView):
-    permission_classes = [TokenProvidedPermission]
+    permission_classes = [IsAuthenticated]
     serializer_class = OrderStatusSerializer
     queryset = Order.objects.all()
     lookup_field = "pk"
@@ -89,8 +89,7 @@ class OrderStatusView(UpdateAPIView):
         order_status = request_data.get("status")
         token = request.data.get("token", None)
         try:
-            user = Token.objects.get(key=token).user
-            user_profile = UserProfile.objects.get(user=user)
+            user_profile = request.user.profile
             order_instance = Order.objects.get(pk=pk)
             if order_status != "sent":
                 request_data.pop("package_number", None)
@@ -121,13 +120,17 @@ class OrderStatusView(UpdateAPIView):
 
 
 class OrderRetrieveView(RetrieveAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
 
-        if instance.status == "sent" and timezone.now() - timezone.timedelta(minutes=2) > instance.modified_date:
+        if (
+            instance.status == "sent"
+            and timezone.now() - timezone.timedelta(minutes=2) > instance.modified_date
+        ):
             instance.status = "delivered"
             instance.save()
         serializer = self.get_serializer(instance)

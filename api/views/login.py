@@ -1,12 +1,12 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import redirect
+from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
-from rest_framework import status
 
 from ..serializers import UserSerializer
 
@@ -44,7 +44,10 @@ class RegisterView(CreateAPIView):
         user_instance = serializer.save()
         user_instance.set_password(password)
         user_instance.save()
-        return Response({'message': 'User registered successfully.'}, status=status.HTTP_201_CREATED)
+        return Response(
+            {"message": "User registered successfully."}, status=status.HTTP_201_CREATED
+        )
+
 
 def admin_logout_view(request):
     logout(request)

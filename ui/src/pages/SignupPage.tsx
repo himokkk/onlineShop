@@ -6,7 +6,7 @@ import { BsFillKeyFill } from "react-icons/bs";
 
 import InputField from "../components/InputFieldComponent/InputField";
 import SubmitButton from "../components/SubmitButtonComponent/SubmitButton";
-import postData from "../functions/postData";
+import apiCall from "../functions/apiCall";
 import resetErrors from "../functions/resetErrors";
 import setBlock from "../functions/setBlock";
 
@@ -50,7 +50,7 @@ const SignupPage: React.FC = () => {
                 return;
             }
 
-            postData({ url: "/api/signup/", data: form_data })
+            apiCall({ url: "/api/signup/", method: "POST", data: form_data })
                 .then(response => {
                     if (response && response.ok) {
                         navigate("/login");

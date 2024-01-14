@@ -1,22 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 
 import getCookie from "../../functions/getCookie";
-import getData from "../../functions/getData";
-import Category from "../../interfaces/category";
 
-import InputField from "../InputFieldComponent/InputField";
 import SubmitButton from "../SubmitButtonComponent/SubmitButton";
-import TextArea from "../TextAreaComponent/TextArea";
 import FileInput from "../FileInputComponent/FileInput";
 
-import Select from "../SelectComponent/Select";
 import Cookies from "universal-cookie";
 
-import { IoMdPricetag } from "react-icons/io";
-import { BiCategory } from "react-icons/bi";
-import { MdProductionQuantityLimits } from "react-icons/md";
-
 import "./profilepicturechange.css";
+import apiCall from "../../functions/apiCall";
 
 const ProfilePictureChangeModal = () => {
     const cookies = new Cookies();
@@ -29,22 +21,15 @@ const ProfilePictureChangeModal = () => {
     const SubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (avatarForm.current) {
-            let form_data = new FormData(avatarForm.current);
+            let data = new FormData(avatarForm.current);
             const csrftoken = getCookie("csrftoken") as string;
-
-            fetch("/api/user/avatar_change/", {
-                method: "PUT",
-                headers: {
-                    "X-CSRFToken": csrftoken,
-                    Authorization: cookies.get("token"),
-                },
-                body: form_data,
-            }).then(response => {
-                if (response.ok) {
-                    setIsVisible(false);
-                    window.location.reload();
-                } else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";
-            });
+            apiCall({url: "/api/user/avatar_change/", method: "PUT", data: data})
+                .then(response => {
+                    if (response.ok) {
+                        setIsVisible(false);
+                        window.location.reload();
+                    } else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";
+                });
         }
     };
 

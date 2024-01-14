@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import getCookie from "../../functions/getCookie";
-import getData from "../../functions/getData";
 import Category from "../../interfaces/category";
 
 import InputField from "../InputFieldComponent/InputField";
@@ -11,16 +9,17 @@ import FileInput from "../FileInputComponent/FileInput";
 
 import Select from "../SelectComponent/Select";
 import product_svg from "./product.svg";
-import Cookies from "universal-cookie";
 
 import { IoMdPricetag } from "react-icons/io";
 import { BiCategory } from "react-icons/bi";
 import { MdProductionQuantityLimits } from "react-icons/md";
 
 import "./productmodal.css";
+import apiCall from "../../functions/apiCall";
+import Product from "../../interfaces/product";
+import CategoryCreateModal from "../CategoryCreateModalComponent/CategoryCreateModal";
 
 const ProductCreateModal = () => {
-    const cookies = new Cookies();
     const modalRef = useRef(null);
     const errorRef = useRef(null);
     const productForm = useRef(null);
@@ -29,7 +28,7 @@ const ProductCreateModal = () => {
     const [isVisible, setIsVisible] = useState<boolean>(false);
 
     useEffect(() => {
-        getData({ url: "/api/category/list/" }).then(response => {
+        apiCall({ url: "/api/category/list/", method: "GET" }).then(response => {
             setCategories(response);
         });
     }, []);
@@ -38,19 +37,12 @@ const ProductCreateModal = () => {
         e.preventDefault();
         if (productForm.current) {
             let form_data = new FormData(productForm.current);
-            const csrftoken = getCookie("csrftoken") as string;
-            const token = cookies.get("token");
-            form_data.append("token", token);
-            fetch("/api/product/create/", {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": csrftoken,
-                },
-                body: form_data,
-            }).then(response => {
-                if (response.ok) setIsVisible(false);
-                else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";
-            });
+
+            apiCall({url: "/api/product/create/", method: "POST", data: form_data})
+                .then(data => {
+                    if (data["id"]) setIsVisible(false);
+                    else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";
+                })
         }
     };
 

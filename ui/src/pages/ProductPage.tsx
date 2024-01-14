@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-import getData from "../functions/getData";
-import postData from "../functions/postData";
+import apiCall from "../functions/apiCall";
 import NavBar from "../components/NavBarComponent/NavBar";
 import SubmitButton from "../components/SubmitButtonComponent/SubmitButton";
 import Review from "../interfaces/review";
@@ -31,7 +30,7 @@ const ProductPage = () => {
         const form_data = new FormData();
         form_data.append("token", cookies.get("token"));
 
-        getData({ url: "/api/product/" + id }).then(response => {
+        apiCall({ url: "/api/product/" + id, method: "GET"}).then(response => {
             setName(response["name"]);
             setPrice(response["price"]);
             setShippingPrice(response["shipping_price"]);
@@ -57,13 +56,7 @@ const ProductPage = () => {
         // @ts-ignore
         form_data.append("item", id as number);
 
-        postData({ url: "/api/cart/add/", data: form_data })
-            .then(response => {
-                if (response && response.ok) {
-                    return response.json();
-                }
-                throw response;
-            })
+        apiCall({ url: "/api/cart/add/", method: "POST", data: form_data })
             .then(data => {})
             .catch(error => {
                 console.error("Error fetching data:", error);

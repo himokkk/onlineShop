@@ -1,7 +1,8 @@
-from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
-from rest_framework.authtoken.models import Token
-from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authtoken.models import Token
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from ..models import Category, Product, UserProfile
 from ..serializers import ProductCreateSerializer, ProductSerializer
@@ -71,16 +72,15 @@ class ProductListView(ListAPIView):
 
 
 class ProductCreateView(CreateAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
 
     def create(self, request, *args, **kwargs):
-        data = request.data.dict()
-        token = request.data.get("token", None)
-        user = Token.objects.get(key=token).user
-        user_profile = UserProfile.objects.get(user=user)
-        data["owner"] = user_profile.id
+        user_profile = request.user.profile
 
+        data = request.data.dict()
+        data["owner"] = user_profile.id
         serializer = self.get_serializer(data=data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)

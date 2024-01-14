@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import Order from "../interfaces/order";
-import getData from "../functions/getData";
 import ProductList from "../components/ProductsListComponent/ProductsList";
 import Cookies from "universal-cookie";
+import apiCall from "../functions/apiCall";
 const OrderPage: React.FC = () => {
     const { id } = useParams();
     const [order, setOrder] = useState<Order>();
@@ -19,7 +19,7 @@ const OrderPage: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        getData({ url: "api/order/" + id }).then(data => {
+        apiCall({ url: "api/order/" + id, method: "GET" }).then(data => {
             setOrder(data);
         });
     }, []);

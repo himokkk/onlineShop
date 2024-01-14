@@ -1,6 +1,7 @@
+import configparser
+import datetime
 import os
 from pathlib import Path
-import configparser
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,18 +21,19 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "api",
-    "django_extensions"
+    "django_extensions",
 ]
-
-GRAPH_MODELS = {
-    'all_applications': True,
-    'group_models': True,
-}
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     )
+}
+
+
+GRAPH_MODELS = {
+    "all_applications": True,
+    "group_models": True,
 }
 
 MIDDLEWARE = [
@@ -75,19 +77,19 @@ DATABASES = {
     }
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 
-current_file_path = os.getcwd()
-config_path = os.path.join(current_file_path, "shop", "config.ini")
-config = configparser.ConfigParser()
-config.read(config_path)
-
-EMAIL_HOST = config.get("SMTP", "HOST")
-EMAIL_PORT = config.get("SMTP", "PORT")
-EMAIL_USE_TLS = True  # Set it to False if your server does not use TLS/SSL
-EMAIL_HOST_USER = config.get("SMTP", "HOST_USER")
-EMAIL_HOST_PASSWORD = config.get("SMTP", "HOST_PASSWORD")
+# current_file_path = os.getcwd()
+# config_path = os.path.join(current_file_path, "shop", "config.ini")
+# config = configparser.ConfigParser()
+# config.read(config_path)
+#
+# EMAIL_HOST = config.get("SMTP", "HOST")
+# EMAIL_PORT = config.get("SMTP", "PORT")
+# EMAIL_USE_TLS = True  # Set it to False if your server does not use TLS/SSL
+# EMAIL_HOST_USER = config.get("SMTP", "HOST_USER")
+# EMAIL_HOST_PASSWORD = config.get("SMTP", "HOST_PASSWORD")
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -115,6 +117,11 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
+}
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"

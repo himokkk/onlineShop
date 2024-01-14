@@ -1,23 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 
-import getCookie from "../../functions/getCookie";
-import getData from "../../functions/getData";
-import Category from "../../interfaces/category";
-
-import InputField from "../InputFieldComponent/InputField";
 import SubmitButton from "../SubmitButtonComponent/SubmitButton";
 import TextArea from "../TextAreaComponent/TextArea";
-import Cookies from "universal-cookie";
 
 import "./reviewmodal.css";
 import RatingComponent from "../RatingComponent/RatingComponent";
+import apiCall from "../../functions/apiCall";
 
 interface Props {
     product_id: number;
 }
 
 const ReviewCreateModal = (props: Props) => {
-    const cookies = new Cookies();
     const modalRef = useRef(null);
     const errorRef = useRef(null);
     const productForm = useRef(null);
@@ -32,26 +26,19 @@ const ReviewCreateModal = (props: Props) => {
     const SubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (productForm.current) {
-            let form_data = new FormData(productForm.current);
-            const csrftoken = getCookie("csrftoken") as string;
-            const token = cookies.get("token");
-            form_data.append("review_type", reviewStyle);
-            form_data.append("overall_rating", String(overallRating === 0 ? 1 : overallRating));
-            form_data.append("communication_rating", String(communicationRating));
-            form_data.append("quality_rating", String(productRating));
-            form_data.append("delivery_rating", String(shippingRating));
-            form_data.append("product", String(props.product_id));
-            fetch("/api/review/update/", {
-                method: "PUT",
-                headers: {
-                    "X-CSRFToken": csrftoken,
-                    Authorization: token,
-                },
-                body: form_data,
-            }).then(response => {
-                if (response.ok) setIsVisible(false);
-                else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";
-            });
+            let data = new FormData(productForm.current);
+            data.append("review_type", reviewStyle);
+            data.append("overall_rating", String(overallRating === 0 ? 1 : overallRating));
+            data.append("communication_rating", String(communicationRating));
+            data.append("quality_rating", String(productRating));
+            data.append("delivery_rating", String(shippingRating));
+            data.append("product", String(props.product_id));
+
+            apiCall({url: "/api/review/update/", method: "POST", data: data})
+                .then(response => {
+                    if (response.ok) setIsVisible(false);
+                    else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";
+                });
         }
     };
 

@@ -1,9 +1,9 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
-from django.shortcuts import get_object_or_404
 
+from ..models import Product, Review, UserProfile
 from .review import ReviewSerializer
-from ..models import Product, UserProfile, Review
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -27,15 +27,14 @@ class ProductSerializer(serializers.ModelSerializer):
             "image_url",
             "image",
             "description",
-            "has_review"
+            "has_review",
         ]
 
     def to_representation(self, instance):
         result = super().to_representation(instance)
         reviews = Review.objects.filter(product=instance)
         result.update(
-            {"reviews": ReviewSerializer(
-                reviews, many=True, context=self.context).data}
+            {"reviews": ReviewSerializer(reviews, many=True, context=self.context).data}
         )
         return result
 
@@ -62,7 +61,9 @@ class ProductSerializer(serializers.ModelSerializer):
         except:
             return True
         try:
-            review_instance = Review.objects.get(owner=user_profile_instance, product=obj)
+            review_instance = Review.objects.get(
+                owner=user_profile_instance, product=obj
+            )
             if review_instance.overall_rating or review_instance.delivery_rating:
                 return True
             return False

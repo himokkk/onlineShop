@@ -6,7 +6,7 @@ import { BsFillKeyFill } from "react-icons/bs";
 
 import InputField from "../components/InputFieldComponent/InputField";
 import SubmitButton from "../components/SubmitButtonComponent/SubmitButton";
-import postData from "../functions/postData";
+import apiCall from "../functions/apiCall";
 import setBlock from "../functions/setBlock";
 import resetErrors from "../functions/resetErrors";
 
@@ -43,16 +43,10 @@ const LoginPage: React.FC = () => {
                 setBlock(passwordErrorRef);
                 return;
             }
-            postData({ url: "/api/login/", data: form_data })
-                .then(response => {
-                    if (response && response.ok) {
-                        return response.json();
-                    }
-                    throw response;
-                })
+            apiCall({ url: "/api/login/", method: "POST", data: form_data })
                 .then(data => {
-                    if (data["token"]) {
-                        cookies.set("token", data["token"], { path: "/" });
+                    if (data["access"]) {
+                        cookies.set("token", data["access"], { path: "/" });
                         navigate("/");
                     } else if (data["error"]) {
                         setBlock(incorrectErrorRef);

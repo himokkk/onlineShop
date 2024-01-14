@@ -5,6 +5,7 @@ import InputField from "../InputFieldComponent/InputField";
 import "./statuschangemodal.css";
 import SubmitButton from "../SubmitButtonComponent/SubmitButton";
 import Cookies from "universal-cookie";
+import apiCall from "../../functions/apiCall";
 
 interface Props {
     id: number;
@@ -18,22 +19,14 @@ const StatusChangeModal = (props: Props) => {
     const SubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (statusFormRef.current) {
-            let form_data = new FormData(statusFormRef.current);
-            form_data.append("status", "sent");
-            const token = cookies.get("token");
-            form_data.append("token", token);
-            const csrftoken = getCookie("csrftoken") as string;
+            let data = new FormData(statusFormRef.current);
+            data.append("status", "sent");
 
-            fetch("/api/order/status/" + props.id, {
-                method: "PATCH",
-                headers: {
-                    "X-CSRFToken": csrftoken,
-                },
-                body: form_data,
-            }).then(response => {
-                if (response.ok) setIsVisible(false);
-                // else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";
-            });
+            apiCall({url: "/api/order/status/" + props.id, method: "PATCH", data: data})
+                .then(response => {
+                    if (response.ok) setIsVisible(false);
+                    // else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";
+                });
         }
     };
 

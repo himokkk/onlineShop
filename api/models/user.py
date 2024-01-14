@@ -4,7 +4,7 @@ from django.db import models
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     image = models.ImageField(blank=True, null=True, upload_to="profile")
     description = models.TextField(default="")
     birth = models.DateField(blank=True, null=True)

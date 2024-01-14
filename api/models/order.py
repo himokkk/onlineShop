@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.db import models
-from django.utils.translation import gettext_lazy as _
-from django.utils import timezone
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from .product import Product
 from .user import UserProfile

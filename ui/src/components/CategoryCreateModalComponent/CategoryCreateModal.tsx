@@ -9,6 +9,7 @@ import SubmitButton from "../SubmitButtonComponent/SubmitButton";
 import { BiCategory } from "react-icons/bi";
 
 import "./categorymodal.css";
+import apiCall from "../../functions/apiCall";
 
 const CategoryCreateModal = () => {
     const modalRef = useRef(null);
@@ -20,19 +21,13 @@ const CategoryCreateModal = () => {
     const SubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (productForm.current) {
-            let form_data = new FormData(productForm.current);
-            const csrftoken = getCookie("csrftoken") as string;
+            let data = new FormData(productForm.current);
 
-            fetch("/api/category/create/", {
-                method: "POST",
-                headers: {
-                    "X-CSRFToken": csrftoken,
-                },
-                body: form_data,
-            }).then(response => {
-                if (response.ok) setIsVisible(false);
-                else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";
-            });
+            apiCall({url: "/api/category/create/", method: "POST", data: data})
+                .then(response => {
+                    if (response.ok) setIsVisible(false);
+                    else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";
+                });
         }
     };
 

@@ -3,9 +3,8 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 
 import LoadingSpinner from "../components/LoadingSpinnerComponent/LoadingSpinner";
-import getData from "../functions/getData";
 import "../css/pay.css";
-import getCookie from "../functions/getCookie";
+import apiCall from "../functions/apiCall";
 
 const PayPage: React.FC = () => {
     const { id } = useParams();
@@ -22,7 +21,7 @@ const PayPage: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        getData({ url: "/api/order/" + id }).then(response => {
+        apiCall({ url: "/api/order/" + id, method: "GET" }).then(response => {
             const payed = response["status"];
             if (payed == "waiting for payment") setPayed(false);
             setSpinnerActive(false);
@@ -30,17 +29,10 @@ const PayPage: React.FC = () => {
     }, []);
 
     const pay = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        const form_data = new FormData();
-        form_data.append("token", cookies.get("token"));
-        form_data.append("status", "paid");
-        const csrftoken = getCookie("csrftoken") as string;
-        fetch("api/order/status/" + id, {
-            method: "PATCH",
-            headers: {
-                "X-CSRFToken": csrftoken,
-            },
-            body: form_data,
-        })
+        const data = new FormData();
+        data.append("status", "paid");
+
+        apiCall({url: "api/order/status/" + id, method: "PATCH", data: data})
             .then(response => {
                 if (response && response.ok) {
                     return response.json();

@@ -1,15 +1,19 @@
 from django.urls import path
+from rest_framework_simplejwt import views as jwt_views
 
 from .views import (CartAddView, CartRemoveView, CategoryCreateView,
-                    CategoryListView, LoggedUserView, LoginView,
-                    OrderCreateView, OrderListView, OrderRetrieveView,
-                    OrderStatusView, ProductCreateView, ProductListView,
-                    ProductRetrieveView, RegisterView, ReviewUpdateView, ChangeUserImageView,
-                    ReviewListView, UserListView, UserView, admin_logout_view, PasswordResetView,
-                    GetPasswordResetHashView, MessageCreateView, MessageListView)
+                    CategoryListView, ChangeUserImageView,
+                    GetPasswordResetHashView, LoggedUserView, LoginView,
+                    MessageCreateView, MessageListView, OrderCreateView,
+                    OrderListView, OrderRetrieveView, OrderStatusView,
+                    PasswordResetView, ProductCreateView, ProductListView,
+                    ProductRetrieveView, RegisterView, ReviewListView,
+                    ReviewUpdateView, UserListView, UserView,
+                    admin_logout_view)
 
 urlpatterns = [
-    path("login/", LoginView.as_view()),
+    path("login/", jwt_views.TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("login/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"),
     path("logout/", admin_logout_view),
     path("signup/", RegisterView.as_view()),
     path("user/<pk>", UserView.as_view()),
@@ -33,5 +37,4 @@ urlpatterns = [
     path("order/status/<pk>", OrderStatusView.as_view()),
     path("message/create/", MessageCreateView.as_view()),
     path("message/list/<pk>", MessageListView.as_view()),
-    #5d37ed89015a84701d935559c85d31f8a10d605e
 ]

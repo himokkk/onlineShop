@@ -11,18 +11,26 @@ from .user import UserProfile
 
 class Review(models.Model):
     RATING_CHOICES = (
-        (1, '1'),
-        (2, '2'),
-        (3, '3'),
-        (4, '4'),
-        (5, '5'),
+        (1, "1"),
+        (2, "2"),
+        (3, "3"),
+        (4, "4"),
+        (5, "5"),
     )
 
-    review_type = models.CharField(max_length=20, default='overall')
-    overall_rating = models.PositiveIntegerField(choices=RATING_CHOICES, blank=True, null=True)
-    quality_rating = models.PositiveIntegerField(choices=RATING_CHOICES, blank=True, null=True)
-    delivery_rating = models.PositiveIntegerField(choices=RATING_CHOICES, blank=True, null=True)
-    communication_rating = models.PositiveIntegerField(choices=RATING_CHOICES, blank=True, null=True)
+    review_type = models.CharField(max_length=20, default="overall")
+    overall_rating = models.PositiveIntegerField(
+        choices=RATING_CHOICES, blank=True, null=True
+    )
+    quality_rating = models.PositiveIntegerField(
+        choices=RATING_CHOICES, blank=True, null=True
+    )
+    delivery_rating = models.PositiveIntegerField(
+        choices=RATING_CHOICES, blank=True, null=True
+    )
+    communication_rating = models.PositiveIntegerField(
+        choices=RATING_CHOICES, blank=True, null=True
+    )
     description = models.TextField(blank=True)
     owner = models.ForeignKey(
         UserProfile, null=True, blank=False, on_delete=models.SET_NULL
@@ -33,10 +41,17 @@ class Review(models.Model):
     )
 
     def __str__(self) -> str:
-        return "Review" + str(self.id) + " " + str(self.owner.id) + " " + str(self.product.id)
+        return (
+            "Review"
+            + str(self.id)
+            + " "
+            + str(self.owner.id)
+            + " "
+            + str(self.product.id)
+        )
 
     def save(self, *args, **kwargs):
-        if self.review_type == 'overall':
+        if self.review_type == "overall":
             self.quality_rating = None
             self.delivery_rating = None
             self.communication_rating = None

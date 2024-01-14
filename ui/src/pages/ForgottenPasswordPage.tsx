@@ -3,7 +3,7 @@ import { AiOutlineMail, AiOutlineShop } from "react-icons/ai";
 import InputField from "../components/InputFieldComponent/InputField";
 import SubmitButton from "../components/SubmitButtonComponent/SubmitButton";
 import { Link } from "react-router-dom";
-import postData from "../functions/postData";
+import apiCall from "../functions/apiCall";
 import "../css/forgotten.css";
 
 const ForgottenPasswordPage: React.FC = () => {
@@ -15,13 +15,7 @@ const ForgottenPasswordPage: React.FC = () => {
         if (formRef.current) {
             let form_data = new FormData(formRef.current);
 
-            postData({ url: "/api/user/reset_password/", data: form_data })
-                .then(response => {
-                    if (response && response.ok) {
-                        return response.json();
-                    }
-                    throw response;
-                })
+            apiCall({ url: "/api/user/reset_password/", method: "POST", data: form_data })
                 .then(data => {
                     if (data["token"]) {
                         //cookies.set("token", data["token"], { path: "/" });

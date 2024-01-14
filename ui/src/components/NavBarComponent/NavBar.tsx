@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import postData from "../../functions/postData";
+import apiCall from "../../functions/apiCall";
 import Cookies from "universal-cookie";
 import { Link } from "react-router-dom";
 import { AiOutlineShop } from "react-icons/ai";
@@ -23,14 +23,7 @@ const NavBar: React.FC = () => {
 
     useEffect(() => {
         const form_data = new FormData();
-        form_data.append("token", cookies.get("token"));
-        postData({ url: "/api/user/current/", data: form_data })
-            .then(response => {
-                if (response && response.ok) {
-                    return response.json();
-                }
-                throw response;
-            })
+        apiCall({ url: "/api/user/current/", method: "POST", data: form_data })
             .then(data => {
                 const image_url = data["image_url"];
                 const user_id = data["user"];
@@ -85,13 +78,11 @@ const NavBar: React.FC = () => {
     }, [cart]);
 
     const RemoveFromCart = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        const token = cookies.get("token");
         const form_data = new FormData();
-        form_data.append("token", token);
         const div = e.currentTarget as HTMLDivElement;
         const id = div.id.split("-")[1];
         form_data.append("item", id);
-        postData({ url: "/api/cart/remove/", data: form_data })
+        apiCall({ url: "/api/cart/remove/", method: "POST", data: form_data })
             .then(response => {
                 if (response && response.ok) {
                     setCart(cart => {

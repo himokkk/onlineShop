@@ -1,12 +1,13 @@
 from .category import CategoryCreateView, CategoryListView
 from .login import LoginView, RegisterView, admin_logout_view
+from .message import MessageCreateView, MessageListView
 from .order import (OrderCreateView, OrderListView, OrderRetrieveView,
                     OrderStatusView)
 from .product import ProductCreateView, ProductListView, ProductRetrieveView
-from .review import ReviewUpdateView, ReviewListView
-from .user import (CartAddView, CartRemoveView, LoggedUserView, UserCreateView,
-                   UserListView, UserView, ChangeUserImageView, PasswordResetView, GetPasswordResetHashView)
-from .message import MessageCreateView, MessageListView
+from .review import ReviewListView, ReviewUpdateView
+from .user import (CartAddView, CartRemoveView, ChangeUserImageView,
+                   GetPasswordResetHashView, LoggedUserView, PasswordResetView,
+                   UserCreateView, UserListView, UserView)
 
 __all__ = [
     "LoginView",
@@ -33,5 +34,5 @@ __all__ = [
     "PasswordResetView",
     "GetPasswordResetHashView",
     "MessageCreateView",
-    "MessageListView"
+    "MessageListView",
 ]

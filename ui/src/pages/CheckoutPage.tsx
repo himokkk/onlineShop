@@ -8,7 +8,7 @@ import InputField from "../components/InputFieldComponent/InputField";
 import SubmitButton from "../components/SubmitButtonComponent/SubmitButton";
 
 import Product from "../interfaces/product";
-import postData from "../functions/postData";
+import apiCall from "../functions/apiCall";
 
 import "../css/checkout.css";
 
@@ -29,10 +29,8 @@ const CheckoutPage = () => {
     }, []);
 
     useEffect(() => {
-        const token = cookies.get("token");
         const form_data = new FormData();
-        form_data.append("token", token);
-        postData({ url: "/api/user/current/", data: form_data, setActiveSpinner: setSpinnerActive })
+        apiCall({ url: "/api/user/current/", method: "POST", data: form_data, setActiveSpinner: setSpinnerActive })
             .then(response => {
                 if (response && response.ok) {
                     return response.json();
@@ -59,23 +57,16 @@ const CheckoutPage = () => {
         e.preventDefault();
         if (checkoutForm.current) {
             let form_data = new FormData(checkoutForm.current);
-            const token = cookies.get("token");
-            form_data.append("token", token);
             products.forEach((object: Product) => {
                 form_data.append("items[]", String(object.id));
             });
             let id = 0;
-            postData({
+            apiCall({
                 url: "/api/order/create/",
+                method: "POST",
                 data: form_data,
                 setActiveSpinner: setSpinnerActive,
             })
-                .then(response => {
-                    if (response && response.ok) {
-                        return response.json();
-                    }
-                    throw response;
-                })
                 .then(data => {
                     id = data["id"];
                     navigate("/pay/" + id);

@@ -6,7 +6,6 @@ import api.models.category
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("api", "0004_alter_userprofile_description"),
     ]

@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
-import getData from "../functions/getData";
 import NavBar from "../components/NavBarComponent/NavBar";
 import ProductList from "../components/ProductsListComponent/ProductsList";
 
 import "../css/basic.css";
 import "../css/profile.css";
 import ProfilePictureChangeModal from "../components/ProfilePirctureChangeModalComponent/ProfilePictureChangeModal";
+import apiCall from "../functions/apiCall";
 
 const ProfilePage: React.FC = () => {
     const { id } = useParams();
@@ -18,7 +18,7 @@ const ProfilePage: React.FC = () => {
     const [imageURL, setImageURL] = useState<string>("");
 
     useEffect(() => {
-        getData({ url: "/api/user/" + id }).then(response => {
+        apiCall({ url: "/api/user/" + id, method: "GET" }).then(response => {
             setUsername(response["username"]);
             setDescription(response["description"]);
             setIsOwner(response["owner"]);

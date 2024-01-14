@@ -1,6 +1,7 @@
 Django
 psycopg2
 djangorestframework
+djangorestframework-simplejwt
 Pillow
 configparser
 django-extensions

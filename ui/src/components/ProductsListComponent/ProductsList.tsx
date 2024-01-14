@@ -3,7 +3,6 @@ import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-i
 import { BiSortZA } from "react-icons/bi";
 
 import Product from "../../interfaces/product";
-import getData from "../../functions/getData";
 import selectInterface from "../SelectComponent/selectInterface";
 import LoadingSpinner from "../LoadingSpinnerComponent/LoadingSpinner";
 import Select from "../SelectComponent/Select";
@@ -12,6 +11,7 @@ import ProductComponent from "../ProductComponent/ProductComponent";
 
 import "./productlist.css";
 import ReviewCreateModal from "../ReviewCreateModalComponent/ReviewCreateModal";
+import apiCall from "../../functions/apiCall";
 
 interface Props {
     category?: number;
@@ -86,7 +86,7 @@ const ProductList = (props: Props) => {
             setSpinnerActive(false);
             return;
         }
-        getData({ url: url }).then(response => {
+        apiCall({ url: url, method: "GET"}).then(response => {
             setSpinnerActive(false);
             setProductsCount(response["count"]);
             setProducts(response["results"]);

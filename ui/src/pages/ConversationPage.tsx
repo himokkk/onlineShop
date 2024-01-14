@@ -1,14 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import getData from "../functions/getData";
 
 import "../css/conversation.css";
 import Message from "../interfaces/message";
 import InputField from "../components/InputFieldComponent/InputField";
 import SubmitButton from "../components/SubmitButtonComponent/SubmitButton";
-import getCookie from "../functions/getCookie";
 import Cookies from "universal-cookie";
-import postData from "../functions/postData";
+import apiCall from "../functions/apiCall";
 import NavBar from "../components/NavBarComponent/NavBar";
 
 const ConversationPage: React.FC = () => {
@@ -31,7 +29,7 @@ const ConversationPage: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        getData({ url: "/api/user/" + id }).then(response => {
+        apiCall({ url: "/api/user/" + id, method: "GET" }).then(response => {
             setUsername(response["username"]);
             setDescription(response["description"]);
             setIsOwner(response["owner"]);
@@ -44,7 +42,7 @@ const ConversationPage: React.FC = () => {
             }
         });
 
-        getData({ url: "/api/message/list/" + id }).then(response => {
+        apiCall({ url: "/api/message/list/" + id, method: "GET" }).then(response => {
             setMessages(response);
         });
     }, []);
@@ -57,7 +55,7 @@ const ConversationPage: React.FC = () => {
                 form_data.append("to_user", id);
             }
 
-            postData({ url: "/api/message/create/", data: form_data })
+            apiCall({ url: "/api/message/create/", method: "POST", data: form_data })
                 .then(response => {
                     if (response && response.ok) {
                         return response.json();
