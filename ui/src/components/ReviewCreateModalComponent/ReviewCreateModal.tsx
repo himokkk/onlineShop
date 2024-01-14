@@ -6,6 +6,7 @@ import TextArea from "../TextAreaComponent/TextArea";
 import "./reviewmodal.css";
 import RatingComponent from "../RatingComponent/RatingComponent";
 import apiCall from "../../functions/apiCall";
+import backendConfig from "../../urls";
 
 interface Props {
     product_id: number;
@@ -34,7 +35,7 @@ const ReviewCreateModal = (props: Props) => {
             data.append("delivery_rating", String(shippingRating));
             data.append("product", String(props.product_id));
 
-            apiCall({url: "/api/review/update/", method: "POST", data: data})
+            apiCall({url: backendConfig.review_update, method: "POST", data: data})
                 .then(response => {
                     if (response.ok) setIsVisible(false);
                     else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";

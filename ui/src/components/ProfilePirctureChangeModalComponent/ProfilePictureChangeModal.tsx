@@ -9,6 +9,7 @@ import Cookies from "universal-cookie";
 
 import "./profilepicturechange.css";
 import apiCall from "../../functions/apiCall";
+import backendConfig from "../../urls";
 
 const ProfilePictureChangeModal = () => {
     const cookies = new Cookies();
@@ -22,8 +23,7 @@ const ProfilePictureChangeModal = () => {
         e.preventDefault();
         if (avatarForm.current) {
             let data = new FormData(avatarForm.current);
-            const csrftoken = getCookie("csrftoken") as string;
-            apiCall({url: "/api/user/avatar_change/", method: "PUT", data: data})
+            apiCall({url: backendConfig.avatar_change, method: "PUT", data: data})
                 .then(response => {
                     if (response.ok) {
                         setIsVisible(false);

@@ -5,6 +5,7 @@ import Order from "../interfaces/order";
 import ProductList from "../components/ProductsListComponent/ProductsList";
 import Cookies from "universal-cookie";
 import apiCall from "../functions/apiCall";
+import backendConfig from "../urls";
 const OrderPage: React.FC = () => {
     const { id } = useParams();
     const [order, setOrder] = useState<Order>();
@@ -19,7 +20,7 @@ const OrderPage: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        apiCall({ url: "api/order/" + id, method: "GET" }).then(data => {
+        apiCall({ url: backendConfig.order_by_id + id, method: "GET" }).then(data => {
             setOrder(data);
         });
     }, []);

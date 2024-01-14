@@ -11,6 +11,7 @@ import Cookies from "universal-cookie";
 import "../css/basic.css";
 import "../css/product.css";
 import RatingComponent from "../components/RatingComponent/RatingComponent";
+import backendConfig from "../urls";
 
 const ProductPage = () => {
     const { id } = useParams();
@@ -30,7 +31,7 @@ const ProductPage = () => {
         const form_data = new FormData();
         form_data.append("token", cookies.get("token"));
 
-        apiCall({ url: "/api/product/" + id, method: "GET"}).then(response => {
+        apiCall({ url: backendConfig.product_by_id + id, method: "GET"}).then(response => {
             setName(response["name"]);
             setPrice(response["price"]);
             setShippingPrice(response["shipping_price"]);
@@ -56,7 +57,7 @@ const ProductPage = () => {
         // @ts-ignore
         form_data.append("item", id as number);
 
-        apiCall({ url: "/api/cart/add/", method: "POST", data: form_data })
+        apiCall({ url: backendConfig.add_to_cart, method: "POST", data: form_data })
             .then(data => {})
             .catch(error => {
                 console.error("Error fetching data:", error);

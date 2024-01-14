@@ -12,6 +12,7 @@ import ProductComponent from "../ProductComponent/ProductComponent";
 import "./productlist.css";
 import ReviewCreateModal from "../ReviewCreateModalComponent/ReviewCreateModal";
 import apiCall from "../../functions/apiCall";
+import backendConfig from "../../urls";
 
 interface Props {
     category?: number;
@@ -46,7 +47,7 @@ const ProductList = (props: Props) => {
     ];
 
     const combineQueryParams = () => {
-        let url = "/api/product/list/";
+        let url = backendConfig.products_list;
 
         url += "?size=" + size;
         if (sort) {
@@ -86,10 +87,10 @@ const ProductList = (props: Props) => {
             setSpinnerActive(false);
             return;
         }
-        apiCall({ url: url, method: "GET"}).then(response => {
+        apiCall({ url: url, method: "GET"}).then(data => {
             setSpinnerActive(false);
-            setProductsCount(response["count"]);
-            setProducts(response["results"]);
+            setProductsCount(data["count"]);
+            setProducts(data["results"]);
         });
     }, [url]);
 

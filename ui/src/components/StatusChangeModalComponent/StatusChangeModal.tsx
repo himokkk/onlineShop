@@ -6,6 +6,7 @@ import "./statuschangemodal.css";
 import SubmitButton from "../SubmitButtonComponent/SubmitButton";
 import Cookies from "universal-cookie";
 import apiCall from "../../functions/apiCall";
+import backendConfig from "../../urls";
 
 interface Props {
     id: number;
@@ -22,7 +23,7 @@ const StatusChangeModal = (props: Props) => {
             let data = new FormData(statusFormRef.current);
             data.append("status", "sent");
 
-            apiCall({url: "/api/order/status/" + props.id, method: "PATCH", data: data})
+            apiCall({url: backendConfig.orders_status + props.id, method: "PATCH", data: data})
                 .then(response => {
                     if (response.ok) setIsVisible(false);
                     // else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";

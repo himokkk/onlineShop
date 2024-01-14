@@ -12,6 +12,7 @@ import setBlock from "../functions/setBlock";
 
 import "../css/basic.css";
 import "../css/login.css";
+import backendConfig from "../urls";
 
 const SignupPage: React.FC = () => {
     const signupFormRef = useRef(null);
@@ -50,7 +51,7 @@ const SignupPage: React.FC = () => {
                 return;
             }
 
-            apiCall({ url: "/api/signup/", method: "POST", data: form_data })
+            apiCall({ url: backendConfig.sign_up, method: "POST", data: form_data })
                 .then(response => {
                     if (response && response.ok) {
                         navigate("/login");

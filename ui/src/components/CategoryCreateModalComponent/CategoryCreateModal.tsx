@@ -10,6 +10,7 @@ import { BiCategory } from "react-icons/bi";
 
 import "./categorymodal.css";
 import apiCall from "../../functions/apiCall";
+import backendConfig from "../../urls";
 
 const CategoryCreateModal = () => {
     const modalRef = useRef(null);
@@ -23,7 +24,7 @@ const CategoryCreateModal = () => {
         if (productForm.current) {
             let data = new FormData(productForm.current);
 
-            apiCall({url: "/api/category/create/", method: "POST", data: data})
+            apiCall({url: backendConfig.categories_create, method: "POST", data: data})
                 .then(response => {
                     if (response.ok) setIsVisible(false);
                     else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";

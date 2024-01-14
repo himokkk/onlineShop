@@ -8,6 +8,7 @@ import "../css/basic.css";
 import "../css/profile.css";
 import ProfilePictureChangeModal from "../components/ProfilePirctureChangeModalComponent/ProfilePictureChangeModal";
 import apiCall from "../functions/apiCall";
+import backendConfig from "../urls";
 
 const ProfilePage: React.FC = () => {
     const { id } = useParams();
@@ -18,7 +19,7 @@ const ProfilePage: React.FC = () => {
     const [imageURL, setImageURL] = useState<string>("");
 
     useEffect(() => {
-        apiCall({ url: "/api/user/" + id, method: "GET" }).then(response => {
+        apiCall({ url: backendConfig.user_by_id + id, method: "GET" }).then(response => {
             setUsername(response["username"]);
             setDescription(response["description"]);
             setIsOwner(response["owner"]);

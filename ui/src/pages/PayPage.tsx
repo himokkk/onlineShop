@@ -5,6 +5,7 @@ import Cookies from "universal-cookie";
 import LoadingSpinner from "../components/LoadingSpinnerComponent/LoadingSpinner";
 import "../css/pay.css";
 import apiCall from "../functions/apiCall";
+import backendConfig from "../urls";
 
 const PayPage: React.FC = () => {
     const { id } = useParams();
@@ -21,7 +22,7 @@ const PayPage: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        apiCall({ url: "/api/order/" + id, method: "GET" }).then(response => {
+        apiCall({ url: backendConfig.order_by_id + id, method: "GET" }).then(response => {
             const payed = response["status"];
             if (payed == "waiting for payment") setPayed(false);
             setSpinnerActive(false);
@@ -32,7 +33,7 @@ const PayPage: React.FC = () => {
         const data = new FormData();
         data.append("status", "paid");
 
-        apiCall({url: "api/order/status/" + id, method: "PATCH", data: data})
+        apiCall({url: backendConfig.orders_status + id, method: "PATCH", data: data})
             .then(response => {
                 if (response && response.ok) {
                     return response.json();

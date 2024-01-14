@@ -8,6 +8,7 @@ import Order from "../interfaces/order";
 import StatusChangeModal from "../components/StatusChangeModalComponent/StatusChangeModal";
 import "../css/orderslist.css";
 import NavBar from "../components/NavBarComponent/NavBar";
+import backendConfig from "../urls";
 
 const OrdersListPage: React.FC = () => {
     const [orders, setOrders] = useState<Order[]>([]);
@@ -22,7 +23,7 @@ const OrdersListPage: React.FC = () => {
 
     useEffect(() => {
         const form_data = new FormData();
-        let url = "/api/order/list/?status=" + status;
+        let url = backendConfig.orders_list + "?status=" + status;
         apiCall({ url: url, method: "POST", data: form_data })
             .then(response => {
                 if (response && response.ok) {

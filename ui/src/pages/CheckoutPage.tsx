@@ -11,6 +11,7 @@ import Product from "../interfaces/product";
 import apiCall from "../functions/apiCall";
 
 import "../css/checkout.css";
+import backendConfig from "../urls";
 
 const CheckoutPage = () => {
     const checkoutForm = useRef(null);
@@ -30,7 +31,7 @@ const CheckoutPage = () => {
 
     useEffect(() => {
         const form_data = new FormData();
-        apiCall({ url: "/api/user/current/", method: "POST", data: form_data, setActiveSpinner: setSpinnerActive })
+        apiCall({ url: backendConfig.current_user, method: "POST", data: form_data, setActiveSpinner: setSpinnerActive })
             .then(response => {
                 if (response && response.ok) {
                     return response.json();
@@ -62,7 +63,7 @@ const CheckoutPage = () => {
             });
             let id = 0;
             apiCall({
-                url: "/api/order/create/",
+                url: backendConfig.order_create,
                 method: "POST",
                 data: form_data,
                 setActiveSpinner: setSpinnerActive,

@@ -12,6 +12,7 @@ import resetErrors from "../functions/resetErrors";
 
 import "../css/basic.css";
 import "../css/login.css";
+import backendConfig from "../urls";
 
 const LoginPage: React.FC = () => {
     const loginFormRef = useRef(null);
@@ -43,7 +44,7 @@ const LoginPage: React.FC = () => {
                 setBlock(passwordErrorRef);
                 return;
             }
-            apiCall({ url: "/api/login/", method: "POST", data: form_data })
+            apiCall({ url: backendConfig.login, method: "POST", data: form_data })
                 .then(data => {
                     if (data["access"]) {
                         cookies.set("token", data["access"], { path: "/" });

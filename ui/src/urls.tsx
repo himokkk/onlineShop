@@ -1,0 +1,25 @@
+const backendConfig = {
+  user_by_id:"users/",
+  avatar_change: "users/avatar_change/",
+  login: "users/login/",
+  sign_up: "users/signup/",
+  current_user: "users/current/",
+  add_to_cart: "users/cart/add/",
+  remove_from_cart: "users/cart/remove",
+  product_create: "products/create/",
+  product_by_id: "products/",
+  product_update: "products/update/",
+  products_list: "products/list/",
+  products_list_review: "products/review/l,ist/",
+  review_update: "products/review/update/",
+  orders_status: "orders/status/",
+  orders_list: "orders/list/",
+  order_by_id: "orders/",
+  order_create: "orders/create/",
+  categories_list: "categories/list/",
+  categories_create: "categories/create/",
+  messages_list: "chat/message/list/",
+  message_create: "chat/message/create/",
+};
+
+export default backendConfig;

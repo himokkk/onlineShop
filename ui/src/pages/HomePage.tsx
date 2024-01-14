@@ -11,6 +11,7 @@ import Category from "../interfaces/category";
 import "../css/basic.css";
 import "../css/home.css";
 import apiCall from "../functions/apiCall";
+import backendConfig from "../urls";
 
 const HomePage: React.FC = () => {
     const cookies = new Cookies();
@@ -38,9 +39,11 @@ const HomePage: React.FC = () => {
             svg_url: "0",
         };
 
-        apiCall({ url: "/api/category/list/", method: "GET" }).then(response => {
-            setCategories(() => [allCategory, ...response]);
-            setSpinnerActive(false);
+        apiCall({ url: backendConfig.categories_list, method: "GET" }).then(data => {
+            if(data.length) {
+                setCategories(() => [allCategory, ...data]);
+                setSpinnerActive(false);
+            }
         });
     }, []);
 

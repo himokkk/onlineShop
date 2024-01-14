@@ -18,6 +18,7 @@ import "./productmodal.css";
 import apiCall from "../../functions/apiCall";
 import Product from "../../interfaces/product";
 import CategoryCreateModal from "../CategoryCreateModalComponent/CategoryCreateModal";
+import backendConfig from "../../urls";
 
 const ProductCreateModal = () => {
     const modalRef = useRef(null);
@@ -28,7 +29,7 @@ const ProductCreateModal = () => {
     const [isVisible, setIsVisible] = useState<boolean>(false);
 
     useEffect(() => {
-        apiCall({ url: "/api/category/list/", method: "GET" }).then(response => {
+        apiCall({ url: backendConfig.categories_list, method: "GET" }).then(response => {
             setCategories(response);
         });
     }, []);
@@ -38,7 +39,7 @@ const ProductCreateModal = () => {
         if (productForm.current) {
             let form_data = new FormData(productForm.current);
 
-            apiCall({url: "/api/product/create/", method: "POST", data: form_data})
+            apiCall({url: backendConfig.product_create, method: "POST", data: form_data})
                 .then(data => {
                     if (data["id"]) setIsVisible(false);
                     else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";

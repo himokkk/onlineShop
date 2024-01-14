@@ -8,6 +8,7 @@ import SubmitButton from "../components/SubmitButtonComponent/SubmitButton";
 import Cookies from "universal-cookie";
 import apiCall from "../functions/apiCall";
 import NavBar from "../components/NavBarComponent/NavBar";
+import backendConfig from "../urls";
 
 const ConversationPage: React.FC = () => {
     const { id } = useParams();
@@ -29,7 +30,7 @@ const ConversationPage: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        apiCall({ url: "/api/user/" + id, method: "GET" }).then(response => {
+        apiCall({ url: backendConfig.user_by_id + id, method: "GET" }).then(response => {
             setUsername(response["username"]);
             setDescription(response["description"]);
             setIsOwner(response["owner"]);
@@ -42,7 +43,7 @@ const ConversationPage: React.FC = () => {
             }
         });
 
-        apiCall({ url: "/api/message/list/" + id, method: "GET" }).then(response => {
+        apiCall({ url: backendConfig.messages_list + id, method: "GET" }).then(response => {
             setMessages(response);
         });
     }, []);
@@ -55,7 +56,7 @@ const ConversationPage: React.FC = () => {
                 form_data.append("to_user", id);
             }
 
-            apiCall({ url: "/api/message/create/", method: "POST", data: form_data })
+            apiCall({ url: backendConfig.message_create, method: "POST", data: form_data })
                 .then(response => {
                     if (response && response.ok) {
                         return response.json();

@@ -10,6 +10,7 @@ import ProductCreateModal from "../ProductCreateModalComponent/ProductCreateModa
 import Product from "../../interfaces/product";
 
 import "./navbar.css";
+import backendConfig from "../../urls";
 
 const NavBar: React.FC = () => {
     const cookies = new Cookies();
@@ -23,7 +24,7 @@ const NavBar: React.FC = () => {
 
     useEffect(() => {
         const form_data = new FormData();
-        apiCall({ url: "/api/user/current/", method: "POST", data: form_data })
+        apiCall({ url: backendConfig.current_user, method: "POST", data: form_data })
             .then(data => {
                 const image_url = data["image_url"];
                 const user_id = data["user"];
@@ -82,7 +83,7 @@ const NavBar: React.FC = () => {
         const div = e.currentTarget as HTMLDivElement;
         const id = div.id.split("-")[1];
         form_data.append("item", id);
-        apiCall({ url: "/api/cart/remove/", method: "POST", data: form_data })
+        apiCall({ url: backendConfig.remove_from_cart, method: "POST", data: form_data })
             .then(response => {
                 if (response && response.ok) {
                     setCart(cart => {
