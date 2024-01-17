@@ -41,7 +41,10 @@ const ProductCreateModal = () => {
 
             apiCall({url: backendConfig.product_create, method: "POST", data: form_data})
                 .then(data => {
-                    if (data["id"]) setIsVisible(false);
+                    if (data["id"]) {
+                        setIsVisible(false);
+                        window.location.reload();
+                    }
                     else if (errorRef.current) (errorRef.current as HTMLElement).innerHTML = "Error";
                 })
         }

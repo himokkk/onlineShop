@@ -53,7 +53,7 @@ const SignupPage: React.FC = () => {
 
             apiCall({ url: backendConfig.sign_up, method: "POST", data: form_data })
                 .then(response => {
-                    if (response && response.ok) {
+                    if (response["message"]) {
                         navigate("/login");
                         return;
                     }

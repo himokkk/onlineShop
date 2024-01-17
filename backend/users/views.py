@@ -5,10 +5,8 @@ import string
 from django.contrib.auth import logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
-from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import redirect
 from rest_framework import status
-from rest_framework.authtoken.models import Token
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
@@ -17,7 +15,6 @@ from rest_framework.views import APIView
 
 from users.models import UserProfile
 from products.models import Product
-# from backend.api.permission import TokenProvidedPermission
 from users.serializers import UserProfileSerializer, UserSerializer
 
 
@@ -83,7 +80,6 @@ class PasswordResetView(APIView):
     #     user_instance.save()
     #     hash_instance.delete()
     #     return Response(status=200)
-
 
 
 class RegisterView(CreateAPIView):

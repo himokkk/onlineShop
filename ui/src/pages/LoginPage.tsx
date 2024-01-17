@@ -33,7 +33,7 @@ const LoginPage: React.FC = () => {
     const SubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        resetErrors([usernameErrorRef, passwordErrorRef, incorrectErrorRef]);
+        resetErrors([usernameErrorRef, passwordErrorRef, incorrectErrorRef, internalErrorRef]);
         if (loginFormRef.current) {
             let form_data = new FormData(loginFormRef.current);
             if (!form_data.get("username")) {
@@ -46,10 +46,11 @@ const LoginPage: React.FC = () => {
             }
             apiCall({ url: backendConfig.login, method: "POST", data: form_data })
                 .then(data => {
+                    console.log(data)
                     if (data["access"]) {
                         cookies.set("token", data["access"], { path: "/" });
                         navigate("/");
-                    } else if (data["error"]) {
+                    } else if (data["detail"]) {
                         setBlock(incorrectErrorRef);
                     }
                 })

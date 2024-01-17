@@ -17,15 +17,20 @@ let apiCall = async (props: Props) => {
     if (props.url.includes("null")) {
         return;
     }
+    const headers = new Headers();
     const csrftoken = getCookie("csrftoken") as string;
+    headers.append("X-CSRFToken", csrftoken);
+    if (token) {
+        headers.append("Authorization", `Bearer ${token}`);
+    }
+
     let response = await fetch(props.url, {
         method: props.method,
-        headers: {
-            "X-CSRFToken": csrftoken,
-            Authorization: `Bearer ${token}`,
-        },
+        headers: headers,
         body: props.data,
-    }).then(response => response.json());
+    }).then(response => {
+        return response.json();
+    });
     if (props.setActiveSpinner) props.setActiveSpinner(false);
     return response;
 };
