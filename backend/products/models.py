@@ -10,7 +10,9 @@ class Product(models.Model):
     price = models.FloatField(blank=True, null=True, verbose_name=_("price"))
     shipping_price = models.FloatField(default="0", verbose_name=_("shipping price"))
     description = models.TextField(default="", blank=True)
-    owner = models.ForeignKey("users.UserProfile", null=True, on_delete=models.CASCADE, related_name="profile")
+    owner = models.ForeignKey(
+        "users.UserProfile", null=True, on_delete=models.CASCADE, related_name="profile"
+    )
     post_date = models.DateTimeField(
         default=datetime.datetime.now, verbose_name=_("post date")
     )

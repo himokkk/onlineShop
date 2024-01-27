@@ -12,9 +12,7 @@ class ProductListViewTest(APITestCase):
     product_list_url = "/products/list/"
 
     def setUp(self):
-        self.user = User.objects.create(
-            username="testuser", password="testpassword"
-        )
+        self.user = User.objects.create(username="testuser", password="testpassword")
         self.client.force_authenticate(user=self.user)
         self.category = Category.objects.create(name="Test Category")
         for i in range(50):
@@ -23,7 +21,7 @@ class ProductListViewTest(APITestCase):
                 price=i,
                 shipping_price=i,
                 owner=self.user.profile,
-                category=self.category
+                category=self.category,
             )
 
     def test_product_list_view(self):

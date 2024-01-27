@@ -7,7 +7,6 @@ from rest_framework_simplejwt.tokens import AccessToken
 from chat.consumers import ChatConsumer
 from chat.models import Message
 
-
 # class ChatConsumerTest(TestCase):
 #     def setUp(self):
 #         self.user1 = User.objects.create_user(username="user1", password="password1")

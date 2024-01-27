@@ -1,6 +1,7 @@
-from django.test import TestCase
 from django.contrib.auth.models import User
-from products.models import Review, Product
+from django.test import TestCase
+
+from products.models import Product, Review
 from users.models import UserProfile
 
 
