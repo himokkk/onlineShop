@@ -18,49 +18,47 @@ class ProductListView(ListAPIView):
         queryset = self.queryset.all()
 
         query_params = self.request.query_params
-        if query_params:
-            size = query_params.get("size", None)
-            if size:
-                size = int(size)
-            else:
-                size = 25
+        if not query_params:
+            serializer = self.get_serializer(queryset[:25], many=True)
+            return Response({"results": serializer.data})
 
-            category_id = query_params.get("category", None)
-            if category_id:
-                category_instance = Category.objects.filter(id=category_id)
-                if not category_instance:
-                    return None
-                queryset = queryset.filter(category=category_instance[0])
+        size = query_params.get("size", None)
+        size = int(size) if size else 25
 
-            owner = query_params.get("owner", None)
-            if owner:
-                queryset = queryset.filter(owner=int(owner))
+        category_id = query_params.get("category", None)
+        if category_id:
+            category_instance = Category.objects.get(id=category_id)
+            queryset = queryset.filter(category=category_instance)
 
-            min_price = query_params.get("min-price", None)
-            max_price = query_params.get("max-price", None)
-            if min_price and max_price:
-                queryset = queryset.all().filter(
-                    price__lte=int(max_price), price__gte=int(min_price)
-                )
-            elif min_price:
-                queryset = queryset.all().filter(price__gte=int(min_price))
-            elif max_price:
-                queryset = queryset.all().filter(price__lte=int(max_price))
+        owner = query_params.get("owner", None)
+        if owner:
+            queryset = queryset.filter(owner=int(owner))
 
-            sort = query_params.get("sort", None)
-            if sort:
-                if sort == "price_ascending":
-                    queryset = queryset.order_by("price")
-                elif sort == "price_descending":
-                    queryset = queryset.order_by("price").reverse()
-                elif sort == "name_ascending":
-                    queryset = queryset.order_by("name")
-                elif sort == "name_descending":
-                    queryset = queryset.order_by("name").reverse()
-                elif sort == "newest":
-                    queryset = queryset.order_by("post_date").reverse()
-                elif sort == "oldest":
-                    queryset = queryset.order_by("post_date")
+        min_price = query_params.get("min-price", None)
+        max_price = query_params.get("max-price", None)
+        if min_price and max_price:
+            queryset = queryset.all().filter(
+                price__lte=int(max_price), price__gte=int(min_price)
+            )
+        elif min_price:
+            queryset = queryset.all().filter(price__gte=int(min_price))
+        elif max_price:
+            queryset = queryset.all().filter(price__lte=int(max_price))
+
+        sort = query_params.get("sort", None)
+        if sort:
+            if sort == "price_ascending":
+                queryset = queryset.order_by("price")
+            elif sort == "price_descending":
+                queryset = queryset.order_by("price").reverse()
+            elif sort == "name_ascending":
+                queryset = queryset.order_by("name")
+            elif sort == "name_descending":
+                queryset = queryset.order_by("name").reverse()
+            elif sort == "newest":
+                queryset = queryset.order_by("post_date").reverse()
+            elif sort == "oldest":
+                queryset = queryset.order_by("post_date")
 
         items_count = queryset.count()
         page = query_params.get("page", 1)

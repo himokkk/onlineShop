@@ -33,11 +33,11 @@ class OrderListView(ListAPIView):
             else:
                 size = 25
 
-        # items_count = queryset.count()
-        # page = query_params.get("page", 1)
-        # start_index = size * (int(page) - 1)
-        # end_index = start_index + size
-        # queryset = queryset[start_index:end_index]
+        items_count = queryset.count()
+        page = query_params.get("page", 1)
+        start_index = size * (int(page) - 1)
+        end_index = start_index + size
+        queryset = queryset[start_index:end_index]
         if status == "sent":
             for instance in queryset:
                 if (
@@ -46,6 +46,7 @@ class OrderListView(ListAPIView):
                 ):
                     instance.status = "delivered"
                     instance.save()
+
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 

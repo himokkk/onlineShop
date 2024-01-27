@@ -5,3 +5,4 @@ media/
 .vscode/
 *.ini
 venv/
+backend/.coverage
