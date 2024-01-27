@@ -1,7 +1,8 @@
 from django.urls import path
 
-from products.views import ReviewListView, ReviewUpdateView
-from products.views import ProductListView, ProductCreateView, ProductRetrieveView
+from products.views import (ProductCreateView, ProductListView,
+                            ProductRetrieveView, ReviewListView,
+                            ReviewUpdateView)
 
 urlpatterns = [
     path("list/", ProductListView.as_view()),

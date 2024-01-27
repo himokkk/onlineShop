@@ -17,6 +17,7 @@ def is_svg(file):
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name=_("name"))
 
+    @staticmethod
     def validate_svg(file):
         if not is_svg(file):
             raise ValidationError("File not svg")

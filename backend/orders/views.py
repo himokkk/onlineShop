@@ -6,8 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from orders.models import Order
-from products.models import Review
 from orders.serializers import OrderSerializer, OrderStatusSerializer
+from products.models import Review
 
 
 class OrderListView(ListAPIView):
@@ -85,7 +85,6 @@ class OrderStatusView(UpdateAPIView):
         request_data.pop("items", None)
 
         order_status = request_data.get("status")
-        token = request.data.get("token", None)
         try:
             user_profile = request.user.profile
             order_instance = Order.objects.get(pk=pk)

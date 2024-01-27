@@ -12,6 +12,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    "daphne",
+    "chat",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -21,12 +23,21 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "categories",
-    "chat",
+    "channels",
     "orders",
     "products",
     "users",
     "django_extensions",
 ]
+
+ASGI_APPLICATION = "shop.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
+
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (

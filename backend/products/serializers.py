@@ -84,6 +84,7 @@ class ProductCreateSerializer(serializers.ModelSerializer):
             "image",
         ]
 
+
 class ReviewSerializer(serializers.ModelSerializer):
     owner_name = serializers.SerializerMethodField()
 

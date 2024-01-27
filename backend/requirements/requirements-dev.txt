@@ -7,9 +7,17 @@
 asgiref==3.7.2
     # via
     #   -r requirements\requirements.txt
+    #   channels
+    #   channels-redis
     #   django
 black==23.11.0
     # via -r requirements/requirements-dev.in
+channels==4.0.0
+    # via
+    #   -r requirements\requirements.txt
+    #   channels-redis
+channels-redis==4.2.0
+    # via -r requirements\requirements.txt
 click==8.1.7
     # via black
 colorama==0.4.6
@@ -19,14 +27,24 @@ configparser==6.0.0
 django==4.2.7
     # via
     #   -r requirements\requirements.txt
+    #   channels
     #   django-extensions
     #   djangorestframework
+    #   djangorestframework-simplejwt
 django-extensions==3.2.3
     # via -r requirements\requirements.txt
 djangorestframework==3.14.0
+    # via
+    #   -r requirements\requirements.txt
+    #   djangorestframework-simplejwt
+djangorestframework-simplejwt==5.3.1
     # via -r requirements\requirements.txt
 isort==5.12.0
     # via -r requirements/requirements-dev.in
+msgpack==1.0.7
+    # via
+    #   -r requirements\requirements.txt
+    #   channels-redis
 mypy-extensions==1.0.0
     # via black
 packaging==23.2
@@ -39,10 +57,18 @@ platformdirs==4.0.0
     # via black
 psycopg2==2.9.9
     # via -r requirements\requirements.txt
+pyjwt==2.8.0
+    # via
+    #   -r requirements\requirements.txt
+    #   djangorestframework-simplejwt
 pytz==2023.3.post1
     # via
     #   -r requirements\requirements.txt
     #   djangorestframework
+redis==5.0.1
+    # via
+    #   -r requirements\requirements.txt
+    #   channels-redis
 sqlparse==0.4.4
     # via
     #   -r requirements\requirements.txt

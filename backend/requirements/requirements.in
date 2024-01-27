@@ -5,3 +5,5 @@ djangorestframework-simplejwt
 Pillow
 configparser
 django-extensions
+channels
+channels_redis

@@ -15,7 +15,9 @@ class Product(models.Model):
         default=datetime.datetime.now, verbose_name=_("post date")
     )
     image = models.ImageField(blank=True, null=True, upload_to="products")
-    category = models.ForeignKey("categories.Category", null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey(
+        "categories.Category", null=True, on_delete=models.SET_NULL
+    )
 
     class Meta:
         verbose_name = _("Product")
@@ -25,6 +27,7 @@ class Product(models.Model):
 
 
 admin.site.register(Product)
+
 
 class Review(models.Model):
     RATING_CHOICES = (
