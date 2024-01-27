@@ -45,7 +45,7 @@ class Order(models.Model):
     street = models.CharField(max_length=95, null=True)
     apartment = models.CharField(default="", max_length=20)
     postal_code = models.CharField(max_length=255, null=True)
-    modified_date = models.DateTimeField(auto_now=True)
+    modified_date = models.DateTimeField(default=timezone.now)
 
     class Meta:
         verbose_name = "Order"
@@ -55,7 +55,7 @@ class Order(models.Model):
 
 
 @receiver(pre_save, sender=Order)
-def update_last_updated(_sender, instance:  Order, **kwargs) -> None:
+def update_last_updated(sender, instance:  Order, **kwargs) -> None:
     instance.last_updated = timezone.now()
 
 

@@ -21,14 +21,15 @@ class CategoryModelTest(SimpleTestCase):
         content_type="image/svg+xml",
     )
 
-    @patch("categories.models.validate_svg", return_value=True)
+    @patch("categories.models.validate_svg", return_value=None)
     def test_svg_validator_valid_file(self, _mock_is_svg):
-        category = Category(name="Test Category", svg=self.valid_svg_file)
+        category = Category.objects.create(name="Test Category", svg=self.valid_svg_file)
         category.full_clean()
+        Category.objects.all().delete()
 
     @patch("categories.models.validate_svg", return_value=False)
     def test_svg_validator_invalid_file(self, _mock_is_svg):
-        category = Category(name="Invalid Category", svg=self.invalid_svg_file)
+        category = Category.objects.create(name="Invalid Category", svg=self.invalid_svg_file)
 
         with self.assertRaises(ValidationError):
             category.full_clean()

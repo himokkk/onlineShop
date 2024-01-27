@@ -2,6 +2,7 @@ import datetime
 
 from django.contrib import admin
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 
@@ -30,7 +31,7 @@ class Product(models.Model):
         related_name="profile",
     )
     post_date = models.DateTimeField(
-        default=datetime.datetime.now, verbose_name=_("post date")
+        default=timezone.now, verbose_name=_("post date")
     )
     image = models.ImageField(blank=True, null=True, upload_to="products")
     category = models.ForeignKey(
@@ -89,7 +90,7 @@ class Review(models.Model):
     )
     product = models.ForeignKey(Product, null=True, on_delete=models.CASCADE)
     post_date = models.DateTimeField(
-        default=datetime.datetime.now, verbose_name=_("post date")
+        default=timezone.now, verbose_name=_("post date")
     )
 
     def __str__(self) -> str:
