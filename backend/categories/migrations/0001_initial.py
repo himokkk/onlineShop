@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                         blank=True,
                         null=True,
                         upload_to="category",
-                        validators=[categories.models.Category.validate_svg],
+                        validators=[categories.models.validate_svg],
                     ),
                 ),
             ],

@@ -13,14 +13,14 @@ def is_svg(file):
     is_svg = SVG_RE.match(file_contents) is not None
     return is_svg
 
+def validate_svg(file):
+    if not is_svg(file):
+        raise ValidationError("File not svg")
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True, verbose_name=_("name"))
 
-    @staticmethod
-    def validate_svg(file):
-        if not is_svg(file):
-            raise ValidationError("File not svg")
+
 
     svg = models.FileField(
         blank=True, null=True, upload_to="category", validators=[validate_svg]
