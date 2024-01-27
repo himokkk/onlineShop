@@ -1,3 +1,18 @@
+[project]
+name = "online_shop"
+version = "0.1.0"
+readme = "README.md"
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["backend"]
+include = ["online_shop"]
+exclude = ["ui"]
+
+
 [tool.flake8]
 max-line-length = 88
 extend-ignore = "E203, W503, D104, D100"
