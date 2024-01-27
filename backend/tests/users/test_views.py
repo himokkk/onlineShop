@@ -28,7 +28,8 @@ class UserViewsTest(TestCase):
 
     def test_login_view(self):
         response = self.client.post(
-            "/users/login/", {"username": self.username, "password": self.password}
+            "/users/login/",
+            {"username": self.username, "password": self.password},
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("access", response.data)
@@ -36,7 +37,8 @@ class UserViewsTest(TestCase):
 
     def test_logged_user_view(self):
         response = self.client.post(
-            "/users/current/", headers={"Authorization": f"Bearer {self.access_token}"}
+            "/users/current/",
+            headers={"Authorization": f"Bearer {self.access_token}"},
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["id"], self.user.profile.id)

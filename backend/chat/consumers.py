@@ -11,6 +11,14 @@ from .models import Message
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
+    """WebSocket consumer for handling chat functionality.
+
+    Attributes:
+        room_group_name (str): The name of the chat room group.
+        user (User): The user sending the messages.
+        receiver (User): The user receiving the messages.
+    """
+
     def __init__(self, *args, **kwargs):
         super().__init__(args, kwargs)
         self.room_group_name = None
@@ -18,6 +26,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.receiver = None
 
     async def connect(self):
+        """Called when the WebSocket is handshaking as part of the connection process.
+        Performs necessary setup and validation before accepting the connection.
+        """
         try:
             receiver_pk = self.scope["url_route"]["kwargs"]["user_id"]
             self.receiver = await self.get_user_instance_by_id(receiver_pk)
@@ -40,10 +51,16 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({"messages": last_10_messages}))
 
     async def disconnect(self, close_code):
+        """Called when the WebSocket closes for any reason.
+        Performs necessary cleanup and removes the connection from the chat room group.
+        """
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
         await self.close()
 
     async def receive(self, text_data):
+        """Called when a WebSocket frame is received from the client.
+        Handles different types of messages received from the client.
+        """
         data = json.loads(text_data)
         if "type" in data and data["type"] == "get_older_messages":
             last_message_id = data.get("last_message_id")
@@ -61,27 +78,67 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
     async def chat_message(self, event):
+        """Called when a chat message is received from the chat room group.
+        Sends the chat message to the connected WebSocket client.
+        """
         message = event["message"]
         await self.send(text_data=json.dumps({"message": message}))
 
     @database_sync_to_async
     def get_user_instance_by_token(self, token):
+        """
+        Retrieves the user instance based on the provided token.
+
+        Args:
+            token (str): The authentication token.
+
+        Returns:
+            User: The user instance.
+
+        Raises:
+            Http404: If the user instance is not found.
+        """
         decoded_data = UntypedToken(token).payload
         user_pk = decoded_data["user_id"]
         return get_object_or_404(User, pk=user_pk)
 
     @database_sync_to_async
     def get_user_instance_by_id(self, pk):
+        """Retrieves the user instance based on the provided user ID.
+
+        Args:
+            pk (int): The user ID.
+
+        Returns:
+            User: The user instance.
+
+        Raises:
+            Http404: If the user instance is not found.
+        """
         return get_object_or_404(User, pk=pk)
 
     @database_sync_to_async
     def save_message(self, message_content):
+        """Saves the chat message to the database.
+
+        Args:
+            message_content (str): The content of the chat message.
+        """
         Message.objects.create(
             from_user=self.user, to_user=self.receiver, message=message_content
         )
 
     @database_sync_to_async
     def load_last_messages(self, *args, **kwargs):
+        """Loads the last 10 messages from the database.
+
+        Args:
+            *args: Additional positional arguments.
+            **kwargs: Additional keyword arguments.
+
+        Returns:
+            list: A list of dictionaries representing the last 10 messages.
+        """
         queryset1 = Message.objects.filter(
             from_user=self.user, to_user=self.receiver, **kwargs
         ).order_by("-date")[:10]

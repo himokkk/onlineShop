@@ -60,12 +60,21 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("review_type", models.CharField(default="overall", max_length=20)),
+                (
+                    "review_type",
+                    models.CharField(default="overall", max_length=20),
+                ),
                 (
                     "overall_rating",
                     models.PositiveIntegerField(
                         blank=True,
-                        choices=[(1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5")],
+                        choices=[
+                            (1, "1"),
+                            (2, "2"),
+                            (3, "3"),
+                            (4, "4"),
+                            (5, "5"),
+                        ],
                         null=True,
                     ),
                 ),
@@ -73,7 +82,13 @@ class Migration(migrations.Migration):
                     "quality_rating",
                     models.PositiveIntegerField(
                         blank=True,
-                        choices=[(1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5")],
+                        choices=[
+                            (1, "1"),
+                            (2, "2"),
+                            (3, "3"),
+                            (4, "4"),
+                            (5, "5"),
+                        ],
                         null=True,
                     ),
                 ),
@@ -81,7 +96,13 @@ class Migration(migrations.Migration):
                     "delivery_rating",
                     models.PositiveIntegerField(
                         blank=True,
-                        choices=[(1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5")],
+                        choices=[
+                            (1, "1"),
+                            (2, "2"),
+                            (3, "3"),
+                            (4, "4"),
+                            (5, "5"),
+                        ],
                         null=True,
                     ),
                 ),
@@ -89,7 +110,13 @@ class Migration(migrations.Migration):
                     "communication_rating",
                     models.PositiveIntegerField(
                         blank=True,
-                        choices=[(1, "1"), (2, "2"), (3, "3"), (4, "4"), (5, "5")],
+                        choices=[
+                            (1, "1"),
+                            (2, "2"),
+                            (3, "3"),
+                            (4, "4"),
+                            (5, "5"),
+                        ],
                         null=True,
                     ),
                 ),

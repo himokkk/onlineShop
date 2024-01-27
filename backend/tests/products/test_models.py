@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 
 from products.models import Product, Review
-from users.models import UserProfile
 
 
 class ReviewModelTest(TestCase):

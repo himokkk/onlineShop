@@ -5,6 +5,15 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Message(models.Model):
+    """Represents a message sent from one user to another.
+
+    Attributes:
+        from_user (User): The user who sent the message.
+        to_user (User): The user who received the message.
+        message (str): The content of the message.
+        date (datetime): The date and time when the message was sent.
+    """
+
     from_user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="from_user"
     )

@@ -1,11 +1,11 @@
-from channels.db import database_sync_to_async
-from channels.testing import WebsocketCommunicator
-from django.contrib.auth.models import User
-from django.test import TestCase
-from rest_framework_simplejwt.tokens import AccessToken
-
-from chat.consumers import ChatConsumer
-from chat.models import Message
+# from channels.db import database_sync_to_async
+# from channels.testing import WebsocketCommunicator
+# from django.contrib.auth.models import User
+# from django.test import TestCase
+# from rest_framework_simplejwt.tokens import AccessToken
+#
+# from chat.consumers import ChatConsumer
+# from chat.models import Message
 
 # class ChatConsumerTest(TestCase):
 #     def setUp(self):

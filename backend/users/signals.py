@@ -6,5 +6,12 @@ from users.models import UserProfile
 
 
 @receiver(post_save, sender=User)
-def create_profile(sender, instance, **kwargs):
+def create_profile(_sender, instance, **kwargs):
+    """Create a user profile for the given instance if it doesn't already exist.
+
+    Args:
+        _sender: The sender of the signal.
+        instance: The instance triggering the signal.
+        **kwargs: Additional keyword arguments.
+    """
     UserProfile.objects.get_or_create(user=instance)

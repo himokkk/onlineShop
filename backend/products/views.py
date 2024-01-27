@@ -1,7 +1,11 @@
 from rest_framework import status
-from rest_framework.generics import (CreateAPIView, ListAPIView,
-                                     RetrieveAPIView, UpdateAPIView,
-                                     get_object_or_404)
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    RetrieveAPIView,
+    UpdateAPIView,
+    get_object_or_404,
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -11,6 +15,28 @@ from products.serializers import ProductSerializer, ReviewSerializer
 
 
 class ProductListView(ListAPIView):
+    """A view that returns a list of products based on the provided query parameters.
+
+    Query Parameters:
+    - size: The number of products to return per page. Default is 25.
+    - category: The ID of the category to filter the products by.
+    - owner: The ID of the owner to filter the products by.
+    - min-price: The minimum price of the products to filter by.
+    - max-price: The maximum price of the products to filter by.
+    - sort: The sorting order of the products. Possible values are:
+        - "price_ascending": Sort by price in ascending order.
+        - "price_descending": Sort by price in descending order.
+        - "name_ascending": Sort by name in ascending order.
+        - "name_descending": Sort by name in descending order.
+        - "newest": Sort by post date in descending order.
+        - "oldest": Sort by post date in ascending order.
+    - page: The page number of the results. Default is 1.
+
+    Returns:
+    - count: The total number of products matching the query parameters.
+    - results: A list of serialized product objects.
+    """
+
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
 
@@ -72,6 +98,15 @@ class ProductListView(ListAPIView):
 
 
 class ProductCreateView(CreateAPIView):
+    """
+    View for creating a new product.
+
+    Inherits from CreateAPIView which provides the necessary functionality for creating a new object.
+    Requires authentication for the user.
+    Uses ProductSerializer for serializing and deserializing the data.
+    Retrieves all products from the database.
+    """
+
     permission_classes = [IsAuthenticated]
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
@@ -92,19 +127,47 @@ class ProductCreateView(CreateAPIView):
 
 
 class ProductRetrieveView(RetrieveAPIView):
+    """
+    A view for retrieving a single product.
+
+    Inherits from the RetrieveAPIView class and uses the ProductSerializer
+    for serializing the product data. The queryset is set to retrieve all
+    products from the database.
+    """
+
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
 
 
 class ReviewListView(ListAPIView):
+    """
+    A view that returns a list of reviews.
+
+    Inherits from ListAPIView and uses ReviewSerializer
+    to serialize the queryset of Review objects.
+    """
+
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
 
 
 class ReviewUpdateView(UpdateAPIView):
+    """
+    API view for updating a review.
+    """
+
     permission_classes = [IsAuthenticated]
 
     def put(self, request):
+        """
+        Update a review.
+
+        Parameters:
+        - request: The HTTP request object.
+
+        Returns:
+        - Response: The HTTP response object.
+        """
         user_profile_instance = request.user.profile
 
         product_id = request.data.get("product", None)

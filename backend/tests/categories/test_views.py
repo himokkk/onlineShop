@@ -1,7 +1,3 @@
-import io
-import random
-from unittest.mock import patch
-
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import SimpleTestCase, override_settings
 from rest_framework import status
@@ -13,18 +9,23 @@ from categories.models import Category
 @override_settings(DATABASES={"default": {"ENGINE": "django.db.backends.dummy"}})
 class CategoryViewsTest(SimpleTestCase):
     databases = ["default"]
+    valid_svg_file = SimpleUploadedFile(
+        "valid_svg.svg",
+        b'<svg width="100" height="100"><circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" /></svg>',
+        content_type="image/svg+xml",
+    )
+
+    invalid_svg_file = SimpleUploadedFile(
+        "valid_svg.svg",
+        b"test",
+        content_type="image/svg+xml",
+    )
 
     def setUp(self):
         self.client = APIClient()
 
-    @patch("categories.models.is_svg", return_value=True)
-    def test_create_category_view_valid_data(self, mock_is_svg):
-        in_memory_file = io.BytesIO(b"random bytes")
-        uploaded_file = SimpleUploadedFile(
-            name="testfile.txt", content=in_memory_file.read()
-        )
-
-        data = {"name": "Test Category", "svg": uploaded_file}
+    def test_create_category_view_valid_data(self):
+        data = {"name": "Test Category", "svg": self.valid_svg_file}
         response = self.client.post("/categories/create/", data, format="multipart")
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -32,14 +33,8 @@ class CategoryViewsTest(SimpleTestCase):
         self.assertEqual(Category.objects.first().name, "Test Category")
         Category.objects.all().delete()
 
-    @patch("categories.models.is_svg", return_value=False)
-    def test_create_category_view_invalid_svg(self, mock_is_svg):
-        in_memory_file = io.BytesIO(b"random bytes")
-        uploaded_file = SimpleUploadedFile(
-            name="testfile.txt", content=in_memory_file.read()
-        )
-
-        data = {"name": "Test Category", "svg": uploaded_file}
+    def test_create_category_view_invalid_svg(self):
+        data = {"name": "Test Category", "svg": self.invalid_svg_file}
         response = self.client.post("/categories/create/", data, format="multipart")
 
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
