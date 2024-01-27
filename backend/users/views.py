@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -20,7 +21,7 @@ class LoggedUserView(APIView):
 
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
+    def post(self, request: Request, *args, **kwargs) -> Response:
         user_profile = request.user.profile
         data = UserProfileSerializer(user_profile).data
         return Response(data)
@@ -40,7 +41,7 @@ class UserView(RetrieveAPIView):
     serializer_class = UserProfileSerializer
     queryset = UserProfile.objects.all()
 
-    def get(self, request, pk):
+    def get(self, request: Request, pk: int) -> Response:
         """Retrieves the user profile with the specified primary key.
 
         Args:
@@ -102,7 +103,7 @@ class ChangeUserImageView(APIView):
     parser_classes = (MultiPartParser, FormParser)
     permission_classes = [IsAuthenticated]
 
-    def put(self, request, *args, **kwargs):
+    def put(self, request: Request, *args, **kwargs) -> Response:
         user_profile = request.user.profile
 
         image_file = request.FILES.get("image")
@@ -138,7 +139,7 @@ class RegisterView(CreateAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request: Request, *args, **kwargs) -> Response:
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         password = request.data.get("password")
@@ -182,7 +183,7 @@ class CartAddView(APIView):
     serializer_class = UserProfileSerializer
     queryset = UserProfile.objects.all()
 
-    def post(self, request):
+    def post(self, request: Request, *args, **kwargs) -> Response:
         item = request.data.get("item", None)
         if not item:
             return Response(
@@ -213,7 +214,7 @@ class CartRemoveView(APIView):
     serializer_class = UserProfileSerializer
     queryset = UserProfile.objects.all()
 
-    def post(self, request):
+    def post(self, request: Request, *args, **kwargs) -> Response:
         """Handle POST requests to remove a product from the user's cart.
 
         Args:

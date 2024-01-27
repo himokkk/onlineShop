@@ -22,7 +22,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "username",
         ]
 
-    def to_representation(self, instance):
+    def to_representation(self, instance: UserProfile) -> str:
         """Converts the given instance into a dictionary representation.
 
         Args:
@@ -37,7 +37,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         result.update({"cart": ProductSerializer(instance.cart.all(), many=True).data})
         return result
 
-    def get_image_url(self, obj):
+    def get_image_url(self, obj: UserProfile) -> str:
         """Returns the URL of the image associated with the given object.
 
         Args:
@@ -49,7 +49,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         if obj.image:
             return obj.image.url
 
-    def get_username(self, obj):
+    def get_username(self, obj: UserProfile) -> str:
         """Returns the username of the user associated with the given object.
 
         Args:

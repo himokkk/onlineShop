@@ -7,6 +7,7 @@ from rest_framework.generics import (
     UpdateAPIView,
 )
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.request import Request
 from rest_framework.response import Response
 
 from orders.models import Order
@@ -26,7 +27,7 @@ class OrderListView(ListAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
 
-    def post(self, request):
+    def post(self, request: Request, *args, **kwargs) -> Response:
         """
         Handles the POST request for creating a new order.
 
@@ -86,7 +87,7 @@ class OrderCreateView(CreateAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request: Request, *args, **kwargs) -> Response:
         """
         Create a new order.
 
@@ -132,7 +133,7 @@ class OrderStatusView(UpdateAPIView):
     queryset = Order.objects.all()
     lookup_field = "pk"
 
-    def partial_update(self, request, pk):
+    def partial_update(self, request: Request, pk: int) -> Response:
         """
         Update the status of an order.
 
@@ -199,7 +200,7 @@ class OrderRetrieveView(RetrieveAPIView):
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
 
-    def retrieve(self, request, *args, **kwargs):
+    def retrieve(self, request: Request, *args, **kwargs) -> Response:
         """
         Retrieves a single order object and updates its status if necessary.
 

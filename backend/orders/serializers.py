@@ -39,19 +39,19 @@ class OrderSerializer(serializers.ModelSerializer):
         )
         return result
 
-    def get_owner_name(self, obj):
+    def get_owner_name(self, obj: Order) -> str:
         """Returns the username of the owner of the Order."""
         if obj.owner:
             return obj.owner.user.username
 
-    def get_total_products_cost(self, obj):
+    def get_total_products_cost(self, obj: Order) -> float:
         """Calculates and returns the total cost of all products in the Order."""
         price = 0
         for item in obj.items.all():
             price += item.price
         return price
 
-    def get_total_shipping_cost(self, obj):
+    def get_total_shipping_cost(self, obj: Order) -> float:
         """Calculates and returns the total shipping cost of all products in the Order."""
         price = 0
         for item in obj.items.all():

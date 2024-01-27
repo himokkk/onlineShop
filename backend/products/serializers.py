@@ -165,7 +165,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = "__all__"
 
-    def get_owner_name(self, obj):
+    def get_owner_name(self, obj: Review) -> str:
         if obj.owner:
             return str(obj.owner)
 

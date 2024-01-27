@@ -102,7 +102,7 @@ class Review(models.Model):
             + str(self.product.id)
         )
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         if self.review_type == "overall":
             self.quality_rating = None
             self.delivery_rating = None

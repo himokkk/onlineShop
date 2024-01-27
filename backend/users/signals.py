@@ -6,7 +6,7 @@ from users.models import UserProfile
 
 
 @receiver(post_save, sender=User)
-def create_profile(_sender, instance, **kwargs):
+def create_profile(_sender, instance: User, **kwargs) -> None:
     """Create a user profile for the given instance if it doesn't already exist.
 
     Args:

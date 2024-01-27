@@ -4,9 +4,10 @@ from django.contrib import admin
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from typing import Any
 
 
-def validate_svg(file):
+def validate_svg(file: Any) -> None:
     """Validates if the given file is an SVG (Scalable Vector Graphics) file.
 
     Args:

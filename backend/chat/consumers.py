@@ -6,6 +6,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from rest_framework_simplejwt.tokens import UntypedToken
+from typing_extensions import Any
 
 from .models import Message
 
@@ -25,7 +26,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.user = None
         self.receiver = None
 
-    async def connect(self):
+    async def connect(self) -> None:
         """Called when the WebSocket is handshaking as part of the connection process.
         Performs necessary setup and validation before accepting the connection.
         """
@@ -50,14 +51,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
         last_10_messages = await self.load_last_messages()
         await self.send(text_data=json.dumps({"messages": last_10_messages}))
 
-    async def disconnect(self, close_code):
+    async def disconnect(self, close_code: int) -> None:
         """Called when the WebSocket closes for any reason.
         Performs necessary cleanup and removes the connection from the chat room group.
         """
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
         await self.close()
 
-    async def receive(self, text_data):
+    async def receive(self, text_data: dict[str, Any]) -> None:
         """Called when a WebSocket frame is received from the client.
         Handles different types of messages received from the client.
         """
@@ -77,7 +78,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name, {"type": "chat_message", "message": message}
         )
 
-    async def chat_message(self, event):
+    async def chat_message(self, event: dict[str, Any]) -> None:
         """Called when a chat message is received from the chat room group.
         Sends the chat message to the connected WebSocket client.
         """
@@ -85,7 +86,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({"message": message}))
 
     @database_sync_to_async
-    def get_user_instance_by_token(self, token):
+    def get_user_instance_by_token(self, token: str) -> User:
         """
         Retrieves the user instance based on the provided token.
 
@@ -103,7 +104,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         return get_object_or_404(User, pk=user_pk)
 
     @database_sync_to_async
-    def get_user_instance_by_id(self, pk):
+    def get_user_instance_by_id(self, pk: int) -> User:
         """Retrieves the user instance based on the provided user ID.
 
         Args:
@@ -118,7 +119,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         return get_object_or_404(User, pk=pk)
 
     @database_sync_to_async
-    def save_message(self, message_content):
+    def save_message(self, message_content: str) -> None:
         """Saves the chat message to the database.
 
         Args:
@@ -129,7 +130,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
     @database_sync_to_async
-    def load_last_messages(self, *args, **kwargs):
+    def load_last_messages(self, *args, **kwargs) -> list[dict[str, Any]]:
         """Loads the last 10 messages from the database.
 
         Args:

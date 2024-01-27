@@ -7,6 +7,7 @@ from rest_framework.generics import (
     get_object_or_404,
 )
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.request import Request
 from rest_framework.response import Response
 
 from categories.models import Category
@@ -40,7 +41,7 @@ class ProductListView(ListAPIView):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
 
-    def get(self, request):
+    def get(self, request: Request, *args, **kwargs) -> Response:
         queryset = self.queryset.all()
 
         query_params = self.request.query_params
@@ -111,7 +112,7 @@ class ProductCreateView(CreateAPIView):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request: Request, *args, **kwargs) -> Response:
         user_profile = request.user.profile
 
         data = request.data.dict()
@@ -158,7 +159,7 @@ class ReviewUpdateView(UpdateAPIView):
 
     permission_classes = [IsAuthenticated]
 
-    def put(self, request):
+    def put(self, request: Request, *args, **kwargs) -> Response:
         """
         Update a review.
 

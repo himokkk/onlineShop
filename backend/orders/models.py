@@ -55,7 +55,7 @@ class Order(models.Model):
 
 
 @receiver(pre_save, sender=Order)
-def update_last_updated(sender, instance, **kwargs):
+def update_last_updated(_sender, instance:  Order, **kwargs) -> None:
     instance.last_updated = timezone.now()
 
 

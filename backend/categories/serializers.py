@@ -12,7 +12,7 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ["id", "name", "svg_url"]
 
-    def get_svg_url(self, obj):
+    def get_svg_url(self, obj: Category) -> str:
         """Returns the URL of the SVG image associated with the category.
         If no SVG image is available, returns None.
         """
