@@ -14,7 +14,7 @@ class UserProfile(models.Model):
         cart (ManyToManyField): The products added to the user's cart.
     """
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile", default=1)
     image = models.ImageField(blank=True, null=True, upload_to="profile")
     description = models.TextField(default="")
     birth = models.DateField(blank=True, null=True)
