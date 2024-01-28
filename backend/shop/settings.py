@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "products",
     "users",
     "django_extensions",
+    "drf_spectacular",
 ]
 
 ASGI_APPLICATION = "shop.asgi.application"
@@ -41,7 +42,8 @@ CHANNEL_LAYERS = {
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
+    ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 
@@ -139,3 +141,14 @@ SIMPLE_JWT = {
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Online Shop API",
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
+    "SERVE_AUTHENTICATION": ["rest_framework.authentication.BasicAuthentication"],
+    "SWAGGER_UI_SETTINGS": {
+        "deepLinking": True,
+        "persistAuthorization": True,
+        "displayOperationId": True,
+    },
+}

@@ -19,8 +19,14 @@ Follow these steps to set up the project:
    ```sh
    pip install -r requirements/requirements.txt
    ```
+   
+4. Migrate the database:
 
-4. Run the Django server:
+   ```sh
+   python manage.py migrate
+   ```
+
+5. Run the Django server:
 
    ```sh
    python manage.py runserver
@@ -31,6 +37,13 @@ Follow these steps to set up the project:
 ```sh
 python manage.py test
 ```
+
+## Docs
+```sh
+   python manage.py createsuperuser
+   ```
+ 
+ ```schema/swagger-ui/#/```: swagger documentation url
 
 ## Deployment
 

@@ -1,9 +1,10 @@
 Django
-psycopg2
 djangorestframework
 djangorestframework-simplejwt
+django-extensions
+drf-spectacular
+psycopg2
 Pillow
 configparser
-django-extensions
 channels
 channels_redis

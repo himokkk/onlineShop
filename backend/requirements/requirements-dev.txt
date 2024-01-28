@@ -10,6 +10,11 @@ asgiref==3.7.2
     #   channels
     #   channels-redis
     #   django
+attrs==23.2.0
+    # via
+    #   -r .\requirements\requirements.txt
+    #   jsonschema
+    #   referencing
 black==23.11.0
     # via -r .\requirements\requirements-dev.in
 channels==4.0.0
@@ -31,13 +36,17 @@ django==4.2.7
     #   django-extensions
     #   djangorestframework
     #   djangorestframework-simplejwt
+    #   drf-spectacular
 django-extensions==3.2.3
     # via -r .\requirements\requirements.txt
 djangorestframework==3.14.0
     # via
     #   -r .\requirements\requirements.txt
     #   djangorestframework-simplejwt
+    #   drf-spectacular
 djangorestframework-simplejwt==5.3.1
+    # via -r .\requirements\requirements.txt
+drf-spectacular==0.27.1
     # via -r .\requirements\requirements.txt
 flake8==7.0.0
     # via
@@ -45,8 +54,20 @@ flake8==7.0.0
     #   flake8-docstrings
 flake8-docstrings==1.7.0
     # via -r .\requirements\requirements-dev.in
+inflection==0.5.1
+    # via
+    #   -r .\requirements\requirements.txt
+    #   drf-spectacular
 isort==5.12.0
     # via -r .\requirements\requirements-dev.in
+jsonschema==4.21.1
+    # via
+    #   -r .\requirements\requirements.txt
+    #   drf-spectacular
+jsonschema-specifications==2023.12.1
+    # via
+    #   -r .\requirements\requirements.txt
+    #   jsonschema
 mccabe==0.7.0
     # via flake8
 msgpack==1.0.7
@@ -79,10 +100,24 @@ pytz==2023.3.post1
     # via
     #   -r .\requirements\requirements.txt
     #   djangorestframework
+pyyaml==6.0.1
+    # via
+    #   -r .\requirements\requirements.txt
+    #   drf-spectacular
 redis==5.0.1
     # via
     #   -r .\requirements\requirements.txt
     #   channels-redis
+referencing==0.32.1
+    # via
+    #   -r .\requirements\requirements.txt
+    #   jsonschema
+    #   jsonschema-specifications
+rpds-py==0.17.1
+    # via
+    #   -r .\requirements\requirements.txt
+    #   jsonschema
+    #   referencing
 snowballstemmer==2.2.0
     # via pydocstyle
 sqlparse==0.4.4
@@ -93,3 +128,7 @@ tzdata==2023.3
     # via
     #   -r .\requirements\requirements.txt
     #   django
+uritemplate==4.1.1
+    # via
+    #   -r .\requirements\requirements.txt
+    #   drf-spectacular
