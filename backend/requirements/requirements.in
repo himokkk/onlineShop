@@ -8,3 +8,4 @@ Pillow
 configparser
 channels
 channels_redis
+daphne
