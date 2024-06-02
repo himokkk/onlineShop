@@ -24,10 +24,9 @@ const ProductComponent = (props: Props) => {
             <img src={props.product.image_url} className="prevent-select" />
             <div>
                 <div className="product-name">{props.product.name}</div>
-                {props.size != 0 ? <div>{props.product.description}</div> : null}
             </div>
             <div className="right-container">
-                <div>{price} zł</div>
+                {props.size != 0 ? <div>Price: {price} zł</div> : null}
                 {props.size != 0 ? <div>Shipping price: {shipping_price} zł</div> : null}
                 {props.size != 0 ? <div>Total price: {Number(price) + Number(shipping_price)} zł</div> : null}
             </div>

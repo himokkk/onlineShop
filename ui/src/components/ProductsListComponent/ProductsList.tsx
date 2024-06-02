@@ -89,8 +89,11 @@ const ProductList = (props: Props) => {
         }
         apiCall({ url: url, method: "GET"}).then(data => {
             setSpinnerActive(false);
-            setProductsCount(data["count"]);
-            setProducts(data["results"]);
+            if (data["results"]) {
+                setProductsCount(data["count"]);
+                setProducts(data["results"]);
+            return;
+        }
         });
     }, [url]);
 

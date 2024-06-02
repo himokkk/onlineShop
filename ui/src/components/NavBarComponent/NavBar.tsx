@@ -29,7 +29,9 @@ const NavBar: React.FC = () => {
                 const image_url = data["image_url"];
                 const user_id = data["user"];
                 setUserId(user_id);
-                setCart(data["cart"]);
+                if(data["cart"]) {
+                    setCart(data["cart"]);
+                }
                 if (image_url) {
                     setImageURL(image_url);
                 } else {

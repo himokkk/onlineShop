@@ -40,7 +40,9 @@ const HomePage: React.FC = () => {
         };
 
         apiCall({ url: backendConfig.categories_list, method: "GET" }).then(data => {
-            setCategories(() => [allCategory, ...data]);
+            if(data) {
+                setCategories(() => [allCategory, ...data]);
+            }
             setSpinnerActive(false);
         });
     }, []);

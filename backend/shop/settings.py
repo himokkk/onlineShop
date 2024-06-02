@@ -8,7 +8,7 @@ SECRET_KEY = "django-insecure-p4igq(68n%t+2zan!wg81d*co%1zub7$qoc^ct@%jbkt+c_$22
 
 DEBUG = True
 USE_TZ = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     "daphne",
@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "rest_framework",
     "rest_framework.authtoken",
     "categories",
@@ -28,6 +29,10 @@ INSTALLED_APPS = [
     "users",
     "django_extensions",
     "drf_spectacular",
+]
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',  # React frontend running on localhost
 ]
 
 ASGI_APPLICATION = "shop.asgi.application"
@@ -60,6 +65,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = "shop.urls"
@@ -135,8 +142,8 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=1),
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=365),
 }
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

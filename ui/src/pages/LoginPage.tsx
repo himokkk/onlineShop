@@ -46,9 +46,9 @@ const LoginPage: React.FC = () => {
             }
             apiCall({ url: backendConfig.login, method: "POST", data: form_data })
                 .then(data => {
-                    console.log(data)
                     if (data["access"]) {
                         cookies.set("token", data["access"], { path: "/" });
+                        cookies.set("refresh", data["refresh"], { path: "/" });
                         navigate("/");
                     } else if (data["detail"]) {
                         setBlock(incorrectErrorRef);
